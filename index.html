@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Judith: A Dark Comedy Series</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #060606;
+      --bg2:          #0a0a12;
+      --surface:      #111118;
+      --surface2:     #1a1a28;
+      --purple:       #8b5cf6;
+      --purple-glow:  rgba(139, 92, 246, 0.4);
+      --teal:         #00d4ff;
+      --text:         #f9fafb;
+      --text-muted:   #9ca3af;
+      --text-dim:     #6b7280;
+      --lock-overlay: rgba(0,0,0,0.65);
+      --radius:       12px;
+      --transition:   0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ─── Starfield Canvas ──────────────────────────────────────── */
+    #starfield {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Layout wrapper above canvas ──────────────────────────── */
+    #app {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Navigation ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+
+    nav.scrolled {
+      background: rgba(6, 6, 6, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(139,92,246,0.15);
+    }
+
+    .nav-logo {
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(139,92,246,0.5));
+      transition: filter var(--transition);
+    }
+
+    .nav-logo img:hover {
+      filter: drop-shadow(0 0 14px rgba(139,92,246,0.85));
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--purple);
+      transition: width var(--transition);
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--purple);
+    }
+
+    .nav-links a.active::after,
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--purple);
+      color: #fff !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition) !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    .nav-cta:hover {
+      color: #fff !important;
+      background: #7c3aed !important;
+      box-shadow: 0 0 20px var(--purple-glow), 0 0 40px rgba(139,92,246,0.25) !important;
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+
+    /* ─── Sections ──────────────────────────────────────────────── */
+    .section {
+      display: none;
+      padding-top: 70px;
+      min-height: 100vh;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── Hero ──────────────────────────────────────────────────── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+    }
+
+    .hero-logo {
+      width: 200px;
+      height: auto;
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 24px rgba(139,92,246,0.6));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .hero-tagline {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      color: var(--text);
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 40px rgba(139,92,246,0.3), 0 0 80px rgba(139,92,246,0.1);
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-divider {
+      width: 100%;
+      max-width: 400px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      margin: 1rem auto;
+    }
+
+    .hero-season {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      color: var(--purple);
+      text-transform: uppercase;
+    }
+
+    /* ─── Section Header ────────────────────────────────────────── */
+    .section-header {
+      text-align: center;
+      padding: 3rem 2rem 1.5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--teal));
+      border-radius: 2px;
+      margin: 0 auto;
+    }
+
+    /* ─── Episode List ──────────────────────────────────────────── */
+    .episodes-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .episode-card {
+      display: flex;
+      gap: 0;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(139,92,246,0.1);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      opacity: 0;
+      transform: translateY(16px);
+      cursor: pointer;
+    }
+
+    .episode-card.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s ease, transform 0.4s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .episode-card:hover {
+      transform: scale(1.015) translateY(-2px);
+      box-shadow: 0 8px 32px rgba(139,92,246,0.2);
+      border-color: rgba(139,92,246,0.4);
+    }
+
+    .episode-card.locked {
+      cursor: default;
+    }
+
+    .episode-card.locked:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(139,92,246,0.1);
+    }
+
+    .episode-thumb {
+      position: relative;
+      flex-shrink: 0;
+      width: 280px;
+      min-height: 158px;
+      overflow: hidden;
+    }
+
+    .thumb-gradient {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .thumb-real {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--lock-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lock-icon {
+      color: rgba(255,255,255,0.7);
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+    }
+
+    .episode-info {
+      flex: 1;
+      padding: 1.4rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .episode-number {
+      font-family: monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .episode-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .episode-summary {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .episode-card.locked .episode-summary {
+      color: var(--text-dim);
+    }
+
+    .btn-watch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+
+    .btn-watch:hover {
+      background: #7c3aed;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-locked {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface2);
+      color: var(--text-dim);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: default;
+      align-self: flex-start;
+    }
+
+    /* ─── About Section ─────────────────────────────────────────── */
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+      text-align: center;
+    }
+
+    .about-content p {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .about-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
+      margin: 2rem 0;
+    }
+
+    .btn-cta-large {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--purple), #7c3aed);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+      margin-top: 1rem;
+    }
+
+    .btn-cta-large:hover {
+      box-shadow: 0 0 30px var(--purple-glow), 0 0 60px rgba(139,92,246,0.2);
+      transform: translateY(-3px);
+    }
+
+    /* ─── Crew Section ──────────────────────────────────────────── */
+    .crew-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 0 2rem 2rem;
+    }
+
+    .crew-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .crew-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(139,92,246,0.1);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      cursor: default;
+    }
+
+    .crew-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(139,92,246,0.25);
+      border-color: var(--purple);
+    }
+
+    .crew-portrait {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: block;
+    }
+
+    .crew-portrait-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+    }
+
+    .crew-portrait-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .crew-card:hover .crew-portrait-img img {
+      transform: scale(1.05);
+    }
+
+    .crew-info {
+      padding: 1.25rem;
+    }
+
+    .crew-name {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .crew-role {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .crew-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ─── Invest Section ────────────────────────────────────────── */
+    .invest-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+    }
+
+    .invest-block {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(139,92,246,0.15);
+    }
+
+    .invest-block-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--purple);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .invest-block p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+
+    .invest-bullets {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .invest-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
+    }
+
+    .invest-bullets li::before {
+      content: '▸';
+      color: var(--purple);
+      flex-shrink: 0;
+      margin-top: 0.1em;
+      font-size: 0.9rem;
+    }
+
+    .invest-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
+      margin: 1.5rem 0;
+    }
+
+    .invest-cta-wrap {
+      text-align: center;
+      padding-top: 0.5rem;
+    }
+
+    .invest-cta-wrap p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-invest {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--teal), #0099cc);
+      color: #000;
+      text-decoration: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .btn-invest:hover {
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), 0 0 60px rgba(0, 212, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    /* ─── Studio / Founders (About) ────────────────────────────── */
+    .studio-section {
+      max-width: 860px;
+      margin: 4rem auto 0;
+      padding: 0 2rem 3rem;
+    }
+
+    .studio-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .studio-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .studio-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .founders-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      background: var(--surface);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .founder-card:hover {
+      border-color: rgba(0,212,255,0.35);
+      box-shadow: 0 0 30px rgba(0,212,255,0.07);
+    }
+
+    .founder-text { flex: 1; }
+
+    .founder-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .founder-role {
+      font-size: 0.85rem;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .founder-bio {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .founder-photo {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(0,212,255,0.2);
+    }
+
+    .founder-photo-placeholder {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .founder-photo-img {
+      background: none;
+      border: none;
+      overflow: hidden;
+    }
+
+    .founder-photo-img img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(0,212,255,0.25);
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .founder-card { flex-direction: column; text-align: center; }
+      .founder-photo { width: 90px; height: 90px; }
+    }
+
+    /* ─── Invest Form ────────────────────────────────────────────── */
+    .invest-intro {
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .invest-intro p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+
+    .invest-form {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-dim); }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+
+    .btn-invest-submit {
+      align-self: flex-start;
+      background: linear-gradient(135deg, var(--purple), #6d28d9);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .btn-invest-submit:hover {
+      box-shadow: 0 0 28px var(--purple-glow), 0 0 8px var(--purple-glow);
+      transform: translateY(-3px);
+    }
+
+    .invest-success {
+      color: var(--teal);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.75rem 0;
+    }
+
+    /* ─── Modal ─────────────────────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.5);
+      box-shadow: 0 0 60px rgba(139,92,246,0.3), 0 0 120px rgba(139,92,246,0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      position: relative;
+      transform: scale(0.94) translateY(12px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-backdrop.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color var(--transition);
+      padding: 4px;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      letter-spacing: 0.06em;
+    }
+
+    .modal p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .modal-input {
+      background: var(--bg2);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .modal-input::placeholder { color: var(--text-dim); }
+
+    .modal-input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+
+    .modal-submit {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.8rem 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+
+    .modal-submit:hover {
+      background: #7c3aed;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .modal-fine-print {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(139,92,246,0.1);
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+
+    footer span { color: var(--purple); }
+
+    /* ─── Mobile Nav ────────────────────────────────────────────── */
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: rgba(6,6,6,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 99;
+      border-bottom: 1px solid rgba(139,92,246,0.2);
+    }
+
+    .nav-mobile-menu.open { display: flex; }
+
+    .nav-mobile-menu a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color var(--transition);
+    }
+
+    .nav-mobile-menu a:hover,
+    .nav-mobile-menu a.active { color: var(--purple); }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .crew-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .episode-card {
+        flex-direction: column;
+      }
+
+      .episode-thumb {
+        width: 100%;
+        min-height: 200px;
+      }
+
+      .hero-title { font-size: clamp(2.2rem, 12vw, 3.5rem); }
+    }
+
+    @media (max-width: 500px) {
+      .crew-grid { grid-template-columns: 1fr; }
+      .invest-block { padding: 1.5rem; }
+    }
+
+    /* ─── Scroll-in animations for static sections ──────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Starfield ─────────────────────────────────────────────────── -->
+<canvas id="starfield"></canvas>
+
+<!-- ── App Shell ─────────────────────────────────────────────────── -->
+<div id="app">
+
+  <!-- ── Nav ─────────────────────────────────────────────────────── -->
+  <nav id="navbar">
+
+    <ul class="nav-links">
+      <li><a href="#" data-section="home"    class="active">Episodes</a></li>
+      <li><a href="#" data-section="about">About</a></li>
+      <li><a href="#" data-section="crew">Crew Manifest</a></li>
+      <li><a href="#" data-section="invest">Invest</a></li>
+      <li><a href="#" class="nav-cta" id="signupBtn">Sign Up to Stay Informed</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ── Mobile Nav Menu ──────────────────────────────────────────── -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a data-section="home"   class="active">Episodes</a>
+    <a data-section="about">About</a>
+    <a data-section="crew">Crew Manifest</a>
+    <a data-section="invest">Invest</a>
+    <a id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SECTION: HOME (Episodes)
+  ═════════════════════════════════════════════════════════════ -->
+  <section id="section-home" class="section active">
+
+    <!-- Hero -->
+    <div class="hero">
+      <img src="judith-logo.png" alt="The Judith" class="hero-logo" />
+      <p class="hero-tagline">
+        AFTER PLANET EARTH BECAME COMPLETELY ANTISEMITIC, THE JUDITH SPACESHIP WAS SENT TO FIND A NEW HOME FOR THE JEWS.<br />
+        BUT EVEN IN THE VAST AND INFINITE SPACE, NOBODY WANTS THEM.
+      </p>
+      <h1 class="hero-title">THE JUDITH</h1>
+      <div class="hero-divider"></div>
+    </div>
+
+    <!-- Episode List -->
+    <div class="section-header">
+      <h2>Season 1: Episodes</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="episodes-container" id="episodeList"></div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SECTION: ABOUT
+  ═════════════════════════════════════════════════════════════ -->
+  <section id="section-about" class="section">
+
+    <div class="section-header fade-in">
+      <h2>About the Series</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="about-content">
+      <p class="fade-in" style="transition-delay:0.05s">
+        After thousands of years of wandering, Earth's Jewish population thought
+        they'd finally found their home. They were wrong.
+      </p>
+      <p class="fade-in" style="transition-delay:0.12s">
+        When Earth goes fully antisemitic (not partially, not subtly, but
+        <strong>dramatically and completely</strong>), a last-ditch crew boards the Judith,
+        a not-quite-spaceworthy vessel, and sets off into the cosmos in search
+        of a place that will have them.
+      </p>
+      <p class="fade-in" style="transition-delay:0.18s" style="font-style:italic; color: var(--text)">
+        Spoiler: no one does.
+      </p>
+      <div class="about-divider fade-in" style="transition-delay:0.22s"></div>
+      <p class="fade-in" style="transition-delay:0.27s">
+        <strong>THE JUDITH</strong> is a dark, biting, proudly unrepentant animated comedy that
+        treats antisemitism the way Jews have always treated it: as material.
+        Each episode lands the crew on a new planet, facing a new civilization,
+        and a new creative reason to be turned away.
+      </p>
+      <p class="fade-in" style="transition-delay:0.33s">
+        Created with AI animation and old-fashioned human writing, the series
+        pushes the boundaries of what independent animation can be, and what
+        comedy can say.
+      </p>
+      <div class="fade-in" style="transition-delay:0.4s">
+        <button class="btn-cta-large" onclick="navigate('home')">
+          ▶ &nbsp;Watch Pilot Episode
+        </button>
+      </div>
+    </div>
+
+    <!-- Studio Section -->
+    <div class="studio-section fade-in" style="transition-delay:0.5s">
+      <div class="studio-header">
+        <h3 class="studio-title">New Angle Studios</h3>
+        <div class="section-divider" style="margin:1rem auto 1.5rem;"></div>
+        <p class="studio-desc">
+          New Angle Studios is an independent animation studio built at the intersection of
+          decades of creative industry experience and next-generation AI production tools.
+          We believe the future of storytelling belongs to those who are unafraid to point
+          the camera somewhere no one else is looking, and to use every tool available
+          to get there. Our work is fast, bold, and uncompromising.
+        </p>
+      </div>
+
+      <div class="founders-grid">
+
+        <div class="founder-card fade-in" style="transition-delay:0.55s">
+          <div class="founder-text">
+            <div class="founder-name">Eytan Baritzy</div>
+            <p class="founder-bio">
+              With over 20 years in the entertainment industry as a screenwriter and director,
+              Eytan brings the storytelling instincts and creative vision that make The Judith
+              more than just an experiment. He writes the scripts, shapes
+              the characters, and makes sure the comedy actually lands.
+            </p>
+          </div>
+          <div class="founder-photo founder-photo-img">
+            <img src="Eytan profile pic.png" alt="Eytan Baritzy" />
+          </div>
+        </div>
+
+        <div class="founder-card fade-in" style="transition-delay:0.62s">
+          <div class="founder-text">
+            <div class="founder-name">Nadav Shlomo Giladi</div>
+            <p class="founder-bio">
+              A creative technologist with a background in visual storytelling, bringing
+              the technical and aesthetic direction that makes each frame of The Judith
+              look like nothing else on screen. Fluent in the language of AI tools
+              and experienced in translating a writer's vision into motion.
+            </p>
+          </div>
+          <div class="founder-photo founder-photo-img">
+            <img src="Nadav profile pic.png" alt="Nadav Shlomo Giladi" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SECTION: CREW
+  ═════════════════════════════════════════════════════════════ -->
+  <section id="section-crew" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Crew Manifest</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <p class="crew-subtitle fade-in" style="transition-delay:0.08s">
+      Meet the brave, neurotic, and occasionally brilliant souls aboard the Judith.
+    </p>
+
+    <div class="crew-grid" id="crewGrid"></div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SECTION: INVEST
+  ═════════════════════════════════════════════════════════════ -->
+  <section id="section-invest" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Invest in The Judith</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="invest-content">
+
+      <div class="invest-intro fade-in" style="transition-delay:0.08s">
+        <p>
+          The Judith is more than a show. It's a proof of concept for a new era of
+          independent animation. AI-powered, human-written, pilot complete.
+          We're looking for partners who see what we see: a breakout series with
+          global appeal, built on the tools that are reshaping the industry.
+        </p>
+        <p style="margin-top:1rem;">
+          If you're interested in being part of what comes next, reach out.
+          We'd love to tell you more.
+        </p>
+      </div>
+
+      <form class="invest-form fade-in" style="transition-delay:0.18s" onsubmit="handleInvestForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="invest-name">Name</label>
+            <input type="text" id="invest-name" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="form-group">
+            <label for="invest-email">Email</label>
+            <input type="email" id="invest-email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="invest-phone">Phone</label>
+          <input type="tel" id="invest-phone" name="phone" placeholder="+1 (555) 000-0000" />
+        </div>
+        <div class="form-group">
+          <label for="invest-message">Message</label>
+          <textarea id="invest-message" name="message" rows="5" placeholder="Tell us about yourself and your interest in the project..." required></textarea>
+        </div>
+        <button type="submit" class="btn-invest-submit">Send Message →</button>
+        <div id="invest-success" class="invest-success" style="display:none;">
+          ✓ Message sent. We'll be in touch soon.
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────────────────── -->
+  <footer>
+    &copy; 2026 <span>The Judith</span> &nbsp;·&nbsp; An AI-animated dark comedy series
+  </footer>
+
+</div><!-- /app -->
+
+<!-- ── Sign Up Modal ─────────────────────────────────────────── -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <h3 id="modalTitle">Stay in the Loop</h3>
+    <p>
+      Be the first to know when new episodes drop, get exclusive behind-the-scenes
+      content, and hear about our Kickstarter launch.
+    </p>
+    <form class="modal-form" action="https://formspree.io/f/xaqvjazj" method="POST">
+      <input
+        class="modal-input"
+        type="email"
+        name="email"
+        placeholder="Your email address..."
+        required
+        autocomplete="email"
+      />
+      <button type="submit" class="modal-submit">Sign Me Up →</button>
+      <p class="modal-fine-print">No spam. Just Judith.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Data ─────────────────────────────────────────────────────── */
+const EPISODES = [
+  {
+    num: 1,
+    slug: 'pilot',
+    title: 'Pilot',
+    summary: 'With Earth no longer an option, a ragtag Jewish crew boards the Judith. Destination: anywhere but here. Turns out the universe has opinions.',
+    locked: false,
+    img: 'episode1.jpg',
+    colors: ['#1a0a2e', '#2d1b69', '#0d0821', '#6d28d9']
+  },
+  {
+    num: 2,
+    slug: 'nobodys-home',
+    title: "Nobody's Home",
+    summary: "The crew locates a promising planet. Nobody answers the door. They knock for three episodes worth of reasons.",
+    locked: true,
+    colors: ['#0a1a2e', '#1b3569', '#080d21', '#1a6dd0']
+  },
+  {
+    num: 3,
+    slug: 'we-come-in-peace',
+    title: "We Come in Peace (They Don't)",
+    summary: "First contact. The aliens are friendly, until they Google the crew's home planet. Diplomatic incident at warp speed.",
+    locked: true,
+    colors: ['#0a2018', '#1b5035', '#080d21', '#28a878']
+  },
+  {
+    num: 4,
+    slug: 'shabbat-problem',
+    title: 'The Shabbat Problem',
+    summary: "The Judith loses power every Friday at sundown. The crew debates halachic loopholes while drifting toward a sun.",
+    locked: true,
+    colors: ['#2e1a0a', '#694b1b', '#210d08', '#d07828']
+  },
+  {
+    num: 5,
+    slug: 'lost-in-transliteration',
+    title: 'Lost in Transliteration',
+    summary: 'Yossi translates the crew\'s request to land. Something goes wrong. The word for "peace" apparently means something else.',
+    locked: true,
+    colors: ['#2e0a1a', '#691b3a', '#21080d', '#d02868']
+  },
+  {
+    num: 6,
+    slug: 'rabbis-dilemma',
+    title: "The Rabbi's Dilemma",
+    summary: "Rabbi Moshe finds a loophole that would let them claim an uninhabited moon. It was only *mostly* uninhabited.",
+    locked: true,
+    colors: ['#1a2e0a', '#3a6920', '#0d2108', '#78d028']
+  },
+  {
+    num: 7,
+    slug: 'brief-history',
+    title: "A Brief History of Being Unwanted",
+    summary: "The crew discovers an intergalactic museum dedicated entirely to their people. The gift shop is closed.",
+    locked: true,
+    colors: ['#0a0a2e', '#20206a', '#08080d', '#4848d0']
+  },
+  {
+    num: 8,
+    slug: 'arab-in-the-room',
+    title: 'The Arab in the Room',
+    summary: "Dr. Karim finally gets his own episode. It is complicated. Also hilarious. Mostly complicated.",
+    locked: true,
+    colors: ['#2e2a0a', '#69621b', '#21200d', '#d0c028']
+  },
+  {
+    num: 9,
+    slug: 'promised',
+    title: 'Promised (But Not Delivered)',
+    summary: "The navigation computer locates the perfect planet. The fine print is extensive. Shira has questions.",
+    locked: true,
+    colors: ['#0a1e2e', '#1b4869', '#08100d', '#28a0d0']
+  },
+  {
+    num: 10,
+    slug: 'season-finale',
+    title: 'Season Finale: Next Year in... Somewhere',
+    summary: "The season comes to a head. A decision must be made. The Judith was never really about the destination.",
+    locked: true,
+    colors: ['#1e0a2e', '#4a1b69', '#100821', '#9028d0']
+  }
+];
+
+const CREW = [
+  {
+    name: 'The Captain',
+    role: 'Commanding Officer',
+    desc: 'The captain no one elected. The one everyone blames.',
+    img: 'Captain.png'
+  },
+  {
+    name: 'Yardena',
+    role: 'Crew Member',
+    desc: 'Holds the Judith together with prayers and duct tape.',
+    img: 'Yardena.png'
+  },
+  {
+    name: 'Rabbi Itzik',
+    role: 'Spiritual Advisor',
+    desc: 'Finds a halachic loophole for everything. Except landing clearance.',
+    img: 'RABBI ITZIK.png'
+  },
+  {
+    name: 'Shtempepper',
+    role: 'Crew Member',
+    desc: 'Has never been wrong. Has also never been right.',
+    img: 'Shtempepper.png'
+  },
+  {
+    name: 'Dr. Halil',
+    role: "Ship's Physician",
+    desc: "The only non-Jewish crew member. And the only one who knows what he's doing.",
+    img: 'Dr. Halil.png'
+  },
+  {
+    name: 'Boris',
+    role: 'Crew Member',
+    desc: 'Speaks 12 languages, is misunderstood in all of them.',
+    img: 'Boris.png'
+  },
+  {
+    name: 'Lilly',
+    role: 'Crew Member',
+    desc: 'The one everyone underestimates. Repeatedly. Fatally.',
+    img: 'Lilly.png'
+  }
+];
+
+/* ── Episode Card Builder ─────────────────────────────────────── */
+function buildThumbnailSVG(colors) {
+  const [c1, c2, c3, c4] = colors;
+  return `
+    <svg class="thumb-gradient" viewBox="0 0 300 169" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="ng_${Math.random().toString(36).slice(2,6)}" cx="40%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="${c4}" stop-opacity="0.7"/>
+          <stop offset="60%" stop-color="${c2}" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="${c1}" stop-opacity="1"/>
+        </radialGradient>
+      </defs>
+      <rect width="300" height="169" fill="${c1}"/>
+      <ellipse cx="110" cy="70" rx="120" ry="90" fill="${c4}" opacity="0.3"/>
+      <ellipse cx="200" cy="120" rx="90" ry="70" fill="${c2}" opacity="0.25"/>
+      ${Array.from({length:40}, (_,i) => {
+        const x = (Math.sin(i * 137.5) * 0.5 + 0.5) * 300;
+        const y = (Math.cos(i * 97.3) * 0.5 + 0.5) * 169;
+        const r = 0.4 + (i % 3) * 0.4;
+        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="white" opacity="${(0.3 + (i%5)*0.1).toFixed(1)}"/>`;
+      }).join('')}
+    </svg>`;
+}
+
+function buildEpisodeCard(ep, index) {
+  const card = document.createElement('div');
+  card.className = `episode-card${ep.locked ? ' locked' : ''}`;
+  card.style.transitionDelay = `${index * 55}ms`;
+
+  const thumbHTML = ep.img
+    ? `<img class="thumb-real" src="${ep.img}" alt="Episode ${ep.num}" />`
+    : buildThumbnailSVG(ep.colors);
+  const lockHTML = ep.locked ? `
+    <div class="lock-overlay">
+      <svg class="lock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>` : '';
+
+  const btnHTML = ep.locked
+    ? `<div class="btn-locked">🔒 Coming Soon</div>`
+    : `<button class="btn-watch">▶ Watch Now</button>`;
+
+  card.innerHTML = `
+    <div class="episode-thumb">
+      ${thumbHTML}
+      ${lockHTML}
+    </div>
+    <div class="episode-info">
+      <div>
+        <div class="episode-number">Episode ${ep.num.toString().padStart(2,'0')}</div>
+        <div class="episode-title">Episode ${ep.num}: ${ep.title}</div>
+        <p class="episode-summary">${ep.summary}</p>
+      </div>
+      ${btnHTML}
+    </div>`;
+
+  return card;
+}
+
+function buildCrewPortraitSVG(colors) {
+  const [c1, c2, accent] = colors;
+  const id = 'cg_' + Math.random().toString(36).slice(2,7);
+  return `
+    <svg class="crew-portrait" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="${id}" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="${accent}" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="${c1}" stop-opacity="1"/>
+        </radialGradient>
+      </defs>
+      <rect width="300" height="300" fill="url(#${id})"/>
+      <!-- silhouette suggestion -->
+      <ellipse cx="150" cy="115" rx="45" ry="50" fill="${accent}" opacity="0.25"/>
+      <ellipse cx="150" cy="230" rx="80" ry="60" fill="${accent}" opacity="0.15"/>
+      ${Array.from({length:25}, (_,i) => {
+        const x = (Math.sin(i * 113.5) * 0.5 + 0.5) * 300;
+        const y = (Math.cos(i * 89.7) * 0.5 + 0.5) * 300;
+        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="0.8" fill="white" opacity="0.4"/>`;
+      }).join('')}
+    </svg>`;
+}
+
+function buildCrewCard(member, index) {
+  const card = document.createElement('div');
+  card.className = 'crew-card fade-in';
+  card.style.transitionDelay = `${0.1 + index * 0.08}s`;
+  card.innerHTML = `
+    <div class="crew-portrait-img">
+      <img src="${member.img}" alt="${member.name}" loading="lazy" />
+    </div>
+    <div class="crew-info">
+      <div class="crew-name">${member.name}</div>
+      <div class="crew-desc">${member.desc}</div>
+    </div>`;
+  return card;
+}
+
+/* ── Render on load ───────────────────────────────────────────── */
+function renderEpisodes() {
+  const list = document.getElementById('episodeList');
+  EPISODES.forEach((ep, i) => {
+    const card = buildEpisodeCard(ep, i);
+    list.appendChild(card);
+  });
+  // Stagger animate-in
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.episode-card').forEach((card, i) => {
+      setTimeout(() => card.classList.add('animate-in'), i * 55);
+    });
+  });
+}
+
+function renderCrew() {
+  const grid = document.getElementById('crewGrid');
+  CREW.forEach((member, i) => {
+    grid.appendChild(buildCrewCard(member, i));
+  });
+}
+
+/* ── Section Navigation ───────────────────────────────────────── */
+let currentSection = 'home';
+
+function navigate(target) {
+  if (target === currentSection) return;
+
+  const outEl = document.getElementById(`section-${currentSection}`);
+  const inEl  = document.getElementById(`section-${target}`);
+  if (!outEl || !inEl) return;
+
+  // Hide current
+  outEl.classList.remove('visible');
+  setTimeout(() => {
+    outEl.classList.remove('active');
+    // Show new
+    inEl.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        inEl.classList.add('visible');
+        triggerFadeIns(inEl);
+      });
+    });
+  }, 250);
+
+  currentSection = target;
+  updateNavActive(target);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Close mobile menu
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function triggerFadeIns(section) {
+  section.querySelectorAll('.fade-in').forEach((el, i) => {
+    // Reset then animate
+    el.classList.remove('visible');
+    const delay = parseFloat(el.style.transitionDelay || '0') * 1000;
+    setTimeout(() => el.classList.add('visible'), 50 + delay);
+  });
+}
+
+function updateNavActive(target) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.classList.toggle('active', el.dataset.section === target);
+  });
+}
+
+/* ── Nav link clicks ──────────────────────────────────────────── */
+document.querySelectorAll('[data-section]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigate(el.dataset.section);
+  });
+});
+
+/* ── Hamburger ────────────────────────────────────────────────── */
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+
+/* ── Scroll nav ───────────────────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/* ── Modal ────────────────────────────────────────────────────── */
+function openModal() {
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('signupBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+document.getElementById('mobileSignupBtn').addEventListener('click', openModal);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+/* ── Starfield Canvas ─────────────────────────────────────────── */
+(function initStarfield() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+  let mouseX = 0, mouseY = 0;
+  let targetOffX = 0, targetOffY = 0;
+  let offX = 0, offY = 0;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createStars(n) {
+    stars = [];
+    for (let i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 0.2 + Math.random() * 1.2,
+        a: 0.2 + Math.random() * 0.75,
+        speed: 0.05 + Math.random() * 0.12,
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.005 + Math.random() * 0.015,
+        depth: 0.2 + Math.random() * 0.8
+      });
+    }
+  }
+
+  let scrollY = 0;
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+  window.addEventListener('mousemove', (e) => {
+    const cx = W / 2, cy = H / 2;
+    targetOffX = ((e.clientX - cx) / cx) * 8;
+    targetOffY = ((e.clientY - cy) / cy) * 8;
+  }, { passive: true });
+
+  let lastT = 0;
+  function draw(t) {
+    const dt = Math.min((t - lastT) / 16, 3);
+    lastT = t;
+
+    offX += (targetOffX - offX) * 0.04;
+    offY += (targetOffY - offY) * 0.04;
+
+    ctx.clearRect(0, 0, W, H);
+
+    const scrollOff = scrollY * 0.08;
+
+    stars.forEach(s => {
+      s.twinkle += s.twinkleSpeed * dt;
+      const twinkleA = s.a * (0.7 + 0.3 * Math.sin(s.twinkle));
+
+      const px = ((s.x + offX * s.depth + W) % W);
+      const py = ((s.y + offY * s.depth + scrollOff * s.depth + H) % H);
+
+      ctx.beginPath();
+      ctx.arc(px, py, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${twinkleA.toFixed(2)})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); createStars(300); }, { passive: true });
+  resize();
+  createStars(300);
+  requestAnimationFrame(draw);
+})();
+
+/* ── Init ─────────────────────────────────────────────────────── */
+renderEpisodes();
+renderCrew();
+
+// Activate home section on load
+requestAnimationFrame(() => {
+  const homeSection = document.getElementById('section-home');
+  homeSection.classList.add('visible');
+});
+
+/* ── Invest Contact Form ──────────────────────────────────────── */
+function handleInvestForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  const successEl = document.getElementById('invest-success');
+
+  fetch('https://formspree.io/f/xaqvjazj', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    form.reset();
+    successEl.style.display = 'block';
+  }).catch(() => {
+    successEl.textContent = '✓ Message received. We\'ll be in touch soon.';
+    successEl.style.display = 'block';
+    form.reset();
+  });
+}
+</script>
+</body>
+</html>
