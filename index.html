@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ─── Reset & Base ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -38,7 +37,7 @@
       min-height: 100vh;
     }
 
-    /* ─── Starfield Canvas ──────────────────────────────────────── */
+    /* ── Starfield Canvas ── */
     #starfield {
       position: fixed;
       top: 0; left: 0;
@@ -47,13 +46,115 @@
       pointer-events: none;
     }
 
-    /* ─── Layout wrapper above canvas ──────────────────────────── */
+    /* ══════════════════════════════════════════════
+       LANDING / SPLASH SCREEN
+    ══════════════════════════════════════════════ */
+    #landing {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    #landing.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #landing-poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    #landing-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.05) 50%,
+        rgba(0,0,0,0.55) 100%
+      );
+    }
+
+    #enter-cta {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      z-index: 2;
+    }
+
+    #enter-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #fff;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.75);
+      border-radius: 4px;
+      padding: 0.9rem 3rem;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, letter-spacing 0.3s;
+      animation: pulse-border 3s ease-in-out infinite;
+    }
+
+    #enter-btn:hover {
+      background: rgba(139,92,246,0.25);
+      border-color: var(--purple);
+      box-shadow: 0 0 30px var(--purple-glow), 0 0 60px rgba(139,92,246,0.15);
+      letter-spacing: 0.45em;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+      50%       { box-shadow: 0 0 22px rgba(255,255,255,0.35); }
+    }
+
+    .enter-arrow {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.3rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50%       { transform: translateY(6px); opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════════════
+       MAIN APP (hidden until Enter is clicked)
+    ══════════════════════════════════════════════ */
     #app {
       position: relative;
       z-index: 1;
+      opacity: 0;
+      transition: opacity 0.7s ease 0.3s;
+      pointer-events: none;
     }
 
-    /* ─── Navigation ────────────────────────────────────────────── */
+    #app.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── Navigation ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -122,14 +223,10 @@
     }
 
     .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--purple);
-    }
+    .nav-links a.active { color: var(--purple); }
 
     .nav-links a.active::after,
-    .nav-links a:hover::after {
-      width: 100%;
-    }
+    .nav-links a:hover::after { width: 100%; }
 
     .nav-cta {
       background: var(--purple);
@@ -168,7 +265,7 @@
       transition: all var(--transition);
     }
 
-    /* ─── Sections ──────────────────────────────────────────────── */
+    /* ── Sections ── */
     .section {
       display: none;
       padding-top: 70px;
@@ -178,29 +275,30 @@
       transition: opacity 0.45s ease, transform 0.45s ease;
     }
 
-    .section.active {
-      display: block;
-    }
+    .section.active { display: block; }
 
     .section.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ─── Hero ──────────────────────────────────────────────────── */
+
+    /* ── Hero ── */
     .hero {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       text-align: center;
-      padding: 5rem 2rem 3rem;
+      padding: 0 2rem 1rem;
     }
 
     .hero-logo {
-      width: 200px;
+      width: 420px;
+      max-width: 85vw;
       height: auto;
-      margin-bottom: 2rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
       filter: drop-shadow(0 0 24px rgba(139,92,246,0.6));
       animation: float 6s ease-in-out infinite;
     }
@@ -217,7 +315,7 @@
       color: var(--text-muted);
       max-width: 640px;
       line-height: 1.7;
-      margin-bottom: 2rem;
+      margin-bottom: 0.75rem;
     }
 
     .hero-title {
@@ -239,16 +337,7 @@
       margin: 1rem auto;
     }
 
-    .hero-season {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(0.85rem, 2vw, 1.1rem);
-      font-weight: 600;
-      letter-spacing: 0.35em;
-      color: var(--purple);
-      text-transform: uppercase;
-    }
-
-    /* ─── Section Header ────────────────────────────────────────── */
+    /* ── Section Header ── */
     .section-header {
       text-align: center;
       padding: 3rem 2rem 1.5rem;
@@ -271,7 +360,7 @@
       margin: 0 auto;
     }
 
-    /* ─── Episode List ──────────────────────────────────────────── */
+    /* ── Episode List ── */
     .episodes-container {
       max-width: 960px;
       margin: 0 auto;
@@ -282,8 +371,8 @@
     }
 
     .episode-card {
-      display: flex;
-      gap: 0;
+      display: grid;
+      grid-template-columns: 380px 1fr;
       background: var(--surface);
       border-radius: var(--radius);
       overflow: hidden;
@@ -306,9 +395,7 @@
       border-color: rgba(139,92,246,0.4);
     }
 
-    .episode-card.locked {
-      cursor: default;
-    }
+    .episode-card.locked { cursor: default; }
 
     .episode-card.locked:hover {
       transform: none;
@@ -318,22 +405,18 @@
 
     .episode-thumb {
       position: relative;
-      flex-shrink: 0;
-      width: 280px;
-      min-height: 158px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
     }
 
-    .thumb-gradient {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+    .thumb-gradient { width: 100%; height: 100%; display: block; }
 
     .thumb-real {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       display: block;
     }
 
@@ -352,12 +435,13 @@
     }
 
     .episode-info {
-      flex: 1;
-      padding: 1.4rem 1.75rem;
+      overflow: hidden;
+      padding: 1.1rem 1.5rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 0.4rem;
     }
+
 
     .episode-number {
       font-family: monospace;
@@ -381,13 +465,13 @@
       font-size: 0.88rem;
       color: var(--text-muted);
       line-height: 1.65;
-      flex: 1;
-      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .episode-card.locked .episode-summary {
-      color: var(--text-dim);
-    }
+    .episode-card.locked .episode-summary { color: var(--text-dim); }
 
     .btn-watch {
       display: inline-flex;
@@ -428,7 +512,45 @@
       align-self: flex-start;
     }
 
-    /* ─── About Section ─────────────────────────────────────────── */
+    /* ── Vision Section ── */
+    .vision-hero {
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .vision-tagline {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-transform: uppercase;
+      text-shadow: 0 0 40px rgba(139,92,246,0.4), 0 0 80px rgba(139,92,246,0.15);
+      line-height: 1.25;
+      margin-bottom: 2.5rem;
+    }
+
+    .vision-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .vision-body p {
+      font-size: clamp(0.98rem, 1.8vw, 1.1rem);
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.75rem;
+    }
+
+    .vision-body p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── About Section ── */
     .about-content {
       max-width: 800px;
       margin: 0 auto;
@@ -480,7 +602,7 @@
       transform: translateY(-3px);
     }
 
-    /* ─── Crew Section ──────────────────────────────────────────── */
+    /* ── Characters Section ── */
     .crew-subtitle {
       text-align: center;
       font-size: 1rem;
@@ -513,12 +635,6 @@
       border-color: var(--purple);
     }
 
-    .crew-portrait {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      display: block;
-    }
-
     .crew-portrait-img {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -533,13 +649,9 @@
       transition: transform 0.4s ease;
     }
 
-    .crew-card:hover .crew-portrait-img img {
-      transform: scale(1.05);
-    }
+    .crew-card:hover .crew-portrait-img img { transform: scale(1.05); }
 
-    .crew-info {
-      padding: 1.25rem;
-    }
+    .crew-info { padding: 1.25rem; }
 
     .crew-name {
       font-family: 'Orbitron', sans-serif;
@@ -564,214 +676,61 @@
       line-height: 1.55;
     }
 
-    /* ─── Invest Section ────────────────────────────────────────── */
+    /* ── Teasers Section ── */
+    .teasers-placeholder {
+      max-width: 860px;
+      margin: 2rem auto 5rem;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .teasers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .teaser-slot {
+      background: var(--surface);
+      border: 2px dashed rgba(139,92,246,0.25);
+      border-radius: var(--radius);
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--text-dim);
+      font-size: 0.88rem;
+      font-style: italic;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .teaser-slot.portrait {
+      aspect-ratio: 9 / 16;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+
+    .teaser-slot svg {
+      opacity: 0.3;
+    }
+
+    .teasers-note {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ── Invest Section ── */
     .invest-content {
       max-width: 860px;
       margin: 0 auto;
       padding: 2rem 2rem 5rem;
     }
 
-    .invest-block {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(139,92,246,0.15);
-    }
-
-    .invest-block-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: var(--purple);
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
-    }
-
-    .invest-block p {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.85;
-    }
-
-    .invest-bullets {
-      list-style: none;
-      margin-top: 1rem;
-    }
-
-    .invest-bullets li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      margin-bottom: 0.75rem;
-    }
-
-    .invest-bullets li::before {
-      content: '▸';
-      color: var(--purple);
-      flex-shrink: 0;
-      margin-top: 0.1em;
-      font-size: 0.9rem;
-    }
-
-    .invest-divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
-      margin: 1.5rem 0;
-    }
-
-    .invest-cta-wrap {
-      text-align: center;
-      padding-top: 0.5rem;
-    }
-
-    .invest-cta-wrap p {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .btn-invest {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--teal), #0099cc);
-      color: #000;
-      text-decoration: none;
-      padding: 0.9rem 2.5rem;
-      border-radius: 50px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: box-shadow var(--transition), transform var(--transition);
-    }
-
-    .btn-invest:hover {
-      box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), 0 0 60px rgba(0, 212, 255, 0.15);
-      transform: translateY(-3px);
-    }
-
-    /* ─── Studio / Founders (About) ────────────────────────────── */
-    .studio-section {
-      max-width: 860px;
-      margin: 4rem auto 0;
-      padding: 0 2rem 3rem;
-    }
-
-    .studio-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .studio-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--teal);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .studio-desc {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.85;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .founders-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .founder-card {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      background: var(--surface);
-      border: 1px solid rgba(0,212,255,0.12);
-      border-radius: var(--radius);
-      padding: 2rem;
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-
-    .founder-card:hover {
-      border-color: rgba(0,212,255,0.35);
-      box-shadow: 0 0 30px rgba(0,212,255,0.07);
-    }
-
-    .founder-text { flex: 1; }
-
-    .founder-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.2rem;
-    }
-
-    .founder-role {
-      font-size: 0.85rem;
-      color: var(--teal);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-    }
-
-    .founder-bio {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-    }
-
-    .founder-photo {
-      flex-shrink: 0;
-      width: 120px;
-      height: 120px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid rgba(0,212,255,0.2);
-    }
-
-    .founder-photo-placeholder {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .founder-photo-img {
-      background: none;
-      border: none;
-      overflow: hidden;
-    }
-
-    .founder-photo-img img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 2px solid rgba(0,212,255,0.25);
-      display: block;
-    }
-
-    @media (max-width: 600px) {
-      .founder-card { flex-direction: column; text-align: center; }
-      .founder-photo { width: 90px; height: 90px; }
-    }
-
-    /* ─── Invest Form ────────────────────────────────────────────── */
     .invest-intro {
       max-width: 680px;
       margin: 0 auto 2.5rem;
@@ -866,7 +825,100 @@
       padding: 0.75rem 0;
     }
 
-    /* ─── Modal ─────────────────────────────────────────────────── */
+    /* ── Studio / Founders ── */
+    .studio-section {
+      max-width: 860px;
+      margin: 4rem auto 0;
+      padding: 0 2rem 3rem;
+    }
+
+    .studio-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .studio-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .studio-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .founders-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      background: var(--surface);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .founder-card:hover {
+      border-color: rgba(0,212,255,0.35);
+      box-shadow: 0 0 30px rgba(0,212,255,0.07);
+    }
+
+    .founder-text { flex: 1; }
+
+    .founder-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .founder-role {
+      font-size: 0.85rem;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .founder-bio {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .founder-photo-img {
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .founder-photo-img img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(0,212,255,0.25);
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .founder-card { flex-direction: column; text-align: center; }
+    }
+
+    /* ── Modal ── */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -901,9 +953,7 @@
       transition: transform 0.3s ease;
     }
 
-    .modal-backdrop.open .modal {
-      transform: scale(1) translateY(0);
-    }
+    .modal-backdrop.open .modal { transform: scale(1) translateY(0); }
 
     .modal-close {
       position: absolute;
@@ -988,7 +1038,7 @@
       margin-top: 0.5rem;
     }
 
-    /* ─── Footer ────────────────────────────────────────────────── */
+    /* ── Footer ── */
     footer {
       position: relative;
       z-index: 1;
@@ -1002,7 +1052,7 @@
 
     footer span { color: var(--purple); }
 
-    /* ─── Mobile Nav ────────────────────────────────────────────── */
+    /* ── Mobile Nav ── */
     .nav-mobile-menu {
       display: none;
       position: fixed;
@@ -1035,7 +1085,7 @@
     .nav-mobile-menu a:hover,
     .nav-mobile-menu a.active { color: var(--purple); }
 
-    /* ─── Responsive ────────────────────────────────────────────── */
+    /* ── Responsive ── */
     @media (max-width: 900px) {
       .crew-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -1044,24 +1094,14 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
 
-      .episode-card {
-        flex-direction: column;
-      }
-
-      .episode-thumb {
-        width: 100%;
-        min-height: 200px;
-      }
-
       .hero-title { font-size: clamp(2.2rem, 12vw, 3.5rem); }
     }
 
     @media (max-width: 500px) {
       .crew-grid { grid-template-columns: 1fr; }
-      .invest-block { padding: 1.5rem; }
     }
 
-    /* ─── Scroll-in animations for static sections ──────────────── */
+    /* ── Fade-in animations ── */
     .fade-in {
       opacity: 0;
       transform: translateY(24px);
@@ -1076,19 +1116,38 @@
 </head>
 <body>
 
-<!-- ── Starfield ─────────────────────────────────────────────────── -->
+<!-- ── Starfield ── -->
 <canvas id="starfield"></canvas>
 
-<!-- ── App Shell ─────────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════
+     LANDING / SPLASH SCREEN
+══════════════════════════════════════════════ -->
+<div id="landing">
+  <img id="landing-poster" src="poster.png" alt="The Judith" />
+  <div id="landing-overlay"></div>
+  <div id="enter-cta">
+    <button id="enter-btn">Enter Site</button>
+    <div class="enter-arrow">&#x25BC;</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════════════ -->
 <div id="app">
 
-  <!-- ── Nav ─────────────────────────────────────────────────────── -->
+  <!-- ── Nav ── -->
   <nav id="navbar">
+    <div class="nav-logo" onclick="navigate('home')">
+      <img src="judith-logo-new.png" alt="The Judith" />
+    </div>
 
     <ul class="nav-links">
       <li><a href="#" data-section="home"    class="active">Episodes</a></li>
+      <li><a href="#" data-section="vision">Our Vision</a></li>
       <li><a href="#" data-section="about">About</a></li>
-      <li><a href="#" data-section="crew">Crew Manifest</a></li>
+      <li><a href="#" data-section="teasers">Teasers &amp; Trailers</a></li>
+      <li><a href="#" data-section="crew">Characters</a></li>
       <li><a href="#" data-section="invest">Invest</a></li>
       <li><a href="#" class="nav-cta" id="signupBtn">Sign Up to Stay Informed</a></li>
     </ul>
@@ -1098,23 +1157,24 @@
     </div>
   </nav>
 
-  <!-- ── Mobile Nav Menu ──────────────────────────────────────────── -->
+  <!-- ── Mobile Nav Menu ── -->
   <div class="nav-mobile-menu" id="mobileMenu">
-    <a data-section="home"   class="active">Episodes</a>
+    <a data-section="home"    class="active">Episodes</a>
+    <a data-section="vision">Our Vision</a>
     <a data-section="about">About</a>
-    <a data-section="crew">Crew Manifest</a>
+    <a data-section="teasers">Teasers &amp; Trailers</a>
+    <a data-section="crew">Characters</a>
     <a data-section="invest">Invest</a>
     <a id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
   </div>
 
-  <!-- ════════════════════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
        SECTION: HOME (Episodes)
-  ═════════════════════════════════════════════════════════════ -->
+  ═════════════════════════════════════════════ -->
   <section id="section-home" class="section active">
 
-    <!-- Hero -->
     <div class="hero">
-      <img src="judith-logo.png" alt="The Judith" class="hero-logo" />
+      <img src="judith-logo-new.png" alt="The Judith" class="hero-logo" />
       <p class="hero-tagline">
         AFTER PLANET EARTH BECAME COMPLETELY ANTISEMITIC, THE JUDITH SPACESHIP WAS SENT TO FIND A NEW HOME FOR THE JEWS.<br />
         BUT EVEN IN THE VAST AND INFINITE SPACE, NOBODY WANTS THEM.
@@ -1123,7 +1183,6 @@
       <div class="hero-divider"></div>
     </div>
 
-    <!-- Episode List -->
     <div class="section-header">
       <h2>Season 1: Episodes</h2>
       <div class="section-divider"></div>
@@ -1133,9 +1192,37 @@
 
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
+       SECTION: OUR VISION
+  ═════════════════════════════════════════════ -->
+  <section id="section-vision" class="section">
+
+    <div class="vision-hero fade-in">
+      <div class="vision-tagline">Just Jews looking for a home in infinite space</div>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="vision-body">
+      <p class="fade-in" style="transition-delay:0.08s">
+        We are done apologizing. We are done bowing our heads or asking for permission to be who we are.
+        <strong>"The Judith"</strong> was born to stop hiding and start shouting: We are here, we are Jewish, and it's going to be freaking hilarious.
+      </p>
+      <p class="fade-in" style="transition-delay:0.16s">
+        The series embraces the historical role forced upon us: the universe's scapegoat. If the antisocial, antisemitic world insists on believing we are the root of all evil, fine. We took that ridiculous theory and blasted it into deep space. Instead of explaining why we aren't to blame, we decided to take responsibility for everything bad that happens in the universe.
+      </p>
+      <p class="fade-in" style="transition-delay:0.24s">
+        We deliver unfiltered, uncensored Judaism without apologies. This is the Jewish "Rick and Morty": a collision of ancient traditions, modern manias, and uncompromising humanity.
+      </p>
+      <p class="fade-in" style="transition-delay:0.32s">
+        We aren't trying to please anyone anymore. We are crazy, we are proud, and we are inviting you on an intergalactic journey proving that even at the edge of the universe, there will always be someone blaming us for something. <strong>We are here to stay. Get used to it.</strong>
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
        SECTION: ABOUT
-  ═════════════════════════════════════════════════════════════ -->
+  ═════════════════════════════════════════════ -->
   <section id="section-about" class="section">
 
     <div class="section-header fade-in">
@@ -1154,7 +1241,7 @@
         a not-quite-spaceworthy vessel, and sets off into the cosmos in search
         of a place that will have them.
       </p>
-      <p class="fade-in" style="transition-delay:0.18s" style="font-style:italic; color: var(--text)">
+      <p class="fade-in" style="transition-delay:0.18s; font-style:italic; color: var(--text)">
         Spoiler: no one does.
       </p>
       <div class="about-divider fade-in" style="transition-delay:0.22s"></div>
@@ -1171,12 +1258,11 @@
       </p>
       <div class="fade-in" style="transition-delay:0.4s">
         <button class="btn-cta-large" onclick="navigate('home')">
-          ▶ &nbsp;Watch Pilot Episode
+          &#x25B6; &nbsp;Watch Pilot Episode
         </button>
       </div>
     </div>
 
-    <!-- Studio Section -->
     <div class="studio-section fade-in" style="transition-delay:0.5s">
       <div class="studio-header">
         <h3 class="studio-title">New Angle Studios</h3>
@@ -1191,7 +1277,6 @@
       </div>
 
       <div class="founders-grid">
-
         <div class="founder-card fade-in" style="transition-delay:0.55s">
           <div class="founder-text">
             <div class="founder-name">Eytan Baritzy</div>
@@ -1202,7 +1287,7 @@
               the characters, and makes sure the comedy actually lands.
             </p>
           </div>
-          <div class="founder-photo founder-photo-img">
+          <div class="founder-photo-img">
             <img src="Eytan profile pic.png" alt="Eytan Baritzy" />
           </div>
         </div>
@@ -1217,23 +1302,91 @@
               and experienced in translating a writer's vision into motion.
             </p>
           </div>
-          <div class="founder-photo founder-photo-img">
+          <div class="founder-photo-img">
             <img src="Nadav profile pic.png" alt="Nadav Shlomo Giladi" />
           </div>
         </div>
-
       </div>
     </div>
 
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════
-       SECTION: CREW
-  ═════════════════════════════════════════════════════════════ -->
+  <!-- ════════════════════════════════════════════
+       SECTION: TEASERS & TRAILERS
+  ═════════════════════════════════════════════ -->
+  <section id="section-teasers" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Teasers &amp; Trailers</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="teasers-placeholder">
+      <p class="fade-in" style="color: var(--text-muted); font-style: italic; transition-delay:0.08s">
+        Trailers and teasers coming soon. Check back before launch.
+      </p>
+
+      <!-- Landscape slots (16:9) -->
+      <div class="teasers-grid fade-in" style="transition-delay:0.16s">
+        <div class="teaser-slot">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Trailer 1
+        </div>
+        <div class="teaser-slot">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Trailer 2
+        </div>
+        <div class="teaser-slot">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Teaser 1
+        </div>
+      </div>
+
+      <!-- Portrait slots (9:16) -->
+      <p class="fade-in" style="color: var(--text-dim); font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase; margin-top:2.5rem; transition-delay:0.22s">
+        Short-form (9:16)
+      </p>
+      <div style="display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-top:1rem;" class="fade-in" style="transition-delay:0.28s">
+        <div class="teaser-slot portrait">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Reel 1
+        </div>
+        <div class="teaser-slot portrait">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Reel 2
+        </div>
+        <div class="teaser-slot portrait">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          Reel 3
+        </div>
+      </div>
+
+      <p class="teasers-note fade-in" style="transition-delay:0.34s">
+        Supports 16:9 trailers and 9:16 social reels.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: CHARACTERS
+  ═════════════════════════════════════════════ -->
   <section id="section-crew" class="section">
 
     <div class="section-header fade-in">
-      <h2>Crew Manifest</h2>
+      <h2>Characters</h2>
       <div class="section-divider"></div>
     </div>
 
@@ -1245,9 +1398,9 @@
 
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
        SECTION: INVEST
-  ═════════════════════════════════════════════════════════════ -->
+  ═════════════════════════════════════════════ -->
   <section id="section-invest" class="section">
 
     <div class="section-header fade-in">
@@ -1289,26 +1442,26 @@
           <label for="invest-message">Message</label>
           <textarea id="invest-message" name="message" rows="5" placeholder="Tell us about yourself and your interest in the project..." required></textarea>
         </div>
-        <button type="submit" class="btn-invest-submit">Send Message →</button>
+        <button type="submit" class="btn-invest-submit">Send Message &rarr;</button>
         <div id="invest-success" class="invest-success" style="display:none;">
-          ✓ Message sent. We'll be in touch soon.
+          &#x2713; Message sent. We'll be in touch soon.
         </div>
       </form>
 
     </div>
   </section>
 
-  <!-- ── Footer ───────────────────────────────────────────────── -->
+  <!-- ── Footer ── -->
   <footer>
-    &copy; 2026 <span>The Judith</span> &nbsp;·&nbsp; An AI-animated dark comedy series
+    &copy; 2026 <span>The Judith</span> &nbsp;&middot;&nbsp; An AI-animated dark comedy series
   </footer>
 
 </div><!-- /app -->
 
-<!-- ── Sign Up Modal ─────────────────────────────────────────── -->
+<!-- ── Sign Up Modal ── -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
     <h3 id="modalTitle">Stay in the Loop</h3>
     <p>
       Be the first to know when new episodes drop, get exclusive behind-the-scenes
@@ -1323,54 +1476,48 @@
         required
         autocomplete="email"
       />
-      <button type="submit" class="modal-submit">Sign Me Up →</button>
+      <button type="submit" class="modal-submit">Sign Me Up &rarr;</button>
       <p class="modal-fine-print">No spam. Just Judith.</p>
     </form>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
+<!-- ════════════════════════════════════════════
      JAVASCRIPT
-════════════════════════════════════════════════════════════════ -->
+═════════════════════════════════════════════ -->
 <script>
-/* ── Data ─────────────────────────────────────────────────────── */
+/* ── Data ── */
 const EPISODES = [
   {
     num: 1,
-    slug: 'pilot',
     title: 'Pilot',
     summary: 'With Earth no longer an option, a ragtag Jewish crew boards the Judith. Destination: anywhere but here. Turns out the universe has opinions.',
     locked: false,
-    img: 'episode1.jpg',
-    colors: ['#1a0a2e', '#2d1b69', '#0d0821', '#6d28d9']
+    img: 'episode1.jpg'
   },
   {
     num: 2,
-    slug: 'nobodys-home',
-    title: "Nobody's Home",
-    summary: "The crew locates a promising planet. Nobody answers the door. They knock for three episodes worth of reasons.",
+    title: 'Ex-odus',
+    summary: "Searching for a sanctuary, the gang is tempted to join a communal collective on a remote planet. What begins as 'everyone is equal' quickly devolves into the group finding themselves in the role of modern-day Israelites. They discover that the cruel ruler refusing to let their people go is none other than Yardena's bitter ex-boyfriend, who is seizing the momentum to settle old scores. Now, they must plan a sophisticated Ex-odus before the plagues and the emotional baggage start raining down on them.",
     locked: true,
-    colors: ['#0a1a2e', '#1b3569', '#080d21', '#1a6dd0']
+    img: 'episode2.png'
   },
   {
     num: 3,
-    slug: 'we-come-in-peace',
-    title: "We Come in Peace (They Don't)",
-    summary: "First contact. The aliens are friendly, until they Google the crew's home planet. Diplomatic incident at warp speed.",
+    title: 'Open Air Prism',
+    summary: "In an attempt to fund the construction of a new Jewish planet, Shtempepper leads the gang on a mission to find the purest diamond in the universe. But a tiny mishap involving a single photon turns the diamond into a lethal prism, trapping entire civilizations within 'laser prisons.' Now, with half the galaxy stuck behind bars of light and the gang accused of an intergalactic 'Occupation,' they must find a way to shut down the scandal with as little attention as possible, something they are not particularly good at.",
     locked: true,
-    colors: ['#0a2018', '#1b5035', '#080d21', '#28a878']
+    img: 'episode3.png'
   },
   {
     num: 4,
-    slug: 'shabbat-problem',
-    title: 'The Shabbat Problem',
-    summary: "The Judith loses power every Friday at sundown. The crew debates halachic loopholes while drifting toward a sun.",
+    title: 'Micro-Aggression',
+    summary: "The gang lands on a quiet, serene planet seeking a moment of peace, only to quickly discover that their very existence is a biological weapon. Their routine (and destructive) activities accidentally wipe out an entire civilization of microscopic, yet beloved, aliens, sparking a wave of furious protests across the universe. While the Intergalactic Federation issues a global no-fly zone against them, turning them into galactic pariahs, Shtempepper is busy opening his heart to Lilly, only to be crushed by a shocking revelation about her true identity.",
     locked: true,
-    colors: ['#2e1a0a', '#694b1b', '#210d08', '#d07828']
+    img: 'episode4.png'
   },
   {
     num: 5,
-    slug: 'lost-in-transliteration',
     title: 'Lost in Transliteration',
     summary: 'Yossi translates the crew\'s request to land. Something goes wrong. The word for "peace" apparently means something else.',
     locked: true,
@@ -1378,15 +1525,13 @@ const EPISODES = [
   },
   {
     num: 6,
-    slug: 'rabbis-dilemma',
     title: "The Rabbi's Dilemma",
-    summary: "Rabbi Moshe finds a loophole that would let them claim an uninhabited moon. It was only *mostly* uninhabited.",
+    summary: "Rabbi Moshe finds a loophole that would let them claim an uninhabited moon. It was only mostly uninhabited.",
     locked: true,
     colors: ['#1a2e0a', '#3a6920', '#0d2108', '#78d028']
   },
   {
     num: 7,
-    slug: 'brief-history',
     title: "A Brief History of Being Unwanted",
     summary: "The crew discovers an intergalactic museum dedicated entirely to their people. The gift shop is closed.",
     locked: true,
@@ -1394,7 +1539,6 @@ const EPISODES = [
   },
   {
     num: 8,
-    slug: 'arab-in-the-room',
     title: 'The Arab in the Room',
     summary: "Dr. Karim finally gets his own episode. It is complicated. Also hilarious. Mostly complicated.",
     locked: true,
@@ -1402,7 +1546,6 @@ const EPISODES = [
   },
   {
     num: 9,
-    slug: 'promised',
     title: 'Promised (But Not Delivered)',
     summary: "The navigation computer locates the perfect planet. The fine print is extensive. Shira has questions.",
     locked: true,
@@ -1410,7 +1553,6 @@ const EPISODES = [
   },
   {
     num: 10,
-    slug: 'season-finale',
     title: 'Season Finale: Next Year in... Somewhere',
     summary: "The season comes to a head. A decision must be made. The Judith was never really about the destination.",
     locked: true,
@@ -1419,51 +1561,16 @@ const EPISODES = [
 ];
 
 const CREW = [
-  {
-    name: 'The Captain',
-    role: 'Commanding Officer',
-    desc: 'The captain no one elected. The one everyone blames.',
-    img: 'Captain.png'
-  },
-  {
-    name: 'Yardena',
-    role: 'Crew Member',
-    desc: 'Holds the Judith together with prayers and duct tape.',
-    img: 'Yardena.png'
-  },
-  {
-    name: 'Rabbi Itzik',
-    role: 'Spiritual Advisor',
-    desc: 'Finds a halachic loophole for everything. Except landing clearance.',
-    img: 'RABBI ITZIK.png'
-  },
-  {
-    name: 'Shtempepper',
-    role: 'Crew Member',
-    desc: 'Has never been wrong. Has also never been right.',
-    img: 'Shtempepper.png'
-  },
-  {
-    name: 'Dr. Halil',
-    role: "Ship's Physician",
-    desc: "The only non-Jewish crew member. And the only one who knows what he's doing.",
-    img: 'Dr. Halil.png'
-  },
-  {
-    name: 'Boris',
-    role: 'Crew Member',
-    desc: 'Speaks 12 languages, is misunderstood in all of them.',
-    img: 'Boris.png'
-  },
-  {
-    name: 'Lilly',
-    role: 'Crew Member',
-    desc: 'The one everyone underestimates. Repeatedly. Fatally.',
-    img: 'Lilly.png'
-  }
+  { name: 'The Captain', role: 'Commanding Officer', desc: 'The captain no one elected. The one everyone blames.', img: 'Captain.png' },
+  { name: 'Yardena',     role: 'Crew Member',        desc: 'Holds the Judith together with prayers and duct tape.', img: 'Yardena.png' },
+  { name: 'Rabbi Itzik', role: 'Spiritual Advisor',  desc: 'Finds a halachic loophole for everything. Except landing clearance.', img: 'RABBI ITZIK.png' },
+  { name: 'Shtempepper', role: 'Crew Member',        desc: 'Has never been wrong. Has also never been right.', img: 'Shtempepper.png' },
+  { name: 'Dr. Halil',   role: "Ship's Physician",   desc: "The only non-Jewish crew member. And the only one who knows what he's doing.", img: 'Dr. Halil.png' },
+  { name: 'Boris',       role: 'Crew Member',        desc: 'Speaks 12 languages, is misunderstood in all of them.', img: 'Boris.png' },
+  { name: 'Lilly',       role: 'Crew Member',        desc: 'The one everyone underestimates. Repeatedly. Fatally.', img: 'Lilly.png' }
 ];
 
-/* ── Episode Card Builder ─────────────────────────────────────── */
+/* ── Thumbnail SVG fallback ── */
 function buildThumbnailSVG(colors) {
   const [c1, c2, c3, c4] = colors;
   return `
@@ -1487,6 +1594,7 @@ function buildThumbnailSVG(colors) {
     </svg>`;
 }
 
+/* ── Episode Card ── */
 function buildEpisodeCard(ep, index) {
   const card = document.createElement('div');
   card.className = `episode-card${ep.locked ? ' locked' : ''}`;
@@ -1495,6 +1603,7 @@ function buildEpisodeCard(ep, index) {
   const thumbHTML = ep.img
     ? `<img class="thumb-real" src="${ep.img}" alt="Episode ${ep.num}" />`
     : buildThumbnailSVG(ep.colors);
+
   const lockHTML = ep.locked ? `
     <div class="lock-overlay">
       <svg class="lock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1504,8 +1613,8 @@ function buildEpisodeCard(ep, index) {
     </div>` : '';
 
   const btnHTML = ep.locked
-    ? `<div class="btn-locked">🔒 Coming Soon</div>`
-    : `<button class="btn-watch">▶ Watch Now</button>`;
+    ? `<div class="btn-locked">&#x1F512; Coming Soon</div>`
+    : `<button class="btn-watch">&#x25B6; Watch Now</button>`;
 
   card.innerHTML = `
     <div class="episode-thumb">
@@ -1524,29 +1633,7 @@ function buildEpisodeCard(ep, index) {
   return card;
 }
 
-function buildCrewPortraitSVG(colors) {
-  const [c1, c2, accent] = colors;
-  const id = 'cg_' + Math.random().toString(36).slice(2,7);
-  return `
-    <svg class="crew-portrait" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="${id}" cx="50%" cy="35%" r="65%">
-          <stop offset="0%" stop-color="${accent}" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="${c1}" stop-opacity="1"/>
-        </radialGradient>
-      </defs>
-      <rect width="300" height="300" fill="url(#${id})"/>
-      <!-- silhouette suggestion -->
-      <ellipse cx="150" cy="115" rx="45" ry="50" fill="${accent}" opacity="0.25"/>
-      <ellipse cx="150" cy="230" rx="80" ry="60" fill="${accent}" opacity="0.15"/>
-      ${Array.from({length:25}, (_,i) => {
-        const x = (Math.sin(i * 113.5) * 0.5 + 0.5) * 300;
-        const y = (Math.cos(i * 89.7) * 0.5 + 0.5) * 300;
-        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="0.8" fill="white" opacity="0.4"/>`;
-      }).join('')}
-    </svg>`;
-}
-
+/* ── Crew Card ── */
 function buildCrewCard(member, index) {
   const card = document.createElement('div');
   card.className = 'crew-card fade-in';
@@ -1562,14 +1649,10 @@ function buildCrewCard(member, index) {
   return card;
 }
 
-/* ── Render on load ───────────────────────────────────────────── */
+/* ── Render ── */
 function renderEpisodes() {
   const list = document.getElementById('episodeList');
-  EPISODES.forEach((ep, i) => {
-    const card = buildEpisodeCard(ep, i);
-    list.appendChild(card);
-  });
-  // Stagger animate-in
+  EPISODES.forEach((ep, i) => list.appendChild(buildEpisodeCard(ep, i)));
   requestAnimationFrame(() => {
     document.querySelectorAll('.episode-card').forEach((card, i) => {
       setTimeout(() => card.classList.add('animate-in'), i * 55);
@@ -1579,12 +1662,10 @@ function renderEpisodes() {
 
 function renderCrew() {
   const grid = document.getElementById('crewGrid');
-  CREW.forEach((member, i) => {
-    grid.appendChild(buildCrewCard(member, i));
-  });
+  CREW.forEach((member, i) => grid.appendChild(buildCrewCard(member, i)));
 }
 
-/* ── Section Navigation ───────────────────────────────────────── */
+/* ── Section Navigation ── */
 let currentSection = 'home';
 
 function navigate(target) {
@@ -1594,11 +1675,9 @@ function navigate(target) {
   const inEl  = document.getElementById(`section-${target}`);
   if (!outEl || !inEl) return;
 
-  // Hide current
   outEl.classList.remove('visible');
   setTimeout(() => {
     outEl.classList.remove('active');
-    // Show new
     inEl.classList.add('active');
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -1611,14 +1690,11 @@ function navigate(target) {
   currentSection = target;
   updateNavActive(target);
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // Close mobile menu
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
 function triggerFadeIns(section) {
-  section.querySelectorAll('.fade-in').forEach((el, i) => {
-    // Reset then animate
+  section.querySelectorAll('.fade-in').forEach(el => {
     el.classList.remove('visible');
     const delay = parseFloat(el.style.transitionDelay || '0') * 1000;
     setTimeout(() => el.classList.add('visible'), 50 + delay);
@@ -1631,7 +1707,7 @@ function updateNavActive(target) {
   });
 }
 
-/* ── Nav link clicks ──────────────────────────────────────────── */
+/* ── Nav link clicks ── */
 document.querySelectorAll('[data-section]').forEach(el => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
@@ -1639,18 +1715,17 @@ document.querySelectorAll('[data-section]').forEach(el => {
   });
 });
 
-/* ── Hamburger ────────────────────────────────────────────────── */
+/* ── Hamburger ── */
 document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('mobileMenu').classList.toggle('open');
 });
 
-/* ── Scroll nav ───────────────────────────────────────────────── */
+/* ── Scroll nav ── */
 window.addEventListener('scroll', () => {
-  const navbar = document.getElementById('navbar');
-  navbar.classList.toggle('scrolled', window.scrollY > 20);
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-/* ── Modal ────────────────────────────────────────────────────── */
+/* ── Modal ── */
 function openModal() {
   document.getElementById('modalBackdrop').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1668,14 +1743,37 @@ document.getElementById('modalBackdrop').addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-/* ── Starfield Canvas ─────────────────────────────────────────── */
+/* ── Landing / Enter Site ── */
+(function initLanding() {
+  const landing = document.getElementById('landing');
+  const app     = document.getElementById('app');
+
+  function enter() {
+    landing.classList.add('fade-out');
+    app.classList.add('visible');
+    setTimeout(() => {
+      landing.style.display = 'none';
+    }, 900);
+  }
+
+  document.getElementById('enter-btn').addEventListener('click', enter);
+  landing.addEventListener('click', (e) => {
+    if (e.target !== document.getElementById('enter-btn')) enter();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') enter();
+  });
+})();
+
+/* ── Starfield Canvas ── */
 (function initStarfield() {
   const canvas = document.getElementById('starfield');
   const ctx = canvas.getContext('2d');
   let W, H, stars = [];
-  let mouseX = 0, mouseY = 0;
   let targetOffX = 0, targetOffY = 0;
   let offX = 0, offY = 0;
+  let scrollY = 0;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
@@ -1690,7 +1788,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
         y: Math.random() * H,
         r: 0.2 + Math.random() * 1.2,
         a: 0.2 + Math.random() * 0.75,
-        speed: 0.05 + Math.random() * 0.12,
         twinkle: Math.random() * Math.PI * 2,
         twinkleSpeed: 0.005 + Math.random() * 0.015,
         depth: 0.2 + Math.random() * 0.8
@@ -1698,7 +1795,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
     }
   }
 
-  let scrollY = 0;
   window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
 
   window.addEventListener('mousemove', (e) => {
@@ -1722,7 +1818,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
     stars.forEach(s => {
       s.twinkle += s.twinkleSpeed * dt;
       const twinkleA = s.a * (0.7 + 0.3 * Math.sin(s.twinkle));
-
       const px = ((s.x + offX * s.depth + W) % W);
       const py = ((s.y + offY * s.depth + scrollOff * s.depth + H) % H);
 
@@ -1741,17 +1836,16 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
   requestAnimationFrame(draw);
 })();
 
-/* ── Init ─────────────────────────────────────────────────────── */
+/* ── Init ── */
 renderEpisodes();
 renderCrew();
 
-// Activate home section on load
 requestAnimationFrame(() => {
   const homeSection = document.getElementById('section-home');
   homeSection.classList.add('visible');
 });
 
-/* ── Invest Contact Form ──────────────────────────────────────── */
+/* ── Invest Form ── */
 function handleInvestForm(e) {
   e.preventDefault();
   const form = e.target;
@@ -1762,11 +1856,11 @@ function handleInvestForm(e) {
     method: 'POST',
     body: data,
     headers: { 'Accept': 'application/json' }
-  }).then(res => {
+  }).then(() => {
     form.reset();
     successEl.style.display = 'block';
   }).catch(() => {
-    successEl.textContent = '✓ Message received. We\'ll be in touch soon.';
+    successEl.textContent = 'Message received. We\'ll be in touch soon.';
     successEl.style.display = 'block';
     form.reset();
   });
