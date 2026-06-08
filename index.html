@@ -1898,6 +1898,7 @@ let currentSection = 'main';
 
 function navigate(target) {
   if (target === currentSection) return;
+  sessionStorage.setItem('judithSection', target);
 
   const outEl = document.getElementById(`section-${currentSection}`);
   const inEl  = document.getElementById(`section-${target}`);
@@ -1976,19 +1977,46 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
   const landing = document.getElementById('landing');
   const app     = document.getElementById('app');
 
+  function showSection(sectionId) {
+    const id = sectionId || 'main';
+    if (id !== 'main' && document.getElementById('section-' + id)) {
+      const mainEl = document.getElementById('section-main');
+      const targetEl = document.getElementById('section-' + id);
+      mainEl.classList.remove('active', 'visible');
+      targetEl.classList.add('active');
+      currentSection = id;
+      updateNavActive(id);
+      requestAnimationFrame(() => { targetEl.classList.add('visible'); triggerFadeIns(targetEl); });
+    } else {
+      requestAnimationFrame(() => {
+        const mainEl = document.getElementById('section-main');
+        mainEl.classList.add('visible');
+        triggerFadeIns(mainEl);
+      });
+    }
+  }
+
+  // Refresh: user already entered this session — skip landing
+  if (sessionStorage.getItem('judithEntered')) {
+    landing.style.display = 'none';
+    app.classList.add('visible');
+    showSection(sessionStorage.getItem('judithSection'));
+    return;
+  }
+
   function enter() {
+    sessionStorage.setItem('judithEntered', '1');
+    sessionStorage.setItem('judithSection', 'main');
     landing.classList.add('fade-out');
     app.classList.add('visible');
-    setTimeout(() => {
-      landing.style.display = 'none';
-    }, 900);
+    setTimeout(() => { landing.style.display = 'none'; }, 900);
+    showSection('main');
   }
 
   document.getElementById('enter-btn').addEventListener('click', enter);
   landing.addEventListener('click', (e) => {
     if (e.target !== document.getElementById('enter-btn')) enter();
   });
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') enter();
   });
@@ -2067,12 +2095,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
 /* ── Init ── */
 renderEpisodes();
 renderCrew();
-
-requestAnimationFrame(() => {
-  const mainSection = document.getElementById('section-main');
-  mainSection.classList.add('visible');
-  triggerFadeIns(mainSection);
-});
 
 /* ── Video Modal ── */
 function openVideoModal(vimeoId) {
