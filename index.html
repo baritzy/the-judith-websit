@@ -67,6 +67,14 @@
       pointer-events: none;
     }
 
+    #landing picture {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     #landing-poster {
       position: absolute;
       inset: 0;
@@ -1343,7 +1351,10 @@
      LANDING / SPLASH SCREEN
 ══════════════════════════════════════════════ -->
 <div id="landing">
-  <img id="landing-poster" src="poster916.png" alt="The Judith" />
+  <picture>
+    <source media="(min-width: 768px)" srcset="poster.png">
+    <img id="landing-poster" src="poster916.png" alt="The Judith" />
+  </picture>
   <div id="landing-overlay"></div>
   <div id="enter-cta">
     <button id="enter-btn">Enter Site</button>
@@ -1398,7 +1409,7 @@
     <div class="hero">
       <img src="judith-logo-new.png" alt="The Judith" class="hero-logo" />
       <p class="hero-tagline">
-        After planet Earth became completely antisemetic, the spaceship Judith was sent to find a new home for the Jews. but even in the vast and infinite space - nodoby wants them.
+        After planet Earth became completely antisemitic, the spaceship Judith was sent to find a new home for the Jews. but even in the vast and infinite space - nobody wants them.
       </p>
       <div class="hero-divider"></div>
     </div>
