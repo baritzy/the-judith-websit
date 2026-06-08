@@ -498,10 +498,6 @@
       font-size: 0.88rem;
       color: var(--text-muted);
       line-height: 1.65;
-      display: -webkit-box;
-      -webkit-line-clamp: 4;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .episode-card.locked .episode-summary { color: var(--text-dim); }
@@ -711,6 +707,46 @@
 
     .crew-desc p { margin-bottom: 0.75rem; }
     .crew-desc p:last-child { margin-bottom: 0; }
+
+    /* ── Synopsis Section ── */
+    .synopsis-section {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .synopsis-part-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.78rem, 1.8vw, 0.92rem);
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      margin-top: 2.25rem;
+    }
+
+    .synopsis-section p {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .teasers-coming-soon {
+      text-align: center;
+      padding: 6rem 2rem 8rem;
+    }
+
+    .teasers-coming-soon span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow: 0 0 40px rgba(139,92,246,0.35), 0 0 80px rgba(139,92,246,0.12);
+    }
 
     /* ── Teasers Section ── */
     .teasers-placeholder {
@@ -1322,14 +1358,15 @@
 
   <!-- ── Nav ── -->
   <nav id="navbar">
-    <div class="nav-logo" onclick="navigate('home')">
+    <div class="nav-logo" onclick="navigate('main')">
       <img src="judith-logo-new.png" alt="The Judith" />
     </div>
 
     <ul class="nav-links">
-      <li><a href="#" data-section="home"    class="active">Episodes</a></li>
+      <li><a href="#" data-section="main"   class="active">Main</a></li>
+      <li><a href="#" data-section="home">Episodes</a></li>
       <li><a href="#" data-section="vision">Our Vision</a></li>
-      <li><a href="#" data-section="about">About</a></li>
+      <li><a href="#" data-section="about">About Us</a></li>
       <li><a href="#" data-section="teasers">Teasers &amp; Trailers</a></li>
       <li><a href="#" data-section="crew">Characters</a></li>
       <li><a href="#" data-section="invest">Invest</a></li>
@@ -1343,9 +1380,10 @@
 
   <!-- ── Mobile Nav Menu ── -->
   <div class="nav-mobile-menu" id="mobileMenu">
-    <a data-section="home"    class="active">Episodes</a>
+    <a data-section="main"   class="active">Main</a>
+    <a data-section="home">Episodes</a>
     <a data-section="vision">Our Vision</a>
-    <a data-section="about">About</a>
+    <a data-section="about">About Us</a>
     <a data-section="teasers">Teasers &amp; Trailers</a>
     <a data-section="crew">Characters</a>
     <a data-section="invest">Invest</a>
@@ -1353,23 +1391,13 @@
   </div>
 
   <!-- ════════════════════════════════════════════
-       SECTION: HOME (Episodes)
+       SECTION: MAIN
   ═════════════════════════════════════════════ -->
-  <section id="section-home" class="section active">
-
-    <div class="hero">
-      <img src="judith-logo-new.png" alt="The Judith" class="hero-logo" />
-      <p class="hero-tagline">
-        AFTER PLANET EARTH BECAME COMPLETELY ANTISEMITIC, THE JUDITH SPACESHIP WAS SENT TO FIND A NEW HOME FOR THE JEWS.<br />
-        BUT EVEN IN THE VAST AND INFINITE SPACE, NOBODY WANTS THEM.
-      </p>
-      <h1 class="hero-title">THE JUDITH</h1>
-      <div class="hero-divider"></div>
-    </div>
+  <section id="section-main" class="section active">
 
     <div class="trailer-section">
       <div class="section-header" style="padding-bottom:0.5rem;">
-        <h2>The Judith Trailer</h2>
+        <h2>The Judith Promo</h2>
         <div class="section-divider"></div>
       </div>
       <div class="trailer-embed-wrapper">
@@ -1379,11 +1407,34 @@
             frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowfullscreen
-            title="The Judith Trailer">
+            title="The Judith Promo">
           </iframe>
         </div>
       </div>
     </div>
+
+    <div class="section-header fade-in" style="transition-delay:0.08s">
+      <h2>Season 1 Synopsis</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="synopsis-section fade-in" style="transition-delay:0.16s">
+      <div class="synopsis-part-title">Part A: Dysfunction of the Status Quo</div>
+      <p>The season opens in total chaos. The previous crew was murdered (without anyone even bothering to investigate why), and the new gang quickly realizes their mission to find a home is a sick joke. They clash, they collide, and they basically destroy every planet they land on due to a fundamental inability to communicate as humans, let alone diplomats. The morning after the massacre, the main computer activates the "Judith Protocol" and sends a team of seven strangers who have nothing in common but shared Jewish DNA and varying traumas. They do not get along, not because they are monsters, but because they are too human: the Captain is a leadership fantasist living in a war movie, Jordan is a progressive who thinks every situation is a workshop in sensitivity, Schtempepper is a nihilist who would rather the ship explode than admit he was wrong, and Rabbi Itzik and Dr. Khalil are simply hustlers of survival. and Lilly...oh Lilly. Inside this tin can, every mission to integrate into a new planet turns into a family fight at a Friday night dinner, only the fate of the galaxy is at stake. They will not be able to fit in anywhere, because they cannot even sit in one room without wanting to kill each other.</p>
+
+      <div class="synopsis-part-title">Part B: The Transformation (or: How to Learn to Love the Monster Next to You)</div>
+      <p>When they realize that no one in the universe is even willing to sell them coffee, something changes. Under the infinite pressure, their egos begin to crack. The Captain starts to understand that the rules are just a suggestion. Schtempepper finds some comfort in the fact that someone actually appreciates his cursed genius, and Lilly, the alien who came to destroy them, starts asking herself why the hell she enjoys this human neurosis. They turn from a crew of strangers into a toxic, yet effective, family unit.</p>
+
+      <div class="synopsis-part-title">Part C: Consequences and Collapse</div>
+      <p>This is where everything explodes. It turns out that every planet they visited was rendered uninhabitable because of their stupidity. It is not just an antisemitic universe. it is a universe united in its disgust toward the "Judith" expedition. The Anti-Jewish Federation rises, and they are coming to end what remains. Just before they are wiped off the map, they discover the season's shocking revelation: there is a parallel universe. A universe where Jews are not only loved, they are the stars of the place. Will they run away there for safe haven? Or will they decide to fight for the jews in this jew-hating universe, even if it is about to explode?</p>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: HOME (Episodes)
+  ═════════════════════════════════════════════ -->
+  <section id="section-home" class="section">
 
     <div class="section-header">
       <h2>Season 1: Episodes</h2>
@@ -1427,44 +1478,11 @@
   <section id="section-about" class="section">
 
     <div class="section-header fade-in">
-      <h2>About the Series</h2>
+      <h2>About Us</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="about-content">
-      <p class="fade-in" style="transition-delay:0.05s">
-        After thousands of years of wandering, Earth's Jewish population thought
-        they'd finally found their home. They were wrong.
-      </p>
-      <p class="fade-in" style="transition-delay:0.12s">
-        When Earth goes fully antisemitic (not partially, not subtly, but
-        <strong>dramatically and completely</strong>), a last-ditch crew boards the Judith,
-        a not-quite-spaceworthy vessel, and sets off into the cosmos in search
-        of a place that will have them.
-      </p>
-      <p class="fade-in" style="transition-delay:0.18s; font-style:italic; color: var(--text)">
-        Spoiler: no one does.
-      </p>
-      <div class="about-divider fade-in" style="transition-delay:0.22s"></div>
-      <p class="fade-in" style="transition-delay:0.27s">
-        <strong>THE JUDITH</strong> is a dark, biting, proudly unrepentant animated comedy that
-        treats antisemitism the way Jews have always treated it: as material.
-        Each episode lands the crew on a new planet, facing a new civilization,
-        and a new creative reason to be turned away.
-      </p>
-      <p class="fade-in" style="transition-delay:0.33s">
-        Created with AI animation and old-fashioned human writing, the series
-        pushes the boundaries of what independent animation can be, and what
-        comedy can say.
-      </p>
-      <div class="fade-in" style="transition-delay:0.4s">
-        <button class="btn-cta-large" onclick="navigate('home')">
-          &#x25B6; &nbsp;Watch Pilot Episode
-        </button>
-      </div>
-    </div>
-
-    <div class="studio-section fade-in" style="transition-delay:0.5s">
+    <div class="studio-section fade-in" style="transition-delay:0.12s">
       <div class="studio-header">
         <h3 class="studio-title">New Angle Studios</h3>
         <div class="section-divider" style="margin:1rem auto 1.5rem;"></div>
@@ -1522,61 +1540,8 @@
       <div class="section-divider"></div>
     </div>
 
-    <div class="teasers-placeholder">
-      <p class="fade-in" style="color: var(--text-muted); font-style: italic; transition-delay:0.08s">
-        Trailers and teasers coming soon. Check back before launch.
-      </p>
-
-      <!-- Landscape slots (16:9) -->
-      <div class="teasers-grid fade-in" style="transition-delay:0.16s">
-        <div class="teaser-slot">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          Trailer 1
-        </div>
-        <div class="teaser-slot">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          Trailer 2
-        </div>
-        <div class="teaser-slot">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          Teaser 1
-        </div>
-      </div>
-
-      <!-- Portrait slots (9:16) -->
-      <p class="fade-in" style="color: var(--text-dim); font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase; margin-top:2.5rem; transition-delay:0.22s">
-        Short-form (9:16)
-      </p>
-      <div class="portrait-reels fade-in" style="transition-delay:0.28s">
-        <div class="teaser-slot portrait">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          Reel 1
-        </div>
-        <div class="teaser-slot portrait">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          Reel 2
-        </div>
-        <div class="teaser-slot portrait">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polygon points="5 3 19 12 5 21 5 3"/>
-          </svg>
-          Reel 3
-        </div>
-      </div>
-
-      <p class="teasers-note fade-in" style="transition-delay:0.34s">
-        Supports 16:9 trailers and 9:16 social reels.
-      </p>
+    <div class="teasers-coming-soon fade-in" style="transition-delay:0.1s">
+      <span>Coming Soon</span>
     </div>
 
   </section>
@@ -1910,7 +1875,7 @@ function renderCrew() {
 }
 
 /* ── Section Navigation ── */
-let currentSection = 'home';
+let currentSection = 'main';
 
 function navigate(target) {
   if (target === currentSection) return;
@@ -2085,8 +2050,8 @@ renderEpisodes();
 renderCrew();
 
 requestAnimationFrame(() => {
-  const homeSection = document.getElementById('section-home');
-  homeSection.classList.add('visible');
+  const mainSection = document.getElementById('section-main');
+  mainSection.classList.add('visible');
 });
 
 /* ── Video Modal ── */
