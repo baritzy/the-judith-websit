@@ -329,11 +329,21 @@
     .hero-tagline {
       font-family: 'Inter', sans-serif;
       font-style: italic;
-      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
       color: var(--text-muted);
-      max-width: 640px;
+      max-width: 700px;
       line-height: 1.7;
       margin-bottom: 0.75rem;
+    }
+
+    .series-format {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.6rem, 1.1vw, 0.75rem);
+      letter-spacing: 0.22em;
+      color: var(--purple);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0.85;
     }
 
     .hero-title {
@@ -1267,7 +1277,7 @@
 
       /* Hero */
       .hero-logo { width: 260px; }
-      .hero-tagline { font-size: 0.82rem; line-height: 1.5; }
+      .hero-tagline { font-size: 1rem; line-height: 1.5; }
 
       /* Episode cards: vertical stack */
       .episode-card { grid-template-columns: 1fr; }
@@ -1331,7 +1341,7 @@
       }
 
       .hero-tagline {
-        font-size: 0.78rem;
+        font-size: 0.92rem;
         letter-spacing: 0.02em;
         padding: 0 0.5rem;
       }
@@ -1426,6 +1436,8 @@
       </p>
       <div class="hero-divider"></div>
     </div>
+
+    <p class="series-format">SCI-FI COMEDY · ANIMATED SERIES · 10 EPISODES · 25 MIN</p>
 
     <div class="trailer-section">
       <div class="section-header" style="padding-bottom:0.5rem;">
@@ -1708,36 +1720,36 @@ const EPISODES = [
   },
   {
     num: 2,
-    title: 'Ex-odus',
-    summary: "Searching for a sanctuary, the gang is tempted to join a communal collective on a remote planet. What begins as 'everyone is equal' quickly devolves into the group finding themselves in the role of modern-day Israelites. They discover that the cruel ruler refusing to let their people go is none other than Yardena's bitter ex-boyfriend, who is seizing the momentum to settle old scores. Now, they must plan a sophisticated Ex-odus before the plagues and the emotional baggage start raining down on them.",
+    title: 'Ass a Jew',
+    summary: "After a long run of bad luck and planets that wouldn't even sell them coffee, the crew picks up the signal of their dreams: an invite to a world full of Jews, diaspora Jews, the Western kind, who've never once set foot in Israel. They're welcomed with open arms and finally feel like they've found their people. The good vibes don't last. The locals have their own plans for the newcomers, and it turns out being Jewish together doesn't fix the huge gap in beliefs between them. Jordan is the only one who fits right in, finding her crowd among the planet's proudly progressive Jews. Schtempepper starts digging into what happened to the crew that came before them. Rabbi Itzik picks a fight with the local Reform rabbi over the meaning of faith, when mutual feelings start to arise between them. The Captain wants to know why no one will sacrifice themselves for the team, while making sure it's never him. And Dr. Khalil, the only Arab aboard, can't believe how badly these Jews treat him, until he learns the even more insulting reason why. The group starts to understand that they need more common ground than being Jews to get along and succeed with their mission.",
     locked: true,
     img: 'episode2.png'
   },
   {
     num: 3,
-    title: 'Open Air Prism',
-    summary: "In an attempt to fund the construction of a new Jewish planet, Shtempepper leads the gang on a mission to find the purest diamond in the universe. But a tiny mishap involving a single photon turns the diamond into a lethal prism, trapping entire civilizations within 'laser prisons.' Now, with half the galaxy stuck behind bars of light and the gang accused of an intergalactic 'Occupation,' they must find a way to shut down the scandal with as little attention as possible, something they are not particularly good at.",
+    title: 'Exodus',
+    summary: "A critical malfunction sends the Judith spinning out of control and crashing onto a strange planet. Within minutes the crew is surrounded by friendly ancient Egyptians, who offer them a place in the community in exchange for a little help building pyramids. The local Pharaoh explains that building pyramids together is the whole meaning of life, and for a moment it sounds almost nice. It isn't. The crew quickly realizes they haven't joined a community, they've become slaves with a strict pecking order, and now they need to pull off an escape of biblical proportions, except their ship is still broken and the robot they left aboard has lost contact and is, frankly, no help at all. The Captain decides this is his big heroic moment and starts planning the great escape with equal parts courage and stupidity, only to find that nobody wants to follow him the second things get hard. Rabbi Itzik thinks he should be the one leading this very biblical situation, and the two of them butt heads over who gets to be the hero. Schtempepper impresses the Egyptians with a bit of science and gets promoted to royal Minister of Science, living like a king while the rest of his crew sweats in the sun. Jordan keeps freezing out the ship's mechanic, an ex she would rather forget, while everyone else takes the mechanic's side. Khalil is leaned on to fix a problem he has no idea how to fix, sweating to keep his own secret buried. And Lilly, somehow, gets everyone else to do her work for her. They came down looking for shelter. They're going to have to escape it.",
     locked: true,
     img: 'episode3.png'
   },
   {
     num: 4,
-    title: 'Micro-Aggression',
-    summary: "The gang lands on a quiet, serene planet seeking a moment of peace, only to quickly discover that their very existence is a biological weapon. Their routine (and destructive) activities accidentally wipe out an entire civilization of microscopic, yet beloved, aliens, sparking a wave of furious protests across the universe. While the Intergalactic Federation issues a global no-fly zone against them, turning them into galactic pariahs, Shtempepper is busy opening his heart to Lilly, only to be crushed by a shocking revelation about her true identity.",
+    title: 'Microaggression',
+    summary: "The crew lands on a beautiful, quiet planet and finally gets to relax, playing volleyball and soaking up the calm. As far as they can tell the place is empty, so they let loose and enjoy themselves. What they don't notice is that the planet isn't empty at all, it's home to a tiny, gentle civilization the whole galaxy adores, and the crew's harmless fun is leaving behind massive destruction, rubble and bodies, an entire culture crushed underfoot. They never meant to hurt anyone, but that hardly matters anymore, because this is just one more story spreading across the galaxy: wherever the Jews go, ruin follows. When the locals find a way to make the crew finally see the damage they've caused, the situation spins out of control and the team is left scrambling to fix the disaster. This is the episode where the egos start to crack, where the delegation of the Judith who can't stand each other begin to admit it out loud and realize that the only way out is to actually work together.",
     locked: true,
     img: 'episode4.png'
   },
   {
     num: 5,
-    title: 'Ass a Jew',
-    summary: 'The crew lands on a planet inhabited by the Ass-a-Jews, an ancient group of snobby beings who survive by being perfectly quiet and agreeable. Pressured by the Governor\'s rebellious daughter, the planet\'s council agrees to let the gang stay, but only if they pass an intensive re-education camp to learn how to be polite and well-behaved. The team does their best to play the part of model citizens, but their naturally chaotic nature turns their last chance at a peaceful home into a total disaster.',
+    title: 'How Dare We?',
+    summary: "The crew reaches a planet in a far off corner of the galaxy, and the locals somehow recognize right away that they're humans. That's because the planet's leader is human too, a bitter old woman named Greta who has clearly seen and done things out in space that no one should. At first it feels like a lucky break, finally someone likes them, but the moment Greta realizes her guests are Jews, her hatred sets off a bizarre crisis that quickly grows into a threat to the entire universe. Worse still, the only way to stop it is the most embarrassing thing this crew has ever been asked to do, and it kicks off a full blown battle of the sexes between cynical Schtempepper and progressive Jordan. Running alongside all the chaos, the crew sits down one by one with the ship's psychologist, and the sessions crack each of them wide open. The Captain wrestles with the fact that no one respects him as a leader. Rabbi Itzik feels like a failure for not bringing anyone closer to faith. Khalil is sweating that someone will finally figure out he's not really a doctor. Boris quietly cries. And Schtempepper tries to psychoanalyze the psychologist, only to expose just how unsure of himself he really is. It's the funniest, filthiest, and most revealing hour of the season.",
     locked: true,
     img: 'Ass a Jew.png'
   },
   {
     num: 6,
-    title: 'Globalize the Enchilada',
-    summary: 'The crew lands on a planet divided by a fanatical civil war between two nearly identical factions, the Redshirts and the Burgundyshirts, who are slaughtering each other over the correct way to fold an enchilada. Desperate to boost their numbers, both sides target the crew with manipulative slogans and moral posturing. When every member of the Judith team starts genuinely buying into the propaganda of their chosen side, the crew fractures, turning their internal rivalries into a miniature war of their own. Caught between two sides that are essentially the same, the team must figure out how to stop fighting each other before the planet\'s obsession with culinary purity consumes them all.',
+    title: 'Open Air Prism',
+    summary: "To help fund the new Jewish planet, Schtempepper leads the gang on a hunt for the purest diamond in the universe. But one tiny mishap involving a single photon turns the diamond into a deadly prism, splitting the entire galaxy into countless little prisons made of light. Whole civilizations end up trapped behind laser bars, families are torn apart with no way to reach each other, and half the universe is suddenly living under a siege the crew accidentally created. As the gang scrambles to figure out what went wrong and how to shut the thing down quietly, which they are spectacularly bad at, the Intergalactic Federation steps fully into view at last, the closest thing this universe has to a court of nations, and it is not a Jew-loving entity. Meanwhile something strange keeps happening. Every so often the lasers flicker off for two or three seconds, and nobody can work out when or why. In those tiny windows people risk everything to cross the line, and a belief starts spreading across the galaxy that prayer is what's causing the blackouts, with whole cults forming around the idea. With the universe accusing them of an intergalactic occupation and the Federation closing in, the crew has to fix the mess before the galaxy's fury comes down on them for good.",
     locked: true,
     img: 'Globalize the Enchilada.png'
   },
@@ -1757,15 +1769,15 @@ const EPISODES = [
   },
   {
     num: 9,
-    title: "Once Upon a Time in '48",
-    summary: 'The crew is captured by an advanced civilization that operates a "History Museum of the Universe." Here, the crew is horrified to discover a highly inaccurate, exhibits-based simulation of their own history, specifically focusing on the events of 1948, which portrays them as either ultimate villains or mythical martyrs depending on the visitor\'s political stance. As they fight to gain control of the narrative and destroy the simulation, the crew realizes that their entire journey and their struggle to survive has been observed and exploited by the Galactic Federation for public entertainment. With the truth laid bare, the gang must decide whether to save their own skin or burn the museum to the ground, knowing that doing so will finally bring the Federation\'s full wrath upon them.',
+    title: "Once Upon A Time in 48",
+    summary: "Having barely scraped together a plea deal with the Intergalactic Federation, the crew is finally promised a planet to call home: a world known only as 48. But there's history here. The Asses, the Jew eating species first glimpsed back in episode 2, are a conquering race, and to keep the damage contained the Federation has been letting them swallow up worthless, forgotten little worlds, forty seven of them so far. Handing the crew number forty eight was supposed to be the easy part, until the Asses throw a fit, and the Federation folds, announcing that the crew and the Asses will simply have to share the planet and learn to get along. The crew agrees, but the Asses don't, declaring war and insisting the world is theirs alone. What follows is a brutal, bloody fight for the crew's new home against a merciless enemy, and along the way they realize someone is quietly helping them from the shadows, a mysterious figure tipping the war in their favor. Who that figure turns out to be will leave the crew, and the audience, completely stunned, and crack open a secret about the universe itself that changes everything.",
     locked: true,
     img: "Once Upon a Time in '48.png"
   },
   {
     num: 10,
-    title: 'Parallel Jewniverse',
-    summary: 'Following the destruction of the history museum, the crew stumbles upon a rift leading to a "Parallel Jewniverse," a reality where Jewish people are universally beloved, anti-Semitism doesn\'t exist, and the struggles that have defined the team\'s entire existence are completely unknown. As they navigate this perfect, tranquil mirror of their own reality, they uncover a shocking, classified truth about the origin and true purpose of their mission that changes everything they thought they knew. With the Galactic Federation closing in and the fabric of reality beginning to unravel, the crew is forced into a final, agonizing confrontation: remain in this safe haven and abandon their identity, or return to their own chaotic world to finish their mission, knowing full well that they may be walking into their own destruction.',
+    title: 'Jewverse',
+    summary: "With the existence of the Jewverse now out in the open, a universe where every Jew is loved and safe, the crew finally learns the real reason they were sent away from Earth in the first place, and the truth shatters everything they thought they knew about their mission. There's no time to sit with it. The Asses are already breaking the peace deal and pushing again to claim the whole planet for themselves, and the pressure splits the crew right down the middle. Some want to dig in and fight for the home they bled for, others want to set off into the unknown once more to find the way to the Jewverse and the safe haven waiting there. As the two camps tear at each other and the last buried secrets come spilling onto the table, the crew has to fend off the Asses and decide, once and for all, what the expedition is really for and where it goes from here.",
     locked: true,
     img: 'Parallel Jewniverse.png'
   }
