@@ -469,8 +469,8 @@
       position: relative;
       width: 100%;
       overflow: hidden;
-      align-self: stretch;
-      min-height: 200px;
+      align-self: flex-start;
+      aspect-ratio: 16 / 9;
     }
 
     .thumb-gradient { width: 100%; height: 100%; display: block; }
@@ -505,8 +505,49 @@
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
+      position: relative;
+      max-height: calc(380px * 9 / 16);
+      transition: max-height 0.4s ease;
     }
 
+    .episode-info.expanded {
+      max-height: 1200px;
+    }
+
+    .summary-fade {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: linear-gradient(transparent, var(--surface));
+      pointer-events: none;
+    }
+
+    .episode-info.expanded .summary-fade {
+      display: none;
+    }
+
+    .read-more-btn {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--purple);
+      font-size: 0.78rem;
+      cursor: pointer;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    .read-more-btn:hover { opacity: 0.7; }
+
+    .episode-info.expanded .read-more-btn {
+      position: static;
+      margin-top: 0.4rem;
+    }
 
     .episode-number {
       font-family: monospace;
@@ -1268,6 +1309,7 @@
     @media (max-width: 900px) {
       .crew-grid { grid-template-columns: repeat(2, 1fr); }
       .episode-card { grid-template-columns: 280px 1fr; }
+      .episode-info { max-height: calc(280px * 9 / 16); }
     }
 
     /* Large mobile */
@@ -1287,6 +1329,8 @@
       .episode-card { grid-template-columns: 1fr; }
       .episode-thumb { width: 100%; aspect-ratio: 16 / 9; }
       .episode-info { max-height: none; overflow: visible; padding: 1rem; }
+      .summary-fade { display: none; }
+      .read-more-btn { display: none; }
       .episode-summary {
         -webkit-line-clamp: unset;
         display: block;
@@ -1894,7 +1938,17 @@ function buildEpisodeCard(ep, index) {
         <p class="episode-summary">${ep.summary}</p>
       </div>
       ${btnHTML}
+      <div class="summary-fade"></div>
+      <button class="read-more-btn">Read more &#x25BE;</button>
     </div>`;
+
+  const info = card.querySelector('.episode-info');
+  const readMoreBtn = card.querySelector('.read-more-btn');
+  readMoreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = info.classList.toggle('expanded');
+    readMoreBtn.textContent = expanded ? 'Read less ▴' : 'Read more ▾';
+  });
 
   return card;
 }
