@@ -1508,11 +1508,11 @@
       font-style: italic;
     }
 
-    /* Feed */
+    /* Feed: flat comment-section style (no boxed cards) */
     .gt-feed {
       display: flex;
       flex-direction: column;
-      gap: 1.1rem;
+      gap: 0;
     }
 
     .gt-empty {
@@ -1523,16 +1523,18 @@
       font-size: 0.95rem;
     }
 
+    /* Each comment is a light text block, not a card */
     .gt-card {
-      background: var(--surface);
-      border: 1px solid rgba(139,92,246,0.1);
-      border-radius: var(--radius);
-      padding: 1.1rem 1.25rem;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
+    .gt-feed > .gt-card:last-child { border-bottom: none; }
+
+    /* Admin distinction is a badge, not a box: no fill, no thick border */
     .gt-card.gt-admin {
-      border-left: 3px solid var(--purple);
-      background: linear-gradient(90deg, rgba(139,92,246,0.08), var(--surface) 40%);
+      background: none;
+      border-left: none;
     }
 
     .gt-card-head {
@@ -1540,7 +1542,7 @@
       align-items: center;
       gap: 0.6rem;
       flex-wrap: wrap;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .gt-name {
@@ -1551,17 +1553,21 @@
       letter-spacing: 0.02em;
     }
 
+    /* Admin name gets the brand purple; the box treatment is gone */
+    .gt-card.gt-admin > .gt-card-head .gt-name { color: var(--purple); }
+
     .gt-badge {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       color: var(--purple);
       border: 1px solid rgba(139,92,246,0.5);
-      border-radius: 50px;
-      padding: 0.15rem 0.6rem;
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
       text-transform: uppercase;
       white-space: nowrap;
+      line-height: 1.4;
     }
 
     .gt-time {
@@ -1586,30 +1592,51 @@
       color: var(--purple);
       font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
+      font-weight: 500;
       letter-spacing: 0.03em;
       cursor: pointer;
       padding: 0.5rem 0 0;
-      margin-top: 0.4rem;
+      margin-top: 0.35rem;
     }
 
     .gt-reply-toggle:hover { opacity: 0.7; }
 
+    /* Nested replies: indented column with a single subtle guide line */
     .gt-replies {
       margin-top: 0.9rem;
-      padding-left: 1.1rem;
-      border-left: 1px solid rgba(139,92,246,0.15);
+      margin-left: 2.25rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(139,92,246,0.18);
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0;
     }
+
+    /* A reply is the same flat text block as a top-level comment */
+    .gt-card.gt-reply {
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .gt-replies > .gt-card.gt-reply:first-child { padding-top: 0; }
+    .gt-replies > .gt-card.gt-reply:last-child { border-bottom: none; padding-bottom: 0; }
 
     .gt-reply-form {
       margin-top: 0.9rem;
-      padding-left: 1.1rem;
-      border-left: 1px solid rgba(139,92,246,0.15);
+      margin-left: 2.25rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(139,92,246,0.18);
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
+    }
+
+    /* A reply-form already sitting inside the indented replies column
+       must not indent again (avoid double nesting / horizontal overflow) */
+    .gt-replies .gt-reply-form {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
     }
 
     .gt-reply-form.hidden { display: none; }
@@ -1734,6 +1761,8 @@
       .gt-wrap { padding: 0 1rem 3rem; }
       .gt-form { padding: 1.1rem; }
       .gt-strip { padding: 1.1rem; margin-bottom: 2.5rem; }
+      .gt-replies,
+      .gt-reply-form { margin-left: 1.1rem; padding-left: 0.75rem; }
     }
 
     /* ── Fade-in animations ── */
@@ -2794,7 +2823,8 @@ function handleInvestForm(e) {
     if (replies && replies.length) {
       const wrap = el('div', 'gt-replies');
       replies.forEach(function (r) {
-        wrap.appendChild(buildReplyCard(r));
+        // Replies attach to the same top-level parent (row.id).
+        wrap.appendChild(buildReplyCard(r, row.id));
       });
       card.appendChild(wrap);
     }
@@ -2802,12 +2832,26 @@ function handleInvestForm(e) {
     return card;
   }
 
-  function buildReplyCard(row) {
-    const card = el('div', 'gt-card' + (row.is_admin === true ? ' gt-admin' : ''));
+  function buildReplyCard(row, parentId) {
+    const card = el('div', 'gt-card gt-reply' + (row.is_admin === true ? ' gt-admin' : ''));
     card.appendChild(buildHead(row));
     const body = el('div', 'gt-body');
     body.textContent = row.body || '';
     card.appendChild(body);
+
+    // Reply affordance on replies: new reply attaches to the same top-level parent.
+    const toggle = el('button', 'gt-reply-toggle');
+    toggle.type = 'button';
+    toggle.textContent = 'Reply';
+    card.appendChild(toggle);
+
+    const replyForm = buildReplyForm(parentId, function () { refreshFeed(); });
+    card.appendChild(replyForm);
+
+    toggle.addEventListener('click', function () {
+      replyForm.classList.toggle('hidden');
+    });
+
     return card;
   }
 
