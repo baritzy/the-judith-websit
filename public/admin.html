@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>The Judith :: Transmission Control</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:         #060606;
+      --bg2:        #0a0a12;
+      --surface:    #111118;
+      --surface2:   #1a1a28;
+      --purple:     #8b5cf6;
+      --purple-2:   #7c3aed;
+      --purple-glow: rgba(139, 92, 246, 0.4);
+      --teal:       #00d4ff;
+      --text:       #f9fafb;
+      --text-muted: #9ca3af;
+      --text-dim:   #6b7280;
+      --danger:     #ef4444;
+      --radius:     12px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 600px at 50% -200px, rgba(139,92,246,0.12), transparent),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    a { color: var(--purple); }
+    h1, h2, h3 { font-family: 'Orbitron', sans-serif; margin: 0; }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    header.top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; margin-bottom: 28px; flex-wrap: wrap;
+    }
+    header.top h1 {
+      font-size: 1.5rem; letter-spacing: 2px; color: var(--text);
+      text-transform: uppercase;
+    }
+    header.top h1 span { color: var(--purple); }
+    .subtitle { color: var(--text-dim); font-size: 0.8rem; letter-spacing: 1px; }
+
+    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin: 0 0 6px; }
+    input[type=text], input[type=email], input[type=password], textarea {
+      width: 100%; background: var(--bg2); color: var(--text);
+      border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 12px 14px; font-family: 'Inter', sans-serif; font-size: 1rem;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(139,92,246,0.18); }
+    textarea { resize: vertical; min-height: 100px; }
+    input:disabled { opacity: .6; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--purple); color: #fff; border: none;
+      border-radius: 10px; padding: 12px 20px; font-size: 1rem; font-weight: 600;
+      font-family: 'Inter', sans-serif; cursor: pointer;
+      transition: background .2s, box-shadow .2s, opacity .2s;
+    }
+    .btn:hover { background: var(--purple-2); box-shadow: 0 0 24px var(--purple-glow); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+    .btn.ghost { background: transparent; border: 1px solid #33334a; color: var(--text-muted); }
+    .btn.ghost:hover { border-color: var(--purple); color: var(--text); box-shadow: none; background: rgba(139,92,246,0.08); }
+    .btn.danger { background: transparent; border: 1px solid rgba(239,68,68,0.5); color: #fca5a5; }
+    .btn.danger:hover { background: rgba(239,68,68,0.12); border-color: var(--danger); box-shadow: none; }
+    .btn.sm { padding: 6px 12px; font-size: 0.82rem; }
+
+    .panel {
+      background: var(--surface); border: 1px solid #20202e;
+      border-radius: var(--radius); padding: 22px; margin-bottom: 24px;
+    }
+    .panel h2 { font-size: 1rem; letter-spacing: 1px; margin-bottom: 16px; color: var(--purple); text-transform: uppercase; }
+
+    .field { margin-bottom: 14px; }
+    .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .checkline { display: flex; align-items: center; gap: 10px; margin: 4px 0 14px; }
+    .checkline input { width: 18px; height: 18px; accent-color: var(--purple); }
+    .checkline label { margin: 0; color: var(--text); font-size: 0.95rem; }
+
+    .msg { font-size: 0.9rem; margin-top: 10px; min-height: 1.2em; }
+    .msg.err { color: #fca5a5; }
+    .msg.ok  { color: #6ee7b7; }
+
+    /* Login */
+    #loginView { max-width: 400px; margin: 8vh auto 0; }
+    #loginView .panel { padding: 30px; }
+
+    /* Reply banner */
+    #replyBanner {
+      display: none; align-items: center; justify-content: space-between; gap: 10px;
+      background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.35);
+      border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.88rem;
+    }
+    #replyBanner .rb-text { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; }
+    #replyBanner b { color: var(--text); }
+    #cancelReply { cursor: pointer; color: var(--purple); white-space: nowrap; }
+
+    /* Message list */
+    #list { display: flex; flex-direction: column; gap: 14px; }
+    .card {
+      background: var(--surface); border: 1px solid #20202e;
+      border-radius: var(--radius); padding: 16px 18px;
+    }
+    .card.admin { border-color: rgba(139,92,246,0.45); background: linear-gradient(180deg, rgba(139,92,246,0.06), var(--surface)); }
+    .card.hidden { opacity: 0.55; }
+    .card .reply-card {
+      margin-top: 12px; margin-left: 18px; padding-left: 14px;
+      border-left: 2px solid #2a2a3a;
+    }
+    .card .reply-card .card { background: var(--bg2); }
+    .c-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+    .c-name { font-weight: 600; color: var(--text); }
+    .c-time { color: var(--text-dim); font-size: 0.78rem; }
+    .tag {
+      font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 1px;
+      padding: 2px 7px; border-radius: 6px; text-transform: uppercase;
+    }
+    .tag.judith { background: rgba(139,92,246,0.2); color: var(--purple); border: 1px solid rgba(139,92,246,0.4); }
+    .tag.hidden { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.35); }
+    .c-body { color: var(--text); white-space: pre-wrap; word-break: break-word; margin: 4px 0 12px; }
+    .c-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* Inline edit */
+    .edit-box { margin: 8px 0 12px; }
+    .edit-box .field { margin-bottom: 10px; }
+
+    .empty { color: var(--text-dim); text-align: center; padding: 30px; }
+    .loading { color: var(--text-dim); text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────────
+       CONFIG: same Supabase project as the public site.
+       ───────────────────────────────────────────── -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL  = 'https://kahnoeyykeylwkzgyzvf.supabase.co';
+    const SUPABASE_KEY  = 'sb_publishable_Qg1Yl1ryh_3e7K1S04zQCA_bHOe8EDG';
+    const OWNER_NAME    = 'The Judith';
+  </script>
+
+  <div class="wrap">
+
+    <!-- ─────────────── LOGIN VIEW ─────────────── -->
+    <div id="loginView" style="display:none;">
+      <header class="top">
+        <h1>Transmission <span>Control</span></h1>
+      </header>
+      <div class="panel">
+        <h2>Log in</h2>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="loginPass">Password</label>
+            <input type="password" id="loginPass" autocomplete="current-password" required />
+          </div>
+          <button class="btn" type="submit" id="loginBtn">Log in</button>
+          <div class="msg err" id="loginMsg"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ─────────────── ADMIN CONSOLE ─────────────── -->
+    <div id="adminView" style="display:none;">
+      <header class="top">
+        <div>
+          <h1>Transmission <span>Control</span></h1>
+          <div class="subtitle" id="whoami"></div>
+        </div>
+        <button class="btn ghost sm" id="logoutBtn">Log out</button>
+      </header>
+
+      <!-- Compose -->
+      <div class="panel">
+        <h2 id="composeTitle">New transmission</h2>
+
+        <div id="replyBanner">
+          <span class="rb-text">Replying to <b id="replyToName"></b></span>
+          <a id="cancelReply">cancel reply</a>
+        </div>
+
+        <div class="field">
+          <label for="cName">Name</label>
+          <input type="text" id="cName" placeholder="Display name" />
+        </div>
+        <div class="field">
+          <label for="cBody">Message</label>
+          <textarea id="cBody" placeholder="Write a transmission..."></textarea>
+        </div>
+        <div class="checkline">
+          <input type="checkbox" id="cAdmin" />
+          <label for="cAdmin">Post as The Judith (official)</label>
+        </div>
+        <button class="btn" id="postBtn">Post</button>
+        <div class="msg" id="composeMsg"></div>
+      </div>
+
+      <!-- List -->
+      <div class="panel">
+        <div class="row" style="justify-content:space-between; margin-bottom:14px;">
+          <h2 style="margin:0;">All transmissions</h2>
+          <button class="btn ghost sm" id="refreshBtn">Refresh</button>
+        </div>
+        <div id="list"><div class="loading">Loading...</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Views
+    const loginView  = document.getElementById('loginView');
+    const adminView  = document.getElementById('adminView');
+    // Login
+    const loginForm  = document.getElementById('loginForm');
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPass  = document.getElementById('loginPass');
+    const loginBtn   = document.getElementById('loginBtn');
+    const loginMsg   = document.getElementById('loginMsg');
+    // Console chrome
+    const whoami     = document.getElementById('whoami');
+    const logoutBtn  = document.getElementById('logoutBtn');
+    // Compose
+    const composeTitle = document.getElementById('composeTitle');
+    const replyBanner  = document.getElementById('replyBanner');
+    const replyToName  = document.getElementById('replyToName');
+    const cancelReply  = document.getElementById('cancelReply');
+    const cName      = document.getElementById('cName');
+    const cBody      = document.getElementById('cBody');
+    const cAdmin     = document.getElementById('cAdmin');
+    const postBtn    = document.getElementById('postBtn');
+    const composeMsg = document.getElementById('composeMsg');
+    // List
+    const listEl     = document.getElementById('list');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    let replyParentId = null; // current reply target
+
+    /* ── DOM helpers (XSS safe) ── */
+    function el(tag, cls) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      return e;
+    }
+    function setMsg(node, text, kind) {
+      node.textContent = text || '';
+      node.className = 'msg' + (kind ? ' ' + kind : '');
+    }
+    function relativeTime(iso) {
+      const then = new Date(iso).getTime();
+      if (isNaN(then)) return '';
+      const diff = Math.max(0, Date.now() - then);
+      const s = Math.floor(diff / 1000);
+      if (s < 60) return 'just now';
+      const m = Math.floor(s / 60);
+      if (m < 60) return m + 'm ago';
+      const h = Math.floor(m / 60);
+      if (h < 24) return h + 'h ago';
+      const d = Math.floor(h / 24);
+      if (d < 7) return d + 'd ago';
+      const w = Math.floor(d / 7);
+      if (w < 5) return w + 'w ago';
+      const mo = Math.floor(d / 30);
+      if (mo < 12) return mo + 'mo ago';
+      return Math.floor(d / 365) + 'y ago';
+    }
+
+    /* ── Auth flow ── */
+    async function checkSession() {
+      const { data } = await sb.auth.getSession();
+      if (data && data.session) {
+        showConsole(data.session);
+      } else {
+        showLogin();
+      }
+    }
+    function showLogin() {
+      adminView.style.display = 'none';
+      loginView.style.display = 'block';
+    }
+    function showConsole(session) {
+      loginView.style.display = 'none';
+      adminView.style.display = 'block';
+      const email = session && session.user ? session.user.email : '';
+      whoami.textContent = email ? ('Signed in as ' + email) : 'Signed in';
+      loadList();
+    }
+
+    loginForm.addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      setMsg(loginMsg, '', '');
+      loginBtn.disabled = true;
+      const { data, error } = await sb.auth.signInWithPassword({
+        email: loginEmail.value.trim(),
+        password: loginPass.value
+      });
+      loginBtn.disabled = false;
+      if (error) {
+        setMsg(loginMsg, error.message || 'Login failed.', 'err');
+        return;
+      }
+      loginPass.value = '';
+      showConsole(data.session);
+    });
+
+    logoutBtn.addEventListener('click', async function () {
+      await sb.auth.signOut();
+      showLogin();
+    });
+
+    /* ── Reply mode ── */
+    function enterReplyMode(id, name) {
+      replyParentId = id;
+      replyToName.textContent = name || 'Anonymous';
+      replyBanner.style.display = 'flex';
+      composeTitle.textContent = 'Reply';
+      cBody.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function clearReplyMode() {
+      replyParentId = null;
+      replyBanner.style.display = 'none';
+      composeTitle.textContent = 'New transmission';
+    }
+    cancelReply.addEventListener('click', clearReplyMode);
+
+    /* ── Official-name lock ── */
+    cAdmin.addEventListener('change', function () {
+      if (cAdmin.checked) {
+        cName.value = OWNER_NAME;
+        cName.disabled = true;
+      } else {
+        cName.disabled = false;
+        if (cName.value === OWNER_NAME) cName.value = '';
+      }
+    });
+
+    /* ── Post ── */
+    postBtn.addEventListener('click', async function () {
+      setMsg(composeMsg, '', '');
+      const isAdmin = cAdmin.checked;
+      const name = isAdmin ? OWNER_NAME : cName.value.trim();
+      const body = cBody.value.trim();
+      if (!body) { setMsg(composeMsg, 'Message is empty.', 'err'); return; }
+      if (!name) { setMsg(composeMsg, 'Name is empty.', 'err'); return; }
+
+      const row = {
+        name: name,
+        body: body,
+        is_admin: isAdmin,
+        hidden: false,
+        parent_id: replyParentId || null
+      };
+
+      postBtn.disabled = true;
+      const { error } = await sb
+        .from('transmissions')
+        .insert(row)
+        .select()
+        .single();
+      postBtn.disabled = false;
+
+      if (error) {
+        setMsg(composeMsg, error.message || 'Post failed.', 'err');
+        return;
+      }
+      // Reset compose
+      cBody.value = '';
+      cAdmin.checked = false;
+      cName.disabled = false;
+      cName.value = '';
+      clearReplyMode();
+      setMsg(composeMsg, 'Posted.', 'ok');
+      loadList();
+    });
+
+    /* ── Per-message actions ── */
+    async function toggleHide(row) {
+      const { error } = await sb.from('transmissions')
+        .update({ hidden: !row.hidden }).eq('id', row.id);
+      if (error) { alert(error.message || 'Update failed.'); return; }
+      loadList();
+    }
+    async function saveEdit(id, name, body) {
+      const { error } = await sb.from('transmissions')
+        .update({ name: name, body: body }).eq('id', id);
+      if (error) { alert(error.message || 'Save failed.'); return false; }
+      loadList();
+      return true;
+    }
+    async function deleteRow(row) {
+      if (!confirm('Delete this transmission? Replies to it will also be deleted.')) return;
+      const { error } = await sb.from('transmissions').delete().eq('id', row.id);
+      if (error) { alert(error.message || 'Delete failed.'); return; }
+      loadList();
+    }
+
+    /* ── Render one card (XSS safe) ── */
+    function buildCard(row, isReply) {
+      const card = el('div', 'card'
+        + (row.is_admin ? ' admin' : '')
+        + (row.hidden ? ' hidden' : ''));
+
+      // Head
+      const head = el('div', 'c-head');
+      const nm = el('span', 'c-name');
+      nm.textContent = row.name || 'Anonymous';
+      head.appendChild(nm);
+      if (row.is_admin) {
+        const t = el('span', 'tag judith'); t.textContent = 'The Judith'; head.appendChild(t);
+      }
+      if (row.hidden) {
+        const t = el('span', 'tag hidden'); t.textContent = 'Hidden'; head.appendChild(t);
+      }
+      const tm = el('span', 'c-time'); tm.textContent = relativeTime(row.created_at);
+      head.appendChild(tm);
+      card.appendChild(head);
+
+      // Body
+      const bodyEl = el('div', 'c-body');
+      bodyEl.textContent = row.body || '';
+      card.appendChild(bodyEl);
+
+      // Actions
+      const actions = el('div', 'c-actions');
+
+      const replyBtn = el('button', 'btn ghost sm'); replyBtn.textContent = 'Reply';
+      replyBtn.addEventListener('click', function () {
+        // Replies attach to the top-level parent (1 level), matching the public board.
+        const parentId = isReply ? (row.parent_id || row.id) : row.id;
+        enterReplyMode(parentId, row.name);
+      });
+      actions.appendChild(replyBtn);
+
+      const hideBtn = el('button', 'btn ghost sm');
+      hideBtn.textContent = row.hidden ? 'Unhide' : 'Hide';
+      hideBtn.addEventListener('click', function () { toggleHide(row); });
+      actions.appendChild(hideBtn);
+
+      const editBtn = el('button', 'btn ghost sm'); editBtn.textContent = 'Edit';
+      actions.appendChild(editBtn);
+
+      const delBtn = el('button', 'btn danger sm'); delBtn.textContent = 'Delete';
+      delBtn.addEventListener('click', function () { deleteRow(row); });
+      actions.appendChild(delBtn);
+
+      card.appendChild(actions);
+
+      // Inline edit toggle
+      editBtn.addEventListener('click', function () {
+        if (card.querySelector('.edit-box')) return; // already editing
+        const box = el('div', 'edit-box');
+
+        const f1 = el('div', 'field');
+        const l1 = el('label'); l1.textContent = 'Name';
+        const inName = el('input'); inName.type = 'text'; inName.value = row.name || '';
+        f1.appendChild(l1); f1.appendChild(inName);
+
+        const f2 = el('div', 'field');
+        const l2 = el('label'); l2.textContent = 'Message';
+        const inBody = el('textarea'); inBody.value = row.body || '';
+        f2.appendChild(l2); f2.appendChild(inBody);
+
+        const rowBtns = el('div', 'row');
+        const save = el('button', 'btn sm'); save.textContent = 'Save';
+        const cancel = el('button', 'btn ghost sm'); cancel.textContent = 'Cancel';
+        rowBtns.appendChild(save); rowBtns.appendChild(cancel);
+
+        box.appendChild(f1); box.appendChild(f2); box.appendChild(rowBtns);
+        card.insertBefore(box, actions);
+        actions.style.display = 'none';
+        inBody.focus();
+
+        cancel.addEventListener('click', function () {
+          box.remove(); actions.style.display = 'flex';
+        });
+        save.addEventListener('click', async function () {
+          const newName = inName.value.trim();
+          const newBody = inBody.value.trim();
+          if (!newBody) { alert('Message cannot be empty.'); return; }
+          save.disabled = true;
+          await saveEdit(row.id, newName || 'Anonymous', newBody);
+        });
+      });
+
+      return card;
+    }
+
+    /* ── Render list, grouped by parent (1 level) ── */
+    function renderList(rows) {
+      listEl.innerHTML = '';
+      if (!rows || !rows.length) {
+        const e = el('div', 'empty'); e.textContent = 'No transmissions yet.';
+        listEl.appendChild(e);
+        return;
+      }
+      const byId = {};
+      rows.forEach(function (r) { byId[r.id] = r; });
+
+      const tops = [];
+      const childrenOf = {};
+      rows.forEach(function (r) {
+        if (r.parent_id && byId[r.parent_id]) {
+          (childrenOf[r.parent_id] = childrenOf[r.parent_id] || []).push(r);
+        } else {
+          tops.push(r); // top-level, or orphan reply shown standalone
+        }
+      });
+
+      // rows are already sorted newest-first; render tops in that order,
+      // replies oldest-first under each parent for readability.
+      tops.forEach(function (top) {
+        const card = buildCard(top, false);
+        const kids = childrenOf[top.id];
+        if (kids && kids.length) {
+          kids.sort(function (a, b) {
+            return new Date(a.created_at) - new Date(b.created_at);
+          });
+          const wrap = el('div', 'reply-card');
+          kids.forEach(function (k) { wrap.appendChild(buildCard(k, true)); });
+          card.appendChild(wrap);
+        }
+        listEl.appendChild(card);
+      });
+    }
+
+    async function loadList() {
+      listEl.innerHTML = '<div class="loading">Loading...</div>';
+      const { data, error } = await sb
+        .from('transmissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) {
+        listEl.innerHTML = '';
+        const e = el('div', 'empty'); e.textContent = 'Could not load: ' + (error.message || 'error');
+        listEl.appendChild(e);
+        return;
+      }
+      renderList(data || []);
+    }
+
+    refreshBtn.addEventListener('click', loadList);
+
+    // React to auth changes (e.g. token refresh / signout in another tab)
+    sb.auth.onAuthStateChange(function (_event, session) {
+      if (session) { showConsole(session); } else { showLogin(); }
+    });
+
+    // Boot
+    checkSession();
+  })();
+  </script>
+</body>
+</html>

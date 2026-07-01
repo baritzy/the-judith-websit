@@ -3018,7 +3018,15 @@ function handleInvestForm(e) {
         opts.demoNoteEl.style.display = 'block';
       }
     } catch (e) {
-      showErr('Transmission failed. Try again.');
+      const code = e && e.code;
+      const msg = (e && e.message) ? String(e.message) : '';
+      if (code === '23514' || msg.indexOf('no_owner_name') !== -1) {
+        showErr('That name is reserved. Please use a different name.');
+      } else if (code === '42501') {
+        showErr('Could not post. Please try again.');
+      } else {
+        showErr('Transmission failed. Try again.');
+      }
     } finally {
       btn.disabled = false;
     }
