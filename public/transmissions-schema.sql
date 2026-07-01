@@ -11,8 +11,10 @@ create table public.transmissions (
   constraint name_len check (char_length(name) between 1 and 40),
   constraint body_len check (char_length(body) between 1 and 2000),
   constraint no_owner_name check (
-    regexp_replace(lower(name), '[^a-z0-9]', '', 'g') <> 'thejudith'
-    and regexp_replace(lower(name), '[^a-z0-9]', '', 'g') <> 'judith'
+    is_admin = true or (
+      regexp_replace(lower(name), '[^a-z0-9]', '', 'g') <> 'thejudith'
+      and regexp_replace(lower(name), '[^a-z0-9]', '', 'g') <> 'judith'
+    )
   )
 );
 
@@ -30,13 +32,15 @@ on public.transmissions for insert to anon
 with check ( is_admin = false and hidden = false );
 
 -- server-side profanity/hate blocklist
--- OWNER: replace slur1|slur2|slur3 below with the real terms you want blocked.
--- Keep them lowercase, separated by | (pipe). The ~* match is case-insensitive.
+-- OWNER: this is a starter list of common hate slurs blocked at the DB level.
+-- Add or remove terms as you see fit. Keep them lowercase, separated by | (pipe).
+-- Word boundaries (\y ... \y) mean normal words are not caught. The ~* match is case-insensitive.
 -- Example: '\y(word1|word2|word3|word4)\y'
 create or replace function public.block_profanity()
 returns trigger language plpgsql as $$
 begin
-  if new.body ~* '\y(slur1|slur2|slur3)\y' or new.name ~* '\y(slur1|slur2|slur3)\y' then
+  if new.body ~* '\y(kike|kikes|yid|yids|heeb|hymie|sheeny|nigger|niggers|nigga|chink|spic|wetback|faggot|fag|tranny)\y'
+     or new.name ~* '\y(kike|kikes|yid|yids|heeb|hymie|sheeny|nigger|niggers|nigga|chink|spic|wetback|faggot|fag|tranny)\y' then
     raise exception 'blocked content';
   end if;
   return new;
