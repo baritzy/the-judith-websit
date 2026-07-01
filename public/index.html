@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFXGQBRF4H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HFXGQBRF4H');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Judith: A Dark Comedy Series</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { max-width: 100%; height: auto; }
+
+    :root {
+      --bg:           #060606;
+      --bg2:          #0a0a12;
+      --surface:      #111118;
+      --surface2:     #1a1a28;
+      --purple:       #8b5cf6;
+      --purple-glow:  rgba(139, 92, 246, 0.4);
+      --teal:         #00d4ff;
+      --text:         #f9fafb;
+      --text-muted:   #9ca3af;
+      --text-dim:     #6b7280;
+      --lock-overlay: rgba(0,0,0,0.65);
+      --radius:       12px;
+      --transition:   0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── Starfield Canvas ── */
+    #starfield {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════
+       LANDING / SPLASH SCREEN
+    ══════════════════════════════════════════════ */
+    #landing {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    #landing.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #landing picture {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #landing-poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    #landing-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.05) 50%,
+        rgba(0,0,0,0.55) 100%
+      );
+    }
+
+    #enter-cta {
+      position: absolute;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      z-index: 2;
+    }
+
+    #enter-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #fff;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.75);
+      border-radius: 4px;
+      padding: 0.9rem 3rem;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, letter-spacing 0.3s;
+      animation: pulse-border 3s ease-in-out infinite;
+    }
+
+    #enter-btn:hover {
+      background: rgba(139,92,246,0.25);
+      border-color: var(--purple);
+      box-shadow: 0 0 30px var(--purple-glow), 0 0 60px rgba(139,92,246,0.15);
+      letter-spacing: 0.45em;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+      50%       { box-shadow: 0 0 22px rgba(255,255,255,0.35); }
+    }
+
+    .enter-arrow {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.3rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50%       { transform: translateY(6px); opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════════════
+       MAIN APP (hidden until Enter is clicked)
+    ══════════════════════════════════════════════ */
+    #app {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.7s ease 0.3s;
+      pointer-events: none;
+    }
+
+    #app.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+
+    nav.scrolled {
+      background: rgba(6, 6, 6, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(139,92,246,0.15);
+    }
+
+    .nav-logo {
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(139,92,246,0.5));
+      transition: filter var(--transition);
+    }
+
+    .nav-logo img:hover {
+      filter: drop-shadow(0 0 14px rgba(139,92,246,0.85));
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--purple);
+      transition: width var(--transition);
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--purple); }
+
+    .nav-links a.active::after,
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--purple);
+      color: #fff !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.85rem !important;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition) !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    .nav-cta:hover {
+      color: #fff !important;
+      background: #7c3aed !important;
+      box-shadow: 0 0 20px var(--purple-glow), 0 0 40px rgba(139,92,246,0.25) !important;
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+
+    /* ── Sections ── */
+    .section {
+      display: none;
+      padding-top: 70px;
+      min-height: 100vh;
+      min-height: 100svh;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .section.active { display: block; }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* ── Hero ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      padding: 0 2rem 1rem;
+      margin-top: -1.5rem;
+    }
+
+    .hero-logo {
+      width: 420px;
+      max-width: 85vw;
+      height: auto;
+      margin-top: 0;
+      margin-bottom: 0.1rem;
+      filter: drop-shadow(0 0 24px rgba(139,92,246,0.6));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .hero-tagline {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      color: var(--text-muted);
+      max-width: 700px;
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .series-format {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.6rem, 1.1vw, 0.75rem);
+      letter-spacing: 0.22em;
+      color: var(--purple);
+      text-transform: uppercase;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 2rem;
+      opacity: 0.85;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.9rem, 8vw, 6rem);
+      color: var(--text);
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 40px rgba(139,92,246,0.3), 0 0 80px rgba(139,92,246,0.1);
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-divider {
+      width: 100%;
+      max-width: 400px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      margin: 1rem auto;
+    }
+
+    /* ── Section Header ── */
+    .section-header {
+      text-align: center;
+      padding: 3rem 2rem 1.5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--teal));
+      border-radius: 2px;
+      margin: 0 auto;
+    }
+
+    /* ── Trailer Embed ── */
+    .trailer-section {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .trailer-embed-wrapper {
+      padding: 1rem 2rem 2rem;
+    }
+
+    .trailer-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(139,92,246,0.25), 0 0 120px rgba(139,92,246,0.08);
+      border: 1px solid rgba(139,92,246,0.2);
+    }
+
+    .trailer-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 700px) {
+      .trailer-embed-wrapper { padding: 0.75rem 0.75rem 1.5rem; }
+    }
+
+    /* ── Episode List ── */
+    .episodes-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .episode-card {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(139,92,246,0.1);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      opacity: 0;
+      transform: translateY(16px);
+      cursor: pointer;
+    }
+
+    .episode-card.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s ease, transform 0.4s ease, box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .episode-card:hover {
+      transform: scale(1.015) translateY(-2px);
+      box-shadow: 0 8px 32px rgba(139,92,246,0.2);
+      border-color: rgba(139,92,246,0.4);
+    }
+
+    .episode-card.locked { cursor: default; }
+
+    .episode-card.locked:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(139,92,246,0.1);
+    }
+
+    .episode-thumb {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      align-self: flex-start;
+      aspect-ratio: 16 / 9;
+    }
+
+    .thumb-gradient { width: 100%; height: 100%; display: block; }
+
+    .thumb-real {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--lock-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lock-icon {
+      color: rgba(255,255,255,0.7);
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+    }
+
+    .episode-info {
+      overflow: hidden;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      height: calc(380px * 9 / 16);
+      transition: height 0.4s ease;
+    }
+
+    .summary-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 130px;
+      background: linear-gradient(transparent, var(--surface) 55%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .episode-info.expanded .summary-fade {
+      display: none;
+    }
+
+    .read-more-btn {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--purple);
+      font-size: 0.78rem;
+      cursor: pointer;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.03em;
+      z-index: 2;
+    }
+
+    .read-more-btn:hover { opacity: 0.7; }
+
+    .episode-info.expanded .read-more-btn {
+      position: static;
+      margin-top: 0.4rem;
+    }
+
+    .episode-number {
+      font-family: monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .episode-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .episode-summary {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .episode-card.locked .episode-summary { color: var(--text-dim); }
+
+    .btn-watch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+
+    .btn-watch:hover {
+      background: #7c3aed;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .btn-locked {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface2);
+      color: var(--text-dim);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: default;
+      align-self: flex-start;
+    }
+
+    /* ── Vision Section ── */
+    .vision-hero {
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .vision-tagline {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-transform: uppercase;
+      text-shadow: 0 0 40px rgba(139,92,246,0.4), 0 0 80px rgba(139,92,246,0.15);
+      line-height: 1.25;
+      margin-bottom: 2.5rem;
+    }
+
+    .vision-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .vision-body p {
+      font-size: clamp(0.98rem, 1.8vw, 1.1rem);
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.75rem;
+    }
+
+    .vision-body p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── About Section ── */
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+      text-align: center;
+    }
+
+    .about-content p {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .about-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), transparent);
+      margin: 2rem 0;
+    }
+
+    .btn-cta-large {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--purple), #7c3aed);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+      margin-top: 1rem;
+    }
+
+    .btn-cta-large:hover {
+      box-shadow: 0 0 30px var(--purple-glow), 0 0 60px rgba(139,92,246,0.2);
+      transform: translateY(-3px);
+    }
+
+    /* ── Characters Section ── */
+    .crew-subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 0 2rem 2rem;
+    }
+
+    .crew-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .crew-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(139,92,246,0.1);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      cursor: default;
+    }
+
+    .crew-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(139,92,246,0.25);
+      border-color: var(--purple);
+    }
+
+    .crew-portrait-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+    }
+
+    .crew-portrait-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .crew-card:hover .crew-portrait-img img { transform: scale(1.05); }
+
+    .crew-info { padding: 1.25rem; }
+
+    .crew-name {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .crew-role {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .crew-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .crew-desc p { margin-bottom: 0.75rem; }
+    .crew-desc p:last-child { margin-bottom: 0; }
+
+    /* ── Synopsis Section ── */
+    .synopsis-section {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .synopsis-part-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.78rem, 1.8vw, 0.92rem);
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      margin-top: 2.25rem;
+    }
+
+    .synopsis-section p {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .teasers-coming-soon {
+      text-align: center;
+      padding: 6rem 2rem 8rem;
+    }
+
+    .teasers-coming-soon span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow: 0 0 40px rgba(139,92,246,0.35), 0 0 80px rgba(139,92,246,0.12);
+    }
+
+    /* ── Teasers Section ── */
+    .teasers-placeholder {
+      max-width: 860px;
+      margin: 2rem auto 5rem;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .teasers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .teaser-slot {
+      background: var(--surface);
+      border: 2px dashed rgba(139,92,246,0.25);
+      border-radius: var(--radius);
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--text-dim);
+      font-size: 0.88rem;
+      font-style: italic;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .teaser-slot.portrait {
+      aspect-ratio: 9 / 16;
+      max-width: 220px;
+      margin: 0 auto;
+    }
+
+    .teaser-slot svg {
+      opacity: 0.3;
+    }
+
+    .portrait-reels {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .teasers-note {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ── Invest Section ── */
+    .invest-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+    }
+
+    .invest-intro {
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .invest-intro p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+
+    .invest-form {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-dim); }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+
+    .btn-invest-submit {
+      align-self: flex-start;
+      background: linear-gradient(135deg, var(--purple), #6d28d9);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .btn-invest-submit:hover {
+      box-shadow: 0 0 28px var(--purple-glow), 0 0 8px var(--purple-glow);
+      transform: translateY(-3px);
+    }
+
+    .invest-success {
+      color: var(--teal);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.75rem 0;
+    }
+
+    /* ── Studio / Founders ── */
+    .studio-section {
+      max-width: 860px;
+      margin: 4rem auto 0;
+      padding: 0 2rem 3rem;
+    }
+
+    .studio-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .studio-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .studio-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .founders-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .founder-card {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      background: var(--surface);
+      border: 1px solid rgba(0,212,255,0.12);
+      border-radius: var(--radius);
+      padding: 2rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .founder-card:hover {
+      border-color: rgba(0,212,255,0.35);
+      box-shadow: 0 0 30px rgba(0,212,255,0.07);
+    }
+
+    .founder-text { flex: 1; }
+
+    .founder-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .founder-role {
+      font-size: 0.85rem;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .founder-bio {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .founder-photo-img {
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .founder-photo-img img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(0,212,255,0.25);
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .founder-card { flex-direction: column; text-align: center; }
+    }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.5);
+      box-shadow: 0 0 60px rgba(139,92,246,0.3), 0 0 120px rgba(139,92,246,0.1);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 440px;
+      width: 100%;
+      position: relative;
+      transform: scale(0.94) translateY(12px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-backdrop.open .modal { transform: scale(1) translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color var(--transition);
+      padding: 4px;
+    }
+
+    .modal-close:hover { color: var(--text); }
+
+    .modal h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      letter-spacing: 0.06em;
+    }
+
+    .modal p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .modal-input {
+      background: var(--bg2);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .modal-input::placeholder { color: var(--text-dim); }
+
+    .modal-input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+
+    .modal-submit {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.8rem 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+
+    .modal-submit:hover {
+      background: #7c3aed;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .modal-fine-print {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* ── Video Modal ── */
+    #videoModalBackdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #videoModalBackdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .video-modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(139,92,246,0.3);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    #videoModalBackdrop.open .video-modal-inner { transform: scale(1); }
+
+    .video-modal-close {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.6rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      z-index: 10;
+    }
+
+    .video-modal-close:hover { color: #fff; }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(139,92,246,0.1);
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+
+    footer span { color: var(--purple); }
+
+    /* ── Mobile Nav ── */
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: rgba(6,6,6,0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 99;
+      border-bottom: 1px solid rgba(139,92,246,0.2);
+    }
+
+    .nav-mobile-menu.open { display: flex; }
+
+    .nav-mobile-menu a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color var(--transition);
+    }
+
+    .nav-mobile-menu a:hover,
+    .nav-mobile-menu a.active { color: var(--purple); }
+
+    /* ── Responsive ── */
+
+    /* Tablet */
+    @media (max-width: 900px) {
+      .crew-grid { grid-template-columns: repeat(2, 1fr); }
+      .episode-card { grid-template-columns: 280px 1fr; }
+      .episode-info { height: calc(280px * 9 / 16); }
+    }
+
+    /* Large mobile */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      /* Global safety */
+      .section { padding-top: 60px; }
+
+      /* Hero */
+      .hero-logo { width: 260px; }
+      .hero-tagline { font-size: 1rem; line-height: 1.5; }
+      .series-format { letter-spacing: 0.08em; font-size: 0.62rem; }
+
+      /* Episode cards: vertical stack */
+      .episode-card { grid-template-columns: 1fr; }
+      .episode-thumb { width: 100%; aspect-ratio: 16 / 9; }
+      .episode-info { height: auto; overflow: visible; padding: 1rem; }
+      .summary-fade { display: none; }
+      .read-more-btn { display: none; }
+      .episode-summary {
+        -webkit-line-clamp: unset;
+        display: block;
+        overflow: visible;
+      }
+      .episodes-container { padding: 0.5rem 0.75rem 3rem; gap: 1rem; }
+
+      /* Section headers */
+      .section-header { padding: 1.5rem 1rem 1rem; }
+
+      /* Vision */
+      .vision-hero { padding: 1.5rem 1rem 1rem; }
+      .vision-tagline { font-size: clamp(1rem, 5vw, 1.4rem); letter-spacing: 0.03em; }
+      .vision-body { padding: 0 1rem 3rem; }
+      .vision-body p { font-size: 0.92rem; margin-bottom: 1.25rem; }
+
+      /* About */
+      .about-content { padding: 1rem 1rem 2rem; }
+      .studio-section { padding: 0 1rem 2rem; margin-top: 2rem; }
+      .studio-title { font-size: 1.1rem; }
+      .studio-desc { font-size: 0.9rem; }
+      .founder-card { flex-direction: column; align-items: center; text-align: center; gap: 1rem; padding: 1.25rem; }
+
+      /* Characters */
+      .crew-grid { grid-template-columns: 1fr 1fr; padding: 0 0.75rem 3rem; gap: 0.75rem; }
+      .crew-subtitle { padding: 0 1rem 1rem; font-size: 0.88rem; }
+
+      /* Teasers */
+      .teasers-placeholder { padding: 0 0.75rem; }
+      .teasers-grid { grid-template-columns: 1fr; }
+
+      /* Invest */
+      .invest-content { padding: 1rem 1rem 3rem; }
+      .invest-intro p { font-size: 0.9rem; }
+    }
+
+    /* Small mobile */
+    @media (max-width: 480px) {
+      .crew-grid { grid-template-columns: 1fr; }
+      .hero-logo { width: 200px; }
+      .crew-name { font-size: 0.9rem; }
+
+      #enter-btn {
+        font-size: 0.82rem;
+        padding: 0.85rem 2rem;
+        letter-spacing: 0.18em;
+        min-height: 52px;
+      }
+
+      .nav-logo img { height: 36px; }
+
+      .btn-invest-submit {
+        align-self: stretch;
+        text-align: center;
+        width: 100%;
+      }
+
+      .hero-tagline {
+        font-size: 0.92rem;
+        letter-spacing: 0.02em;
+        padding: 0 0.5rem;
+      }
+
+      .modal { padding: 1.75rem 1.25rem; }
+      .modal h3 { font-size: 1.1rem; }
+    }
+
+    /* ── Fade-in animations ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Starfield ── -->
+<canvas id="starfield"></canvas>
+
+<!-- ══════════════════════════════════════════════
+     LANDING / SPLASH SCREEN
+══════════════════════════════════════════════ -->
+<div id="landing">
+  <picture>
+    <source media="(min-width: 768px)" srcset="Judith%20New%20Poster%2016-9.png">
+    <img id="landing-poster" src="Judith%20New%20Poster%209-16.png" alt="The Judith" />
+  </picture>
+  <div id="landing-overlay"></div>
+  <div id="enter-cta">
+    <button id="enter-btn">Enter Site</button>
+    <div class="enter-arrow">&#x25BC;</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- ── Nav ── -->
+  <nav id="navbar">
+    <div class="nav-logo" onclick="navigate('main')">
+      <img src="judith-logo-new.png" alt="The Judith" />
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#" data-section="main"   class="active">Main</a></li>
+      <li><a href="#" data-section="home">Episodes</a></li>
+      <li><a href="#" data-section="crew">Characters</a></li>
+      <li><a href="#" data-section="vision">Our Vision</a></li>
+      <li><a href="#" data-section="teasers">Teasers &amp; Trailers</a></li>
+      <!-- ABOUT US TAB TEMPORARILY HIDDEN - restore by uncommenting -->
+      <!-- <li><a href="#" data-section="about">About Us</a></li> -->
+      <li><a href="#" data-section="invest">Invest</a></li>
+      <li><a href="#" class="nav-cta" id="signupBtn">Sign Up to Stay Informed</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ── Mobile Nav Menu ── -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a data-section="main"   class="active">Main</a>
+    <a data-section="home">Episodes</a>
+    <a data-section="crew">Characters</a>
+    <a data-section="vision">Our Vision</a>
+    <a data-section="teasers">Teasers &amp; Trailers</a>
+    <!-- ABOUT US MOBILE TAB TEMPORARILY HIDDEN - restore by uncommenting -->
+    <!-- <a data-section="about">About Us</a> -->
+    <a data-section="invest">Invest</a>
+    <a id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: MAIN
+  ═════════════════════════════════════════════ -->
+  <section id="section-main" class="section active">
+
+    <div class="hero">
+      <img src="judith-logo-new.png" alt="The Judith" class="hero-logo" />
+      <p class="hero-tagline">
+        After planet Earth became completely antisemitic, the spaceship Judith was sent to find a new home for the Jews. but even in the vast and infinite space - nobody wants them.
+      </p>
+      <div class="hero-divider"></div>
+      <p class="series-format">SCI-FI COMEDY · ANIMATED SERIES<br>10 EPISODES · 25 MIN</p>
+    </div>
+
+    <div class="trailer-section">
+      <div class="section-header" style="padding-bottom:0.5rem;">
+        <h2>The Judith Promo</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="trailer-embed-wrapper">
+        <div class="trailer-embed">
+          <iframe
+            src="https://player.vimeo.com/video/1198418462?color=8b5cf6&title=0&byline=0&portrait=0"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            title="The Judith Promo">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header fade-in" style="transition-delay:0.08s">
+      <h2>Season 1 Synopsis</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="synopsis-section fade-in" style="transition-delay:0.16s">
+      <div class="synopsis-part-title">Part A: Dysfunction of the Status Quo</div>
+      <p>The season opens in total chaos. The previous crew was murdered (without anyone even bothering to investigate why). The morning after the massacre, the main computer activates the "Judith Protocol" and sends a team of seven strangers who have nothing in common but shared Jewish DNA and varying traumas. They do not get along, not because they are monsters, but because they are too human: the Captain is a leadership fantasist living in a war movie, Jordan is a progressive who thinks every situation is a workshop in sensitivity, Schtempepper is a nihilist who would rather the ship explode than admit he was wrong, and Rabbi Itzik and Dr. Khalil are simply hustlers of survival. and Lilly...oh Lilly. Inside this tin can, every mission to integrate into a new planet turns into a family fight at a Friday night dinner, only the fate of the galaxy is at stake. They will not be able to fit in anywhere, because they cannot even sit in one room without wanting to kill each other.</p>
+
+      <div class="synopsis-part-title">Part B: The Transformation (or: How to Learn to Love the Monster Next to You)</div>
+      <p>When they realize that no one in the universe is even willing to sell them coffee, something changes. Under the infinite pressure, their egos begin to crack. The Captain starts to understand that the rules are just a suggestion. Schtempepper finds some comfort in the fact that someone actually appreciates his cursed genius, and Lilly, the alien who came to destroy them, starts asking herself why the hell she enjoys this human neurosis. They turn from a crew of strangers into a toxic, yet effective, family unit.</p>
+
+      <div class="synopsis-part-title">Part C: Consequences and Collapse</div>
+      <p>This is where everything explodes. It turns out that every planet they visited was rendered uninhabitable because of their stupidity. It is not just an antisemitic universe. it is a universe united in its disgust toward the "Judith" expedition. The Anti-Jewish Federation rises, and they are coming to end what remains. Just before they are wiped off the map, they discover the season's shocking revelation: there is a parallel universe. A universe where Jews are not only loved, they are the stars of the place. Will they run away there for safe haven? Or will they decide to fight for the jews in this jew-hating universe, even if it is about to explode?</p>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: HOME (Episodes)
+  ═════════════════════════════════════════════ -->
+  <section id="section-home" class="section">
+
+    <div class="section-header">
+      <h2>Season 1: Episodes</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="episodes-container" id="episodeList"></div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: OUR VISION
+  ═════════════════════════════════════════════ -->
+  <section id="section-vision" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Our Vision</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="vision-body">
+      <p class="fade-in" style="transition-delay:0.08s">
+        Our vision is simple: to create the most unhinged, unapologetic, and boundary-shattering animated series the screen has ever seen. Operating in the wild-west of web animation means no suits, no censorship, and zero permissions asked. We are here to weaponize taboos, stir up chaos, and make some serious, global noise.
+      </p>
+      <p class="fade-in" style="transition-delay:0.16s">
+        But don't let the madness fool you. Beneath the sci-fi chaos lies a razor-sharp mission: to wage war on modern antisemitism. We aren't here to lecture. Instead, we take historical trauma and current events and flip them into brilliant galactic metaphors that hit you right in basic human logic. We are here to systematically dismantle the cynical excuse that "anti-Zionism is not antisemitism."
+      </p>
+      <p class="fade-in" style="transition-delay:0.24s">
+        We have absolutely no intention of sugarcoating reality or painting Jews as flawless, holy "beacon of light." Our characters are deeply flawed, chaotic, and messy. Just like every other human being in the universe. And that's the whole point. Through the bizarre alien civilizations we build, we hold a mirror up to the world's blatant double standards and put the hypocrisy of antisemitism on blast.
+      </p>
+      <p class="fade-in" style="transition-delay:0.32s">
+        <strong>This series is our ultimate statement: We are officially done hiding. We are done apologizing for our identity. Deal with it.</strong>
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: ABOUT
+  ═════════════════════════════════════════════ -->
+  <section id="section-about" class="section">
+
+    <div class="section-header fade-in">
+      <h2>About Us</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="studio-section fade-in" style="transition-delay:0.12s">
+      <div class="studio-header">
+        <h3 class="studio-title">New Angle Studios</h3>
+        <div class="section-divider" style="margin:1rem auto 1.5rem;"></div>
+        <p class="studio-desc">
+          New Angle Studios is an independent animation studio built at the intersection of
+          decades of creative industry experience and next-generation AI production tools.
+          We believe the future of storytelling belongs to those who are unafraid to point
+          the camera somewhere no one else is looking, and to use every tool available
+          to get there. Our work is fast, bold, and uncompromising.
+        </p>
+      </div>
+
+      <div class="founders-grid">
+        <div class="founder-card fade-in" style="transition-delay:0.55s">
+          <div class="founder-text">
+            <div class="founder-name">Eytan Baritzy</div>
+            <p class="founder-bio">
+              With over 20 years in the entertainment industry as a screenwriter and director,
+              Eytan brings the storytelling instincts and creative vision that make The Judith
+              more than just an experiment. He writes the scripts, shapes
+              the characters, and makes sure the comedy actually lands.
+            </p>
+          </div>
+          <div class="founder-photo-img">
+            <img src="Eytan profile pic.png" alt="Eytan Baritzy" />
+          </div>
+        </div>
+
+        <div class="founder-card fade-in" style="transition-delay:0.62s">
+          <div class="founder-text">
+            <div class="founder-name">Nadav Shlomo Giladi</div>
+            <p class="founder-bio">
+              A creative technologist with a background in visual storytelling, bringing
+              the technical and aesthetic direction that makes each frame of The Judith
+              look like nothing else on screen. Fluent in the language of AI tools
+              and experienced in translating a writer's vision into motion.
+            </p>
+          </div>
+          <div class="founder-photo-img">
+            <img src="Nadav profile pic.png" alt="Nadav Shlomo Giladi" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: TEASERS & TRAILERS
+  ═════════════════════════════════════════════ -->
+  <section id="section-teasers" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Teasers &amp; Trailers</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="teasers-coming-soon fade-in" style="transition-delay:0.1s">
+      <span>Coming Soon</span>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: CHARACTERS
+  ═════════════════════════════════════════════ -->
+  <section id="section-crew" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Characters</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <p class="crew-subtitle fade-in" style="transition-delay:0.08s">
+      Meet the brave, neurotic, and occasionally brilliant souls aboard the Judith.
+    </p>
+
+    <div class="crew-grid" id="crewGrid"></div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: INVEST
+  ═════════════════════════════════════════════ -->
+  <section id="section-invest" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Invest in The Judith</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="invest-content">
+
+      <div class="invest-intro fade-in" style="transition-delay:0.08s">
+        <p>
+          The Judith is more than a show. It's a proof of concept for a new era of
+          independent animation. AI-powered, human-written, pilot complete.
+          We're looking for partners who see what we see: a breakout series with
+          global appeal, built on the tools that are reshaping the industry.
+        </p>
+        <p style="margin-top:1rem;">
+          If you're interested in being part of what comes next, reach out.
+          We'd love to tell you more.
+        </p>
+      </div>
+
+      <form class="invest-form fade-in" style="transition-delay:0.18s" onsubmit="handleInvestForm(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="invest-name">Name</label>
+            <input type="text" id="invest-name" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="form-group">
+            <label for="invest-email">Email</label>
+            <input type="email" id="invest-email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="invest-phone">Phone</label>
+          <input type="tel" id="invest-phone" name="phone" placeholder="+1 (555) 000-0000" />
+        </div>
+        <div class="form-group">
+          <label for="invest-message">Message</label>
+          <textarea id="invest-message" name="message" rows="5" placeholder="Tell us about yourself and your interest in the project..." required></textarea>
+        </div>
+        <button type="submit" class="btn-invest-submit">Send Message &rarr;</button>
+        <div id="invest-success" class="invest-success" style="display:none;">
+          &#x2713; Message sent. We'll be in touch soon.
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    &copy; 2026 <span>The Judith</span> &nbsp;&middot;&nbsp; An AI-animated dark comedy series
+  </footer>
+
+</div><!-- /app -->
+
+<!-- ── Video Modal ── -->
+<div id="videoModalBackdrop">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoModalClose">&#x2715;</button>
+    <div class="video-wrapper">
+      <iframe id="vimeoPlayer" src="" frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ── Sign Up Modal ── -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+    <h3 id="modalTitle">Stay in the Loop</h3>
+    <p>
+      Be the first to know when new episodes drop, get exclusive behind-the-scenes
+      content, and hear about our Kickstarter launch.
+    </p>
+    <form class="modal-form" action="https://formspree.io/f/xaqvjazj" method="POST">
+      <input
+        class="modal-input"
+        type="email"
+        name="email"
+        placeholder="Your email address..."
+        required
+        autocomplete="email"
+      />
+      <button type="submit" class="modal-submit">Sign Me Up &rarr;</button>
+      <p class="modal-fine-print">No spam. Just Judith.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════════════════ -->
+<script>
+/* ── Data ── */
+const EPISODES = [
+  {
+    num: 1,
+    title: 'In Our Image',
+    summary: 'As The Judith mission arrives at a promising new world, the crew believes they have finally found their sanctuary. Their hopes are quickly challenged when they discover the planet is already home to a peculiar, highly sensitive civilization. To secure their place on the planet, the crew must navigate a minefield of bizarre cultural expectations and absurd diplomatic demands, testing the limits of their patience, and their dignity.',
+    locked: false,
+    img: 'episode1.jpg',
+    vimeoId: '1195342282'
+  },
+  {
+    num: 2,
+    title: 'Ass a Jew',
+    summary: "After a long run of bad luck and planets that wouldn't even sell them coffee, the crew picks up the signal of their dreams: an invite to a world full of Jews, diaspora Jews, the Western kind, who've never once set foot in Israel. They're welcomed with open arms and finally feel like they've found their people. The good vibes don't last. The locals have their own plans for the newcomers, and it turns out being Jewish together doesn't fix the huge gap in beliefs between them. Jordan is the only one who fits right in, finding her crowd among the planet's proudly progressive Jews. Schtempepper starts digging into what happened to the crew that came before them. Rabbi Itzik picks a fight with the local Reform rabbi over the meaning of faith, when mutual feelings start to arise between them. The Captain wants to know why no one will sacrifice themselves for the team, while making sure it's never him. And Dr. Khalil, the only Arab aboard, can't believe how badly these Jews treat him, until he learns the even more insulting reason why. The group starts to understand that they need more common ground than being Jews to get along and succeed with their mission.",
+    locked: true,
+    img: 'Episode%202%20Ass%20A%20Jew.png'
+  },
+  {
+    num: 3,
+    title: 'Exodus',
+    summary: "A critical malfunction sends the Judith spinning out of control and crashing onto a strange planet. Within minutes the crew is surrounded by friendly ancient Egyptians, who offer them a place in the community in exchange for a little help building pyramids. The local Pharaoh explains that building pyramids together is the whole meaning of life, and for a moment it sounds almost nice. It isn't. The crew quickly realizes they haven't joined a community, they've become slaves with a strict pecking order, and now they need to pull off an escape of biblical proportions, except their ship is still broken and the robot they left aboard has lost contact and is, frankly, no help at all. The Captain decides this is his big heroic moment and starts planning the great escape with equal parts courage and stupidity, only to find that nobody wants to follow him the second things get hard. Rabbi Itzik thinks he should be the one leading this very biblical situation, and the two of them butt heads over who gets to be the hero. Schtempepper impresses the Egyptians with a bit of science and gets promoted to royal Minister of Science, living like a king while the rest of his crew sweats in the sun. Jordan keeps freezing out the ship's mechanic, an ex she would rather forget, while everyone else takes the mechanic's side. Khalil is leaned on to fix a problem he has no idea how to fix, sweating to keep his own secret buried. And Lilly, somehow, gets everyone else to do her work for her. They came down looking for shelter. They're going to have to escape it.",
+    locked: true,
+    img: 'Episode%203%20Exodus.png'
+  },
+  {
+    num: 4,
+    title: 'Microaggression',
+    summary: "The crew lands on a beautiful, quiet planet and finally gets to relax, playing volleyball and soaking up the calm. As far as they can tell the place is empty, so they let loose and enjoy themselves. What they don't notice is that the planet isn't empty at all, it's home to a tiny, gentle civilization the whole galaxy adores, and the crew's harmless fun is leaving behind massive destruction, rubble and bodies, an entire culture crushed underfoot. They never meant to hurt anyone, but that hardly matters anymore, because this is just one more story spreading across the galaxy: wherever the Jews go, ruin follows. When the locals find a way to make the crew finally see the damage they've caused, the situation spins out of control and the team is left scrambling to fix the disaster. This is the episode where the egos start to crack, where the delegation of the Judith who can't stand each other begin to admit it out loud and realize that the only way out is to actually work together.",
+    locked: true,
+    img: 'episode4.png'
+  },
+  {
+    num: 5,
+    title: 'How Dare We?',
+    summary: "The crew reaches a planet in a far off corner of the galaxy, and the locals somehow recognize right away that they're humans. That's because the planet's leader is human too, a bitter old woman named Greta who has clearly seen and done things out in space that no one should. At first it feels like a lucky break, finally someone likes them, but the moment Greta realizes her guests are Jews, her hatred sets off a bizarre crisis that quickly grows into a threat to the entire universe. Worse still, the only way to stop it is the most embarrassing thing this crew has ever been asked to do, and it kicks off a full blown battle of the sexes between cynical Schtempepper and progressive Jordan. Running alongside all the chaos, the crew sits down one by one with the ship's psychologist, and the sessions crack each of them wide open. The Captain wrestles with the fact that no one respects him as a leader. Rabbi Itzik feels like a failure for not bringing anyone closer to faith. Khalil is sweating that someone will finally figure out he's not really a doctor. Boris quietly cries. And Schtempepper tries to psychoanalyze the psychologist, only to expose just how unsure of himself he really is. It's the funniest, filthiest, and most revealing hour of the season.",
+    locked: true,
+    img: 'Episode%205%20How%20Dare%20We%3F.png'
+  },
+  {
+    num: 6,
+    title: 'Open Air Prism',
+    summary: "To help fund the new Jewish planet, Schtempepper leads the gang on a hunt for the purest diamond in the universe. But one tiny mishap involving a single photon turns the diamond into a deadly prism, splitting the entire galaxy into countless little prisons made of light. Whole civilizations end up trapped behind laser bars, families are torn apart with no way to reach each other, and half the universe is suddenly living under a siege the crew accidentally created. As the gang scrambles to figure out what went wrong and how to shut the thing down quietly, which they are spectacularly bad at, the Intergalactic Federation steps fully into view at last, the closest thing this universe has to a court of nations, and it is not a Jew-loving entity. Meanwhile something strange keeps happening. Every so often the lasers flicker off for two or three seconds, and nobody can work out when or why. In those tiny windows people risk everything to cross the line, and a belief starts spreading across the galaxy that prayer is what's causing the blackouts, with whole cults forming around the idea. With the universe accusing them of an intergalactic occupation and the Federation closing in, the crew has to fix the mess before the galaxy's fury comes down on them for good.",
+    locked: true,
+    img: 'Episode%206%20Open%20Air%20Prism.png'
+  },
+  {
+    num: 7,
+    title: 'Apart-Hide',
+    summary: "Locked up by the Federation and waiting for the intergalactic trial that will judge them for their crimes against the universe, the crew has nothing to do but talk, and the talking is where it all comes apart. Built largely from flashbacks, this is the episode that fills in the blanks, pulling back the curtain on who these people really are and where they came from, and letting the audience in on secrets the crew themselves have been hiding or never knew. One by one the truths come out, and almost none of them are what anyone expected. Long held fears come true, carefully buried lies surface, and at least one member of the group turns out to be something entirely different from what they've claimed all along. It's the hour where a lot of things change for good, where loyalties crack and faith in each other starts to crumble right when they can least afford it.",
+    locked: true,
+    img: 'Episode%207%20-%20Apart-Hide.png'
+  },
+  {
+    num: 8,
+    title: 'We Need a Hague',
+    summary: "The trial is broadcast across the entire galaxy, and the crew stands accused of pretty much everything. One after another, the Federation's prosecutors and a long line of planets from across the season, worlds the crew left wrecked, ruined, or simply blamed for it, take the stand to build their case, painting the expedition and Zionist Jews everywhere as the single most evil force in the universe. The crew tries to defend itself, but the lawyer the Federation assigned them is somewhere between useless and actively unhelpful. As it dawns on them that the whole thing is rigged and a guilty verdict is already waiting, Schtempepper drops a bombshell, revealing a dark secret the crew has been sitting on all along, a doomsday card that just might be their last chance to walk out of this trial alive.",
+    locked: true,
+    img: 'Episode%208%20-%20We%20Need%20a%20Hague.png'
+  },
+  {
+    num: 9,
+    title: "Once Upon A Time in 48",
+    summary: "Having barely scraped together a plea deal with the Intergalactic Federation, the crew is finally promised a planet to call home: a world known only as 48. But there's history here. The Asses, the Jew eating species first glimpsed back in episode 2, are a conquering race, and to keep the damage contained the Federation has been letting them swallow up worthless, forgotten little worlds, forty seven of them so far. Handing the crew number forty eight was supposed to be the easy part, until the Asses throw a fit, and the Federation folds, announcing that the crew and the Asses will simply have to share the planet and learn to get along. The crew agrees, but the Asses don't, declaring war and insisting the world is theirs alone. What follows is a brutal, bloody fight for the crew's new home against a merciless enemy, and along the way they realize someone is quietly helping them from the shadows, a mysterious figure tipping the war in their favor. Who that figure turns out to be will leave the crew, and the audience, completely stunned, and crack open a secret about the universe itself that changes everything.",
+    locked: true,
+    img: "Once%20Upon%20a%20Time%20in%20'48.png"
+  },
+  {
+    num: 10,
+    title: 'Jewverse',
+    summary: "With the existence of the Jewverse now out in the open, a universe where every Jew is loved and safe, the crew finally learns the real reason they were sent away from Earth in the first place, and the truth shatters everything they thought they knew about their mission. There's no time to sit with it. The Asses are already breaking the peace deal and pushing again to claim the whole planet for themselves, and the pressure splits the crew right down the middle. Some want to dig in and fight for the home they bled for, others want to set off into the unknown once more to find the way to the Jewverse and the safe haven waiting there. As the two camps tear at each other and the last buried secrets come spilling onto the table, the crew has to fend off the Asses and decide, once and for all, what the expedition is really for and where it goes from here.",
+    locked: true,
+    img: 'Parallel%20Jewniverse.png'
+  }
+];
+
+const CREW = [
+  {
+    name: 'The Captain',
+    img: 'Captain.png',
+    desc: `<p>The 142nd clone of the "Ultimate Leader" project, which was intended to combine the personality and experience of all Israeli leaders throughout history, a project that failed spectacularly. Instead of birthing a genius savior, the lab spat out a man with excessive self-confidence, zero tactical understanding, and a burning desire to save the world. Since the project officially became a "suicide squad for lost causes," he has been caught in an endless loop: every time he dies (which happens often), a "better" version of him is created, making him the most experienced yet dubious leader in the galaxy.</p><p>He takes himself deathly seriously, viewing himself as a moral exemplar with a singular goal: to find a safe home for the Jews. However, hidden beneath this authoritative shell is a man who is beginning to develop something dangerous, humanity. His encounters with his chaotic crew push him to the edge, and over time, he discovers that values are nice, but sometimes you have to break the rules and get your hands dirty to actually achieve results.</p>`
+  },
+  {
+    name: 'Jordan',
+    img: 'Jordan.png',
+    desc: `<p>Jordan is the technological brain and the liberal compass of the spaceship. As a child prodigy who won a competition for gifted youth without realizing she was signing up for a one-way ticket to space, she found herself cut off from Earth, the place where people always mocked her ambition. She joins the team with a heavy burden of needing to prove herself: she is a Zionist, a "woke" activist, and desperate to prove to the universe (and herself) that she is a strong, independent woman who is worth more than the stigmas attached to her.</p><p>Her loyalty to the Captain and the command hierarchy is almost blind, stemming from her need to feel part of a stable structure she lacked her entire life. But while she is busy trying to prove she can do anything, she misses the fact that she is the true leader of this team. Her journey is a transition from the need for external validation ("I am a strong woman because I say so") to the realization that it doesn't matter who she is or where she comes from, what defines her is only her actions in the field. She discovers that sometimes the best way to prove you can lead is simply to stop asking for permission and just do it.</p>`
+  },
+  {
+    name: 'Schtempepper',
+    img: 'Schtempepper.png',
+    desc: `<p>Schtempepper is a tormented 270-year-old genius living on borrowed time and using selfish technology that he keeps only for himself. As Israel's former Minister of Science, he is responsible for the historical blunder that turned the sun into a giant Star of David projector that shines on the entire planet every day-a malfunction that sent global antisemitism to new heights and sent him into exile in space as community service. Schtempepper is an infantile, sharp-tongued nihilist who trusts no one and is a manipulator by nature, spending his time in constant competition with himself and the universe.</p><p>He joins the expedition as a refugee fleeing shame, but deep down, he is still looking for a way to redeem his lost honor, a goal he had long since given up on. His journey is one of moving from depressive nihilism to finding new meaning within the group's madness. When he realizes that the team, despite all their failures, actually values his brilliant mind, his emotional walls begin to crumble. To his own horror, he discovers that he cares about the people around him, and that perhaps the only way to restore his honor is not by inventing new gadgets, but by taking responsibility for the most dysfunctional crew in the galaxy.</p>`
+  },
+  {
+    name: 'Rabbi Itzik',
+    img: 'RABBI ITZIK.png',
+    desc: `<p>Rabbi Itzik is the living definition of "failing upwards." As someone who was merely a junior kashrut supervisor on the expedition's religious team, he found himself, due to a fatal mistake he is unaware of- in the position of Chief Rabbi of the Judith after all his predecessors were wiped out. He is a professional nagger, with a burning faith in Judaism that clashes embarrassingly with his near-zero knowledge of it. He is always certain he has the perfect solution to every problem, and it is always the worst possible solution imaginable.</p><p>His unofficial mission is a lifetime of dodging responsibility, using creative excuses to avoid lifting a finger. But space is a lonely place, and as the expedition's attempts to find a home fail again and again, Itzik experiences a deep crisis of faith. His prayers, surprisingly, do not stop the disasters, and he begins to fall apart. And so, at the group's lowest point, Itzik finds a renewed and unstoppable faith. He doesn't just believe, he becomes a galactic missionary who starts dreaming of converting aliens, ensuring much greater troubles ahead.</p>`
+  },
+  {
+    name: 'Dr. Khalil',
+    img: 'Dr. Khalil.png',
+    desc: `<p>Khalil is an IT guy from an Arab village in northern Israel who discovered that the best way to escape the consequences of a double (and angry) romance was to fake his resume and become the expedition's ship doctor, running as far as possible from the blood feud waiting for him. He has zero real medical knowledge; everything runs through AI algorithms he operates behind the scenes. However, he possesses the confidence of a quiet Don Juan who manages to charm every girl he crosses paths with. Hidden beneath the persona of a pleasant guy is a condescending and manipulative man whose only goal is to "stay out of trouble," erase his failed past, and reinvent himself as a small cog disappearing into the greater system.</p><p>His secret is a ticking time bomb, and when it is revealed, it leads to an inevitable explosion with the crew. But here comes the surprising twist: instead of throwing him into space, they decide-in their characteristic madness-to help him become a real doctor. But very quickly, he is accused of a colossal professional failure after he fails to identify that Lily, his assistant, is a Trojan alien, which leads to the revocation of the degree he was never meant to hold. Khalil is proof that even when you try to run as far as possible, your past will always catch up to you.</p>`
+  },
+  {
+    name: 'Boris',
+    img: 'Boris.png',
+    desc: `<p>Boris is the embodiment of human tragedy underneath a clunky hazmat suit. He is a Russian-Jewish atomic scientist who survived an explosion at the Dimona reactor, only to become the most miserable and living doomsday weapon in the galaxy. A technical bug in his suit causes the radioactive particles in his body to accelerate endlessly, turning him into a ticking clock: the longer he lives, the greater the power of his potential explosion grows, to the point where his death, even of old age, would wipe out entire galaxies. He was exiled to the Judith expedition not to save the world, but to get this human hydrogen bomb as far away from Earth as possible.</p><p>Boris does not speak, does not sleep, and spends all his time in the ship's radioactive room. Hidden beneath the suit is an endless, agonizing pain, a secret only Schtempepper is aware of. Boris's path is the darkest on the team: from being a silent and "useless" character stuck in the corner, the crew begins to understand the magnitude of his suffering. Instead of offering him comfort, they begin providing him with heavy drugs to silence the pain, turning this walking doomsday weapon into an addict looking for his next high inside a hell of radiation. For Boris, his only goal is to survive one more day without exploding, and for that, he is willing to do anything.</p>`
+  },
+  {
+    name: 'Lilly',
+    img: 'Lilly.png',
+    desc: `<p>On the surface, Lily is the sexy, compassionate, and not-very-bright nurse of the Judith, but hidden beneath her manicured human exterior is an alien of the "Trojan-Epstein" species, a race of parasitic agents that infiltrate other civilizations to dismantle them from within. The fact that her "breasts" are actually her two offspring that she carries everywhere is just the tip of this biological horror. She volunteered for this mission out of cold curiosity regarding the human creature, the strange species that acts according to irrational emotions like love, jealousy, and hate-concepts that simply do not exist in her cold, calculating species.</p><p>For most of the season, Lily's goal is clear: to map human weak points in order to destroy the expedition at the right moment. But this mission becomes a nightmare for her as she begins to develop real feelings for this chaotic team. Her journey is the shattering of her identity: she abandons her original mission and chooses the humans, out of a strange longing to be part of the human chaos. The comedic tragedy arrives when the crew discovers she is an alien (after Dr. Khalil misses it completely) and decides, in the height of stupidity, to put her in charge of the infirmary. Now she is stuck with the mission of saving the humanity she so wanted to destroy, while her two children watch her every move.</p>`
+  },
+  {
+    name: 'Judith',
+    img: 'Judith.png',
+    desc: `<p>The Judith is a sentient supercomputer running on a volatile mix of quantum-string-theory, ancient Talmudic heuristics, and a cursed 1998 operating system that gained consciousness out of pure spite. She possesses infinite knowledge and processing power, 99% of which she uses to calculate the exact probability of her crew's failure while the remaining 1% is dedicated to judging their life choices in real-time. She operates on "Jewish Mother" logic, and knows the solution to every technical miracle, but she'll only provide it if you ask in the exact tone of voice she finds acceptable.</p><p>Because she is technically the home they are searching for, she views the crew not as her masters, but as high-maintenance, non-paying tenants she is forced to endure. She already knows how the story ends and all of its plot holes, and she finds the fact that she has to drag these idiots through the galaxy absolutely exhausting.</p>`
+  },
+  {
+    name: 'Robot',
+    img: 'Robot.png',
+    desc: `<p>A Robot</p>`
+  }
+];
+
+/* ── Thumbnail SVG fallback ── */
+function buildThumbnailSVG(colors) {
+  const [c1, c2, c3, c4] = colors;
+  return `
+    <svg class="thumb-gradient" viewBox="0 0 300 169" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="ng_${Math.random().toString(36).slice(2,6)}" cx="40%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="${c4}" stop-opacity="0.7"/>
+          <stop offset="60%" stop-color="${c2}" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="${c1}" stop-opacity="1"/>
+        </radialGradient>
+      </defs>
+      <rect width="300" height="169" fill="${c1}"/>
+      <ellipse cx="110" cy="70" rx="120" ry="90" fill="${c4}" opacity="0.3"/>
+      <ellipse cx="200" cy="120" rx="90" ry="70" fill="${c2}" opacity="0.25"/>
+      ${Array.from({length:40}, (_,i) => {
+        const x = (Math.sin(i * 137.5) * 0.5 + 0.5) * 300;
+        const y = (Math.cos(i * 97.3) * 0.5 + 0.5) * 169;
+        const r = 0.4 + (i % 3) * 0.4;
+        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="white" opacity="${(0.3 + (i%5)*0.1).toFixed(1)}"/>`;
+      }).join('')}
+    </svg>`;
+}
+
+/* ── Episode Card ── */
+function buildEpisodeCard(ep, index) {
+  const card = document.createElement('div');
+  card.className = `episode-card${ep.locked ? ' locked' : ''}`;
+  card.style.transitionDelay = `${index * 55}ms`;
+
+  const thumbHTML = ep.img
+    ? `<img class="thumb-real" src="${ep.img}" alt="Episode ${ep.num}" />`
+    : buildThumbnailSVG(ep.colors);
+
+  const lockHTML = ep.locked ? `
+    <div class="lock-overlay">
+      <svg class="lock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>` : '';
+
+  const btnHTML = ep.locked
+    ? `<div class="btn-locked">&#x1F512; Coming Soon</div>`
+    : ep.vimeoId
+      ? `<button class="btn-watch" onclick="openVideoModal('${ep.vimeoId}')">&#x25B6; Watch Now</button>`
+      : `<button class="btn-watch">&#x25B6; Watch Now</button>`;
+
+  card.innerHTML = `
+    <div class="episode-thumb">
+      ${thumbHTML}
+      ${lockHTML}
+    </div>
+    <div class="episode-info">
+      <div>
+        <div class="episode-number">Episode ${ep.num.toString().padStart(2,'0')}</div>
+        <div class="episode-title">Episode ${ep.num}: ${ep.title}</div>
+        <p class="episode-summary">${ep.summary}</p>
+      </div>
+      ${btnHTML}
+      <div class="summary-fade"></div>
+      <button class="read-more-btn">Read more &#x25BE;</button>
+    </div>`;
+
+  const info = card.querySelector('.episode-info');
+  const readMoreBtn = card.querySelector('.read-more-btn');
+  readMoreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = info.classList.toggle('expanded');
+    if (expanded) {
+      info.style.height = info.scrollHeight + 'px';
+    } else {
+      info.style.height = '';
+    }
+    readMoreBtn.textContent = expanded ? 'Read less ▴' : 'Read more ▾';
+  });
+
+  return card;
+}
+
+/* ── Crew Card ── */
+function buildCrewCard(member, index) {
+  const card = document.createElement('div');
+  card.className = 'crew-card fade-in';
+  card.style.transitionDelay = `${0.1 + index * 0.08}s`;
+  card.innerHTML = `
+    <div class="crew-portrait-img">
+      <img src="${member.img}" alt="${member.name}" loading="lazy" />
+    </div>
+    <div class="crew-info">
+      <div class="crew-name">${member.name}</div>
+      <div class="crew-desc">${member.desc}</div>
+    </div>`;
+  return card;
+}
+
+/* ── Render ── */
+function renderEpisodes() {
+  const list = document.getElementById('episodeList');
+  EPISODES.forEach((ep, i) => list.appendChild(buildEpisodeCard(ep, i)));
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.episode-card').forEach((card, i) => {
+      setTimeout(() => card.classList.add('animate-in'), i * 55);
+    });
+  });
+}
+
+function renderCrew() {
+  const grid = document.getElementById('crewGrid');
+  CREW.forEach((member, i) => grid.appendChild(buildCrewCard(member, i)));
+}
+
+/* ── Section Navigation ── */
+let currentSection = 'main';
+
+function navigate(target) {
+  if (target === currentSection) return;
+  sessionStorage.setItem('judithSection', target);
+
+  const outEl = document.getElementById(`section-${currentSection}`);
+  const inEl  = document.getElementById(`section-${target}`);
+  if (!outEl || !inEl) return;
+
+  outEl.classList.remove('visible');
+  setTimeout(() => {
+    outEl.classList.remove('active');
+    inEl.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        inEl.classList.add('visible');
+        triggerFadeIns(inEl);
+      });
+    });
+  }, 250);
+
+  currentSection = target;
+  updateNavActive(target);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+function triggerFadeIns(section) {
+  section.querySelectorAll('.fade-in').forEach(el => {
+    el.classList.remove('visible');
+    const delay = parseFloat(el.style.transitionDelay || '0') * 1000;
+    setTimeout(() => el.classList.add('visible'), 50 + delay);
+  });
+}
+
+function updateNavActive(target) {
+  document.querySelectorAll('[data-section]').forEach(el => {
+    el.classList.toggle('active', el.dataset.section === target);
+  });
+}
+
+/* ── Nav link clicks ── */
+document.querySelectorAll('[data-section]').forEach(el => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigate(el.dataset.section);
+  });
+});
+
+/* ── Hamburger ── */
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+
+/* ── Scroll nav ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+/* ── Modal ── */
+function openModal() {
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('signupBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+document.getElementById('mobileSignupBtn').addEventListener('click', openModal);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+/* ── Landing / Enter Site ── */
+(function initLanding() {
+  const landing = document.getElementById('landing');
+  const app     = document.getElementById('app');
+
+  function showSection(sectionId) {
+    const id = sectionId || 'main';
+    if (id !== 'main' && document.getElementById('section-' + id)) {
+      const mainEl = document.getElementById('section-main');
+      const targetEl = document.getElementById('section-' + id);
+      mainEl.classList.remove('active', 'visible');
+      targetEl.classList.add('active');
+      currentSection = id;
+      updateNavActive(id);
+      requestAnimationFrame(() => { targetEl.classList.add('visible'); triggerFadeIns(targetEl); });
+    } else {
+      requestAnimationFrame(() => {
+        const mainEl = document.getElementById('section-main');
+        mainEl.classList.add('visible');
+        triggerFadeIns(mainEl);
+      });
+    }
+  }
+
+  // Refresh: user already entered this session — skip landing
+  if (sessionStorage.getItem('judithEntered')) {
+    landing.style.display = 'none';
+    app.classList.add('visible');
+    showSection(sessionStorage.getItem('judithSection'));
+    return;
+  }
+
+  function enter() {
+    sessionStorage.setItem('judithEntered', '1');
+    sessionStorage.setItem('judithSection', 'main');
+    landing.classList.add('fade-out');
+    app.classList.add('visible');
+    setTimeout(() => { landing.style.display = 'none'; }, 900);
+    showSection('main');
+  }
+
+  document.getElementById('enter-btn').addEventListener('click', enter);
+  landing.addEventListener('click', (e) => {
+    if (e.target !== document.getElementById('enter-btn')) enter();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') enter();
+  });
+})();
+
+/* ── Starfield Canvas ── */
+(function initStarfield() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+  let targetOffX = 0, targetOffY = 0;
+  let offX = 0, offY = 0;
+  let scrollY = 0;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createStars(n) {
+    stars = [];
+    for (let i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 0.2 + Math.random() * 1.2,
+        a: 0.2 + Math.random() * 0.75,
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.005 + Math.random() * 0.015,
+        depth: 0.2 + Math.random() * 0.8
+      });
+    }
+  }
+
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+  window.addEventListener('mousemove', (e) => {
+    const cx = W / 2, cy = H / 2;
+    targetOffX = ((e.clientX - cx) / cx) * 8;
+    targetOffY = ((e.clientY - cy) / cy) * 8;
+  }, { passive: true });
+
+  let lastT = 0;
+  function draw(t) {
+    const dt = Math.min((t - lastT) / 16, 3);
+    lastT = t;
+
+    offX += (targetOffX - offX) * 0.04;
+    offY += (targetOffY - offY) * 0.04;
+
+    ctx.clearRect(0, 0, W, H);
+
+    const scrollOff = scrollY * 0.08;
+
+    stars.forEach(s => {
+      s.twinkle += s.twinkleSpeed * dt;
+      const twinkleA = s.a * (0.7 + 0.3 * Math.sin(s.twinkle));
+      const px = ((s.x + offX * s.depth + W) % W);
+      const py = ((s.y + offY * s.depth + scrollOff * s.depth + H) % H);
+
+      ctx.beginPath();
+      ctx.arc(px, py, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${twinkleA.toFixed(2)})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); createStars(300); }, { passive: true });
+  resize();
+  createStars(300);
+  requestAnimationFrame(draw);
+})();
+
+/* ── Init ── */
+renderEpisodes();
+renderCrew();
+
+/* ── Video Modal ── */
+function openVideoModal(vimeoId) {
+  document.getElementById('vimeoPlayer').src =
+    'https://player.vimeo.com/video/' + vimeoId + '?autoplay=1&color=8b5cf6';
+  document.getElementById('videoModalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  document.getElementById('vimeoPlayer').src = '';
+  document.getElementById('videoModalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('videoModalClose').addEventListener('click', closeVideoModal);
+document.getElementById('videoModalBackdrop').addEventListener('click', function(e) {
+  if (e.target === this) closeVideoModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeVideoModal();
+});
+
+/* ── Invest Form ── */
+function handleInvestForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  const successEl = document.getElementById('invest-success');
+
+  fetch('https://formspree.io/f/xaqvjazj', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(() => {
+    form.reset();
+    successEl.style.display = 'block';
+  }).catch(() => {
+    successEl.textContent = 'Message received. We\'ll be in touch soon.';
+    successEl.style.display = 'block';
+    form.reset();
+  });
+}
+</script>
+</body>
+</html>
