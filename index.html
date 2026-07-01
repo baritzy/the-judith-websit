@@ -506,12 +506,8 @@
       flex-direction: column;
       gap: 0.4rem;
       position: relative;
-      max-height: calc(380px * 9 / 16);
-      transition: max-height 0.4s ease;
-    }
-
-    .episode-info.expanded {
-      max-height: 1200px;
+      height: calc(380px * 9 / 16);
+      transition: height 0.4s ease;
     }
 
     .summary-fade {
@@ -1309,7 +1305,7 @@
     @media (max-width: 900px) {
       .crew-grid { grid-template-columns: repeat(2, 1fr); }
       .episode-card { grid-template-columns: 280px 1fr; }
-      .episode-info { max-height: calc(280px * 9 / 16); }
+      .episode-info { height: calc(280px * 9 / 16); }
     }
 
     /* Large mobile */
@@ -1328,7 +1324,7 @@
       /* Episode cards: vertical stack */
       .episode-card { grid-template-columns: 1fr; }
       .episode-thumb { width: 100%; aspect-ratio: 16 / 9; }
-      .episode-info { max-height: none; overflow: visible; padding: 1rem; }
+      .episode-info { height: auto; overflow: visible; padding: 1rem; }
       .summary-fade { display: none; }
       .read-more-btn { display: none; }
       .episode-summary {
@@ -1947,6 +1943,11 @@ function buildEpisodeCard(ep, index) {
   readMoreBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     const expanded = info.classList.toggle('expanded');
+    if (expanded) {
+      info.style.height = info.scrollHeight + 'px';
+    } else {
+      info.style.height = '';
+    }
     readMoreBtn.textContent = expanded ? 'Read less ▴' : 'Read more ▾';
   });
 
