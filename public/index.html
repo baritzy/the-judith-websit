@@ -976,6 +976,546 @@
       padding: 0.75rem 0;
     }
 
+    /* ══════════════════════════════════════════════
+       CROWDFUNDING CAMPAIGN (Buy us a coffee)
+    ══════════════════════════════════════════════ */
+    .cf-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 2rem 5rem;
+    }
+
+    .cf-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(139,92,246,0.14);
+      border: 1px solid rgba(139,92,246,0.4);
+      color: var(--purple);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+
+    /* Hero */
+    .cf-hero {
+      margin-bottom: 2rem;
+    }
+
+    .cf-hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-shadow: 0 0 40px rgba(139,92,246,0.3);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .cf-hero-pitch {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 720px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cf-hero-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 1px solid rgba(139,92,246,0.2);
+      box-shadow: 0 0 60px rgba(139,92,246,0.2), 0 0 120px rgba(139,92,246,0.06);
+      display: block;
+    }
+
+    /* Two-column grid */
+    .cf-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .cf-main { min-width: 0; }
+
+    .cf-rail {
+      position: sticky;
+      top: 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Funding panel */
+    .cf-panel {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+
+    .cf-raised {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      color: var(--purple);
+      line-height: 1.1;
+    }
+
+    .cf-raised-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .cf-progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--surface2);
+      border-radius: 50px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+
+    .cf-progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--purple), #a78bfa);
+      border-radius: 50px;
+      box-shadow: 0 0 12px var(--purple-glow);
+      transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .cf-percent {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .cf-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cf-stat-num {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .cf-stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .cf-goal-target {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--purple);
+      margin-bottom: 1.25rem;
+    }
+
+    .cf-btn-primary {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, var(--purple), #6d28d9);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.95rem 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .cf-btn-primary:hover {
+      box-shadow: 0 0 28px var(--purple-glow), 0 0 60px rgba(139,92,246,0.2);
+      transform: translateY(-2px);
+    }
+
+    .cf-btn-secondary {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 0.85rem 0 0.25rem;
+      transition: color var(--transition);
+    }
+
+    .cf-btn-secondary:hover { color: var(--purple); }
+
+    /* Reward tiers */
+    .cf-tiers-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .cf-tiers {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cf-tier {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.15);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .cf-tier:hover {
+      border-color: rgba(139,92,246,0.45);
+      box-shadow: 0 0 24px rgba(139,92,246,0.1);
+    }
+
+    .cf-tier-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .cf-tier-price {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--purple);
+    }
+
+    .cf-tier-backers {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    .cf-tier-name {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .cf-tier-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .cf-tier-list {
+      list-style: none;
+      margin: 0 0 0.75rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .cf-tier-list li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding-left: 1.1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .cf-tier-list li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: var(--purple);
+      font-size: 0.8rem;
+    }
+
+    .cf-tier-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .cf-pill {
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--surface2);
+      color: var(--text-muted);
+      border-radius: 50px;
+      padding: 0.25rem 0.7rem;
+    }
+
+    .cf-pill.limit {
+      background: rgba(139,92,246,0.14);
+      color: var(--purple);
+    }
+
+    .cf-tier-select {
+      width: 100%;
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+    .cf-tier-select:hover {
+      background: var(--purple);
+      color: #fff;
+      box-shadow: 0 0 18px var(--purple-glow);
+    }
+
+    /* Story / About */
+    .cf-story { margin-top: 2rem; }
+
+    .cf-story h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.85rem, 1.8vw, 1rem);
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 2rem 0 0.75rem;
+    }
+
+    .cf-story h3:first-child { margin-top: 0; }
+
+    .cf-story p {
+      font-size: clamp(0.95rem, 1.7vw, 1.02rem);
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .cf-story-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 1px solid rgba(139,92,246,0.15);
+      margin: 1.5rem 0;
+      display: block;
+    }
+
+    .cf-money-list {
+      list-style: none;
+      margin: 0 0 1rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cf-money-list li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .cf-money-list li::before {
+      content: '\2022';
+      position: absolute;
+      left: 0;
+      color: var(--purple);
+    }
+
+    /* Stretch goals */
+    .cf-stretch {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .cf-stretch-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      opacity: 0.6;
+      transition: opacity var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .cf-stretch-item.reached {
+      opacity: 1;
+      border-color: rgba(139,92,246,0.5);
+      box-shadow: 0 0 24px rgba(139,92,246,0.12);
+    }
+
+    .cf-stretch-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface2);
+      color: var(--text-dim);
+      font-size: 1.1rem;
+    }
+
+    .cf-stretch-item.reached .cf-stretch-icon {
+      background: rgba(139,92,246,0.18);
+      color: var(--purple);
+    }
+
+    .cf-stretch-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .cf-stretch-item.reached .cf-stretch-amount { color: var(--purple); }
+
+    .cf-stretch-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text);
+      margin: 0.1rem 0;
+    }
+
+    .cf-stretch-reward {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* FAQ accordion */
+    .cf-faq {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .cf-faq-item {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .cf-faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .cf-faq-q .cf-faq-mark {
+      color: var(--purple);
+      font-size: 1.2rem;
+      transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+
+    .cf-faq-item.open .cf-faq-mark { transform: rotate(45deg); }
+
+    .cf-faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .cf-faq-a p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding: 0 1.25rem 1.1rem;
+      margin: 0;
+    }
+
+    /* Mobile fixed bottom CTA bar */
+    .cf-mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 90;
+      background: rgba(6,6,6,0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(139,92,246,0.25);
+      padding: 0.75rem 1rem;
+    }
+
+    .cf-section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--purple);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 2.5rem 0 1rem;
+    }
+
+    /* Tablet + mobile: single column */
+    @media (max-width: 900px) {
+      .cf-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .cf-rail { position: static; top: auto; }
+      .cf-tiers-title { display: none; }
+    }
+
+    @media (max-width: 700px) {
+      .cf-wrap { padding: 0.5rem 1rem 6rem; }
+      .cf-panel { padding: 1.35rem; }
+      .cf-mobile-bar.show { display: block; }
+    }
+
     /* ── Studio / Founders ── */
     .studio-section {
       max-width: 860px;
@@ -1818,7 +2358,7 @@
       <li><a href="#" data-section="teasers">Teasers &amp; Trailers</a></li>
       <!-- ABOUT US TAB TEMPORARILY HIDDEN - restore by uncommenting -->
       <!-- <li><a href="#" data-section="about">About Us</a></li> -->
-      <li><a href="#" data-section="invest">Invest</a></li>
+      <li><a href="#" data-section="invest">Buy us a coffee</a></li>
       <li><a href="#" class="nav-cta" id="signupBtn">Sign Up to Stay Informed</a></li>
     </ul>
 
@@ -1837,7 +2377,7 @@
     <a data-section="teasers">Teasers &amp; Trailers</a>
     <!-- ABOUT US MOBILE TAB TEMPORARILY HIDDEN - restore by uncommenting -->
     <!-- <a data-section="about">About Us</a> -->
-    <a data-section="invest">Invest</a>
+    <a data-section="invest">Buy us a coffee</a>
     <a id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
   </div>
 
@@ -2070,50 +2610,118 @@
   <section id="section-invest" class="section">
 
     <div class="section-header fade-in">
-      <h2>Invest in The Judith</h2>
+      <h2>Buy Us a Coffee</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="invest-content">
+    <!-- Crowdfunding campaign. All numbers render from the CAMPAIGN config in the
+         campaign script block below. Nothing is hardcoded in this markup. -->
+    <div class="cf-wrap">
 
-      <div class="invest-intro fade-in" style="transition-delay:0.08s">
-        <p>
-          The Judith is more than a show. It's a proof of concept for a new era of
-          independent animation. AI-powered, human-written, pilot complete.
-          We're looking for partners who see what we see: a breakout series with
-          global appeal, built on the tools that are reshaping the industry.
+      <!-- Hero -->
+      <div class="cf-hero fade-in" style="transition-delay:0.05s">
+        <span class="cf-badge" id="cf-badge" style="display:none;">Campaign launches soon</span>
+        <h1 class="cf-hero-title">The Judith</h1>
+        <p class="cf-hero-pitch">
+          Help us keep a Jewish spaceship nobody wants in orbit. Every coffee buys one more episode the galaxy did not ask for.
         </p>
-        <p style="margin-top:1rem;">
-          If you're interested in being part of what comes next, reach out.
-          We'd love to tell you more.
-        </p>
+        <img class="cf-hero-img" src="Judith%20New%20Poster%2016-9.png" alt="The Judith key art" loading="lazy" />
       </div>
 
-      <form class="invest-form fade-in" style="transition-delay:0.18s" onsubmit="handleInvestForm(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="invest-name">Name</label>
-            <input type="text" id="invest-name" name="name" placeholder="Your full name" required />
-          </div>
-          <div class="form-group">
-            <label for="invest-email">Email</label>
-            <input type="email" id="invest-email" name="email" placeholder="your@email.com" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="invest-phone">Phone</label>
-          <input type="tel" id="invest-phone" name="phone" placeholder="+1 (555) 000-0000" />
-        </div>
-        <div class="form-group">
-          <label for="invest-message">Message</label>
-          <textarea id="invest-message" name="message" rows="5" placeholder="Tell us about yourself and your interest in the project..." required></textarea>
-        </div>
-        <button type="submit" class="btn-invest-submit">Send Message &rarr;</button>
-        <div id="invest-success" class="invest-success" style="display:none;">
-          &#x2713; Message sent. We'll be in touch soon.
-        </div>
-      </form>
+      <div class="cf-grid">
 
+        <!-- LEFT COLUMN: story, stretch goals, FAQ -->
+        <div class="cf-main">
+
+          <!-- Story / About -->
+          <div class="cf-story fade-in" style="transition-delay:0.1s">
+            <h3>What is this</h3>
+            <p>
+              The Judith is an AI-animated adult sci-fi comedy about seven Jews on a spaceship, sent to find a new home after Earth turned on them. The catch: nobody in the galaxy wants them either. The pilot is done. The scripts are written. What we are short on is coffee, and by coffee we mean the money to animate the rest.
+            </p>
+
+            <h3>Why now</h3>
+            <p>
+              AI animation just made it possible for a tiny human-led team to make a full series without a studio deciding it is too Jewish, too edgy, or too cynical to exist. The tools are ready. The audience is here. This is the window, and windows in space close fast.
+            </p>
+
+            <img class="cf-story-img" src="poster.png" alt="The Judith crew" loading="lazy" />
+
+            <h3>The team</h3>
+            <p>
+              We are a small crew working under New Angle Studios, led by the two founders who wrote and directed the pilot. Human-written, human-directed, AI-animated. No committee notes, no network softening the punchlines into oblivion.
+            </p>
+
+            <h3>Where the coffee goes</h3>
+            <p>Your support pays for the work, not the overhead. Roughly:</p>
+            <ul class="cf-money-list">
+              <li>Animation and rendering for the next episodes</li>
+              <li>Writing, editing, and voice work</li>
+              <li>Music and sound design</li>
+              <li>Reward fulfillment and platform fees</li>
+            </ul>
+
+            <h3>Risks</h3>
+            <p>
+              This is an independent production using new tools, so timelines can slip. If a reward is delayed, we will tell you honestly and keep you posted. We would rather ship late than ship bad.
+            </p>
+          </div>
+
+          <!-- Stretch goals -->
+          <div class="cf-section-label">Stretch Goals</div>
+          <div class="cf-stretch fade-in" id="cf-stretch" style="transition-delay:0.14s"></div>
+
+          <!-- FAQ -->
+          <div class="cf-section-label">FAQ</div>
+          <div class="cf-faq fade-in" id="cf-faq" style="transition-delay:0.16s"></div>
+
+        </div>
+
+        <!-- RIGHT RAIL: funding panel + tiers (moves inline on mobile) -->
+        <aside class="cf-rail">
+
+          <!-- Funding panel -->
+          <div class="cf-panel fade-in" style="transition-delay:0.08s">
+            <!-- LIVE stats (hidden in prelaunch) -->
+            <div id="cf-live-stats">
+              <div class="cf-raised" id="cf-raised"></div>
+              <div class="cf-progress-track"><div class="cf-progress-fill" id="cf-progress-fill"></div></div>
+              <div class="cf-percent" id="cf-percent"></div>
+              <div class="cf-raised-sub" id="cf-goal-sub"></div>
+              <div class="cf-stats">
+                <div>
+                  <div class="cf-stat-num" id="cf-backers"></div>
+                  <div class="cf-stat-label">backers</div>
+                </div>
+                <div>
+                  <div class="cf-stat-num" id="cf-days"></div>
+                  <div class="cf-stat-label">days left</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PRELAUNCH target (hidden when live) -->
+            <div id="cf-prelaunch-stats" style="display:none;">
+              <div class="cf-raised-sub">Our goal</div>
+              <div class="cf-goal-target" id="cf-goal-target"></div>
+            </div>
+
+            <!-- Primary + secondary CTA. Both open the existing signup modal for now.
+                 NOTE: real payment / backing is not wired yet. This captures email only. -->
+            <button type="button" class="cf-btn-primary" id="cf-primary-cta" onclick="openModal()"></button>
+            <button type="button" class="cf-btn-secondary" id="cf-secondary-cta" onclick="openModal()">Get notified at launch</button>
+          </div>
+
+          <!-- Reward tiers -->
+          <div>
+            <div class="cf-tiers-title">Reward Tiers</div>
+            <div class="cf-section-label" style="display:none;" id="cf-tiers-mobile-label">Reward Tiers</div>
+            <div class="cf-tiers" id="cf-tiers"></div>
+          </div>
+
+        </aside>
+
+      </div>
     </div>
   </section>
 
@@ -2121,6 +2729,12 @@
   <footer>
     &copy; 2026 <span>The Judith</span> &nbsp;&middot;&nbsp; An AI-animated dark comedy series
   </footer>
+
+  <!-- Mobile fixed CTA bar for the crowdfunding campaign. Shown only on the
+       invest/campaign section on small screens (toggled in navigate + JS). -->
+  <div class="cf-mobile-bar" id="cf-mobile-bar">
+    <button type="button" class="cf-btn-primary" id="cf-mobile-cta" onclick="openModal()"></button>
+  </div>
 
 </div><!-- /app -->
 
@@ -2170,9 +2784,9 @@ const EPISODES = [
     num: 1,
     title: 'In Our Image',
     summary: 'As The Judith mission arrives at a promising new world, the crew believes they have finally found their sanctuary. Their hopes are quickly challenged when they discover the planet is already home to a peculiar, highly sensitive civilization. To secure their place on the planet, the crew must navigate a minefield of bizarre cultural expectations and absurd diplomatic demands, testing the limits of their patience, and their dignity.',
-    locked: false,
-    img: 'episode1.jpg',
-    vimeoId: '1195342282'
+    locked: true,
+    lockLabel: 'Premieres on July 29th',
+    img: 'episode1.jpg'
   },
   {
     num: 2,
@@ -2330,7 +2944,7 @@ function buildEpisodeCard(ep, index) {
     </div>` : '';
 
   const btnHTML = ep.locked
-    ? `<div class="btn-locked">&#x1F512; Coming Soon</div>`
+    ? `<div class="btn-locked">&#x1F512; ${ep.lockLabel || 'Coming Soon'}</div>`
     : ep.vimeoId
       ? `<button class="btn-watch" onclick="openVideoModal('${ep.vimeoId}')">&#x25B6; Watch Now</button>`
       : `<button class="btn-watch">&#x25B6; Watch Now</button>`;
@@ -2502,7 +3116,7 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
     }
   }
 
-  // Refresh: user already entered this session — skip landing
+  // Refresh: user already entered this session, skip landing
   if (sessionStorage.getItem('judithEntered')) {
     landing.style.display = 'none';
     app.classList.add('visible');
@@ -2624,26 +3238,202 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeVideoModal();
 });
 
-/* ── Invest Form ── */
-function handleInvestForm(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = new FormData(form);
-  const successEl = document.getElementById('invest-success');
+/* ══════════════════════════════════════════════
+   CROWDFUNDING CAMPAIGN (Buy us a coffee)
+   NOTE: no payment / backing is wired. All CTAs open the existing signup
+   modal (email capture) via openModal(). Numbers read from CAMPAIGN only.
+══════════════════════════════════════════════ */
+const CAMPAIGN = {
+  status: 'live',            // 'live' shows numbers; 'prelaunch' hides raised/backers/countdown and shows "Get notified" instead.
+  raised: 18450,
+  goal: 45000,
+  backers: 327,
+  daysLeft: 28,
+  currency: '$'
+};
 
-  fetch('https://formspree.io/f/xaqvjazj', {
-    method: 'POST',
-    body: data,
-    headers: { 'Accept': 'application/json' }
-  }).then(() => {
-    form.reset();
-    successEl.style.display = 'block';
-  }).catch(() => {
-    successEl.textContent = 'Message received. We\'ll be in touch soon.';
-    successEl.style.display = 'block';
-    form.reset();
+const CF_TIERS = [
+  {
+    price: 5, name: 'Buy Us a Coffee', backers: 142,
+    desc: 'The one that keeps the lights on. Our eternal gratitude, and your name on the backer wall.',
+    perks: ['Our eternal gratitude', 'Your name on the digital backer wall'],
+    delivery: 'Instant', limit: null
+  },
+  {
+    price: 15, name: 'Digital Insider', backers: 88,
+    desc: 'Everything above, plus you get in before everyone else.',
+    perks: ['Everything in the previous tier', 'Episode 1 early digital access', 'Wallpaper pack'],
+    delivery: 'On release', limit: null
+  },
+  {
+    price: 35, name: 'In the Credits', backers: 47,
+    desc: 'Your name rolls with the show. The good kind of public record.',
+    perks: ['Everything above', 'Your name in the end credits (Coffee Club)', 'Private behind the scenes gallery'],
+    delivery: 'On release', limit: null
+  },
+  {
+    price: 60, name: 'Merch Drop', backers: 31,
+    desc: 'Something you can actually hold, for a change.',
+    perks: ['Everything above', 'Enamel pin', 'Sticker sheet', 'Signed digital print'],
+    delivery: '3 months after campaign', limit: 500
+  },
+  {
+    price: 150, name: 'Screening Room', backers: 12,
+    desc: 'Watch the whole thing first, with us in the room.',
+    perks: ['Everything above', 'Full season early access', 'Live virtual watch party with the creators'],
+    delivery: 'On release', limit: 100
+  },
+  {
+    price: 500, name: "Show Runner's Circle", backers: 4,
+    desc: 'Get written into the galaxy. Yes, really.',
+    perks: ['Everything above', 'A hand drawn cameo character in the show', 'A physical animation cel', 'A video call with the team'],
+    delivery: '6 months after campaign', limit: 25
+  }
+];
+
+const CF_STRETCH = [
+  { amount: 60000, title: 'Bonus post-credits scene', reward: 'One extra scene the network would never have let us air.' },
+  { amount: 80000, title: 'Full original score', reward: 'A full original score, with the downloadable soundtrack for all backers.' },
+  { amount: 120000, title: 'A full second episode', reward: 'We animate an entire additional episode.' }
+];
+
+const CF_FAQ = [
+  {
+    q: 'When does it ship?',
+    a: 'Digital rewards land instantly or on release. Physical rewards ship 3 to 6 months after the campaign ends. Exact dates are listed on each tier.'
+  },
+  {
+    q: 'What if the goal is not reached?',
+    a: 'We keep making the show at whatever scale the funding allows. Rewards still ship. Bigger funding just means we get to the good stuff faster.'
+  },
+  {
+    q: 'How do the credits work?',
+    a: 'Back the "In the Credits" tier or above and your name goes in the end credits under the Coffee Club, exactly as you write it.'
+  },
+  {
+    q: 'Is this the same as investing?',
+    a: 'No. This is support, not investment. You are buying us coffee and getting rewards in return. You do not receive equity or a share of revenue.'
+  },
+  {
+    q: 'Where does the money go?',
+    a: 'Straight into making the series: animation, writing, voice, music, and reward fulfillment. Not into a fancy office. We do not have one.'
+  }
+];
+
+(function initCampaign() {
+  const c = CAMPAIGN;
+  const money = (n) => c.currency + Number(n).toLocaleString('en-US');
+  const percent = Math.round((c.raised / c.goal) * 100);
+  const isPrelaunch = c.status === 'prelaunch';
+
+  const liveStats = document.getElementById('cf-live-stats');
+  const preStats  = document.getElementById('cf-prelaunch-stats');
+  const badge     = document.getElementById('cf-badge');
+  const primary   = document.getElementById('cf-primary-cta');
+  const secondary = document.getElementById('cf-secondary-cta');
+  const mobileCta = document.getElementById('cf-mobile-cta');
+
+  if (isPrelaunch) {
+    // Prelaunch: hide raised / progress / backers / days. Show target + badge.
+    liveStats.style.display = 'none';
+    preStats.style.display  = 'block';
+    badge.style.display     = 'inline-flex';
+    document.getElementById('cf-goal-target').textContent = 'Our goal: ' + money(c.goal);
+    primary.textContent   = 'Get Notified at Launch';
+    secondary.style.display = 'none';
+    mobileCta.textContent = 'Get Notified at Launch';
+  } else {
+    // Live: fill the numbers.
+    liveStats.style.display = 'block';
+    preStats.style.display  = 'none';
+    badge.style.display     = 'none';
+    document.getElementById('cf-raised').textContent   = money(c.raised);
+    document.getElementById('cf-percent').textContent  = percent + '% funded';
+    document.getElementById('cf-goal-sub').textContent = 'pledged of ' + money(c.goal) + ' goal';
+    document.getElementById('cf-backers').textContent  = c.backers.toLocaleString('en-US');
+    document.getElementById('cf-days').textContent     = c.daysLeft;
+    primary.textContent   = 'Buy Us a Coffee ☕';
+    mobileCta.textContent = 'Buy Us a Coffee ☕';
+    // Animate the progress bar to the funded percent (cap the visual at 100%).
+    const fill = document.getElementById('cf-progress-fill');
+    setTimeout(() => { fill.style.width = Math.min(percent, 100) + '%'; }, 300);
+  }
+
+  // ── Reward tiers ──
+  const tiersEl = document.getElementById('cf-tiers');
+  tiersEl.innerHTML = CF_TIERS.map((t) => {
+    const perks = t.perks.map((p) => '<li>' + p + '</li>').join('');
+    const limitPill = t.limit
+      ? '<span class="cf-pill limit">' + t.limit + ' of ' + t.limit + ' left</span>'
+      : '';
+    const selectLabel = isPrelaunch ? 'Preview' : 'Select';
+    return (
+      '<div class="cf-tier">' +
+        '<div class="cf-tier-head">' +
+          '<span class="cf-tier-price">' + money(t.price) + '</span>' +
+          '<span class="cf-tier-backers">' + t.backers + ' backers</span>' +
+        '</div>' +
+        '<div class="cf-tier-name">' + t.name + '</div>' +
+        '<p class="cf-tier-desc">' + t.desc + '</p>' +
+        '<ul class="cf-tier-list">' + perks + '</ul>' +
+        '<div class="cf-tier-meta">' +
+          '<span class="cf-pill">Delivery: ' + t.delivery + '</span>' +
+          limitPill +
+        '</div>' +
+        '<button type="button" class="cf-tier-select" onclick="openModal()">' + selectLabel + '</button>' +
+      '</div>'
+    );
+  }).join('');
+
+  // ── Stretch goals (reached = raised >= amount) ──
+  const stretchEl = document.getElementById('cf-stretch');
+  const introNote = isPrelaunch
+    ? '<p class="cf-tier-desc" style="margin-bottom:0.75rem;">Here is what you will be able to unlock:</p>'
+    : '';
+  stretchEl.innerHTML = introNote + CF_STRETCH.map((s) => {
+    const reached = !isPrelaunch && c.raised >= s.amount;
+    const icon = reached ? '✓' : '🔒';
+    return (
+      '<div class="cf-stretch-item' + (reached ? ' reached' : '') + '">' +
+        '<div class="cf-stretch-icon">' + icon + '</div>' +
+        '<div>' +
+          '<div class="cf-stretch-amount">' + money(s.amount) + '</div>' +
+          '<div class="cf-stretch-title">' + s.title + '</div>' +
+          '<div class="cf-stretch-reward">' + s.reward + '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+
+  // ── FAQ accordion (vanilla, click to expand) ──
+  const faqEl = document.getElementById('cf-faq');
+  faqEl.innerHTML = CF_FAQ.map((f) => (
+    '<div class="cf-faq-item">' +
+      '<button type="button" class="cf-faq-q">' + f.q + '<span class="cf-faq-mark">+</span></button>' +
+      '<div class="cf-faq-a"><p>' + f.a + '</p></div>' +
+    '</div>'
+  )).join('');
+  faqEl.querySelectorAll('.cf-faq-q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const ans  = item.querySelector('.cf-faq-a');
+      const open = item.classList.toggle('open');
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
   });
+})();
+
+/* Toggle the mobile fixed CTA bar only while the campaign section is showing. */
+function updateCampaignMobileBar() {
+  const bar = document.getElementById('cf-mobile-bar');
+  if (!bar) return;
+  const onCampaign = document.getElementById('section-invest').classList.contains('active');
+  bar.classList.toggle('show', onCampaign);
 }
+document.querySelectorAll('[data-section]').forEach((el) => {
+  el.addEventListener('click', () => setTimeout(updateCampaignMobileBar, 300));
+});
+updateCampaignMobileBar();
 </script>
 
 <!-- ════════════════════════════════════════════
