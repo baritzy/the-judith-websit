@@ -1396,6 +1396,346 @@
       .modal h3 { font-size: 1.1rem; }
     }
 
+    /* ══════════════════════════════════════════════
+       GUEST TRANSMISSIONS
+    ══════════════════════════════════════════════ */
+    .gt-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .gt-intro {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 620px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.7;
+    }
+
+    /* Post form */
+    .gt-form {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.18);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .gt-form input[type="text"],
+    .gt-form textarea {
+      background: var(--bg2);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      width: 100%;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+
+    .gt-form input::placeholder,
+    .gt-form textarea::placeholder { color: var(--text-dim); }
+
+    .gt-form input:focus,
+    .gt-form textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+
+    .gt-counter {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: right;
+      margin-top: -0.4rem;
+      font-family: monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .gt-counter.warn { color: #f59e0b; }
+
+    .gt-privacy {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .gt-submit {
+      align-self: flex-start;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.7rem 2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition), opacity var(--transition);
+    }
+
+    .gt-submit:hover {
+      background: #7c3aed;
+      box-shadow: 0 0 20px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    .gt-submit:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .gt-error {
+      color: #f87171;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .gt-demo-note {
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-style: italic;
+    }
+
+    /* Feed */
+    .gt-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .gt-empty {
+      text-align: center;
+      color: var(--text-dim);
+      font-style: italic;
+      padding: 2rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    .gt-card {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.1);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+    }
+
+    .gt-card.gt-admin {
+      border-left: 3px solid var(--purple);
+      background: linear-gradient(90deg, rgba(139,92,246,0.08), var(--surface) 40%);
+    }
+
+    .gt-card-head {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .gt-name {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .gt-badge {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--purple);
+      border: 1px solid rgba(139,92,246,0.5);
+      border-radius: 50px;
+      padding: 0.15rem 0.6rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .gt-time {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-family: monospace;
+      letter-spacing: 0.03em;
+      cursor: default;
+    }
+
+    .gt-body {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .gt-reply-toggle {
+      background: none;
+      border: none;
+      color: var(--purple);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      padding: 0.5rem 0 0;
+      margin-top: 0.4rem;
+    }
+
+    .gt-reply-toggle:hover { opacity: 0.7; }
+
+    .gt-replies {
+      margin-top: 0.9rem;
+      padding-left: 1.1rem;
+      border-left: 1px solid rgba(139,92,246,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .gt-reply-form {
+      margin-top: 0.9rem;
+      padding-left: 1.1rem;
+      border-left: 1px solid rgba(139,92,246,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .gt-reply-form.hidden { display: none; }
+
+    .gt-reply-form input[type="text"],
+    .gt-reply-form textarea {
+      background: var(--bg2);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      width: 100%;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+
+    .gt-reply-form input::placeholder,
+    .gt-reply-form textarea::placeholder { color: var(--text-dim); }
+
+    .gt-reply-form input:focus,
+    .gt-reply-form textarea:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+    }
+
+    .gt-reply-form .gt-submit {
+      font-size: 0.74rem;
+      padding: 0.55rem 1.5rem;
+    }
+
+    /* Main-page live strip */
+    .gt-strip {
+      max-width: 760px;
+      margin: 0 auto 4rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.15);
+      border-radius: var(--radius);
+    }
+
+    .gt-strip-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.1rem;
+    }
+
+    .gt-strip-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.06em;
+    }
+
+    .gt-strip-count {
+      font-size: 0.78rem;
+      color: var(--purple);
+      font-family: monospace;
+      letter-spacing: 0.04em;
+    }
+
+    .gt-strip-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .gt-strip-item {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 0.85rem;
+    }
+
+    .gt-strip-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .gt-strip-item-head {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+
+    .gt-strip-item .gt-name { font-size: 0.82rem; }
+    .gt-strip-item .gt-time { font-size: 0.68rem; }
+
+    .gt-strip-item-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .gt-strip-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.55rem 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+
+    .gt-strip-cta:hover {
+      background: #7c3aed;
+      box-shadow: 0 0 18px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 700px) {
+      .gt-wrap { padding: 0 1rem 3rem; }
+      .gt-form { padding: 1.1rem; }
+      .gt-strip { padding: 1.1rem; margin-bottom: 2.5rem; }
+    }
+
     /* ── Fade-in animations ── */
     .fade-in {
       opacity: 0;
@@ -1443,6 +1783,7 @@
     <ul class="nav-links">
       <li><a href="#" data-section="main"   class="active">Main</a></li>
       <li><a href="#" data-section="home">Episodes</a></li>
+      <li><a href="#" data-section="transmissions">Guest Transmissions</a></li>
       <li><a href="#" data-section="crew">Characters</a></li>
       <li><a href="#" data-section="vision">Our Vision</a></li>
       <li><a href="#" data-section="teasers">Teasers &amp; Trailers</a></li>
@@ -1461,6 +1802,7 @@
   <div class="nav-mobile-menu" id="mobileMenu">
     <a data-section="main"   class="active">Main</a>
     <a data-section="home">Episodes</a>
+    <a data-section="transmissions">Guest Transmissions</a>
     <a data-section="crew">Characters</a>
     <a data-section="vision">Our Vision</a>
     <a data-section="teasers">Teasers &amp; Trailers</a>
@@ -1518,6 +1860,9 @@
       <p>This is where everything explodes. It turns out that every planet they visited was rendered uninhabitable because of their stupidity. It is not just an antisemitic universe. it is a universe united in its disgust toward the "Judith" expedition. The Anti-Jewish Federation rises, and they are coming to end what remains. Just before they are wiped off the map, they discover the season's shocking revelation: there is a parallel universe. A universe where Jews are not only loved, they are the stars of the place. Will they run away there for safe haven? Or will they decide to fight for the jews in this jew-hating universe, even if it is about to explode?</p>
     </div>
 
+    <!-- ── Guest Transmissions live strip ── -->
+    <div class="gt-strip fade-in" id="gt-strip" style="transition-delay:0.24s"></div>
+
   </section>
 
   <!-- ════════════════════════════════════════════
@@ -1531,6 +1876,43 @@
     </div>
 
     <div class="episodes-container" id="episodeList"></div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       SECTION: GUEST TRANSMISSIONS
+  ═════════════════════════════════════════════ -->
+  <section id="section-transmissions" class="section">
+
+    <div class="section-header fade-in">
+      <h2>Guest Transmissions</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="gt-wrap">
+      <p class="gt-intro fade-in" style="transition-delay:0.06s">
+        Incoming signals from across the galaxy. Broadcast your own.
+      </p>
+
+      <!-- Post form -->
+      <form class="gt-form fade-in" id="gt-form" style="transition-delay:0.12s" autocomplete="off">
+        <input type="text" id="gt-name" maxlength="40" placeholder="Your name / callsign" />
+        <textarea id="gt-body" maxlength="2000" rows="4" placeholder="Your transmission&hellip;"></textarea>
+        <div class="gt-counter" id="gt-counter">0 / 2000</div>
+
+        <!-- Honeypot: hidden from humans, catches bots -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+          <input type="text" id="gt-website" name="gt_website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p class="gt-privacy">Public board. Don't share personal info. We may remove anything.</p>
+        <div class="gt-error" id="gt-error" style="display:none;"></div>
+        <button type="submit" class="gt-submit" id="gt-transmit">Transmit</button>
+      </form>
+
+      <!-- Feed -->
+      <div class="gt-feed" id="gt-feed"></div>
+    </div>
 
   </section>
 
@@ -2233,6 +2615,488 @@ function handleInvestForm(e) {
     form.reset();
   });
 }
+</script>
+
+<!-- ════════════════════════════════════════════
+     GUEST TRANSMISSIONS
+═════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  /* ===== GUEST TRANSMISSIONS CONFIG =====
+     Paste the Supabase Project URL and anon public key below.
+     (The anon key is safe to expose. It is protected by Row Level Security.) */
+  const GT_SUPABASE_URL  = 'PASTE_SUPABASE_URL_HERE';
+  const GT_SUPABASE_ANON = 'PASTE_SUPABASE_ANON_KEY_HERE';
+
+  /* ── Mode detection ── */
+  const CONFIGURED =
+    GT_SUPABASE_URL  !== 'PASTE_SUPABASE_URL_HERE' &&
+    GT_SUPABASE_ANON !== 'PASTE_SUPABASE_ANON_KEY_HERE' &&
+    !!GT_SUPABASE_URL && !!GT_SUPABASE_ANON;
+
+  let sb = null;
+  if (CONFIGURED && window.supabase && window.supabase.createClient) {
+    sb = window.supabase.createClient(GT_SUPABASE_URL, GT_SUPABASE_ANON);
+  }
+  const DEMO = !sb;
+
+  /* ── Client-side abuse guards ── */
+  // Starter blocklist. Expand as needed. UX-only; the DB trigger is the real guard.
+  const GT_BLOCK = ['kike', 'heeb', 'nigger', 'faggot', 'retard'];
+  const RATE_MS = 30000;
+
+  function isBlocked(text) {
+    if (!text) return false;
+    const re = new RegExp('\\b(' + GT_BLOCK.join('|') + ')\\b', 'i');
+    return re.test(text);
+  }
+
+  /* ── Demo data (only used when not configured) ── */
+  const GT_DEMO = (function () {
+    const now = Date.now();
+    const min = 60 * 1000, hr = 60 * min, day = 24 * hr;
+    return [
+      { id: 'd1', name: 'mordyfromqueens', body: 'Just watched the promo three times in a row. My wife thinks something is wrong with me. Something is. This show.', is_admin: false, parent_id: null, created_at: new Date(now - 19 * day).toISOString() },
+      { id: 'd1r', name: 'The Judith', body: 'Your wife is correct. Seek help. Then watch it a fourth time.', is_admin: true, parent_id: 'd1', created_at: new Date(now - 18 * day).toISOString() },
+      { id: 'd2', name: 'Rachel_K', body: 'ok but Schtempepper is unhinged and I would die for him', is_admin: false, parent_id: null, created_at: new Date(now - 16 * day).toISOString() },
+      { id: 'd2r', name: 'The Judith', body: 'You would die for him. He would not notice. This is the healthiest relationship on the ship.', is_admin: true, parent_id: 'd2', created_at: new Date(now - 15 * day).toISOString() },
+      { id: 'd3', name: 'DAVID FROM THE INTERNET', body: 'WHY DOES EPISODE 2 HAVE A LOCK ON IT. RELEASE THE ASSES.', is_admin: false, parent_id: null, created_at: new Date(now - 3 * day).toISOString() },
+      { id: 'd4', name: 'quiet_lurker', body: 'Did not expect to feel things about a cartoon spaceship. Then Boris happened. Not okay. Well done.', is_admin: false, parent_id: null, created_at: new Date(now - 5 * hr).toISOString() },
+      { id: 'd5', name: 'skeptical_sam', body: 'Was ready to hate this. The AI animation thing usually looks cheap. This does not. Fine. You win.', is_admin: false, parent_id: null, created_at: new Date(now - 40 * min).toISOString() }
+    ];
+  })();
+
+  let demoStore = GT_DEMO.slice();
+
+  /* ── Module-level cache to avoid double-fetch ── */
+  let gtCache = null;
+
+  /* ── Data layer ── */
+  async function fetchAll() {
+    if (DEMO) {
+      return demoStore
+        .slice()
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+    const { data, error } = await sb
+      .from('transmissions')
+      .select('id,name,body,is_admin,parent_id,created_at')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  }
+
+  async function postMessage(name, body) {
+    if (DEMO) {
+      const row = { id: 'demo-' + Date.now(), name: name || 'Anonymous', body: body, is_admin: false, parent_id: null, created_at: new Date().toISOString() };
+      demoStore.push(row);
+      return row;
+    }
+    const { data, error } = await sb
+      .from('transmissions')
+      .insert({ name: name || 'Anonymous', body: body })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async function postReply(name, body, parentId) {
+    if (DEMO) {
+      const row = { id: 'demo-' + Date.now(), name: name || 'Anonymous', body: body, is_admin: false, parent_id: parentId, created_at: new Date().toISOString() };
+      demoStore.push(row);
+      return row;
+    }
+    const { data, error } = await sb
+      .from('transmissions')
+      .insert({ name: name || 'Anonymous', body: body, parent_id: parentId })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  /* ── Helpers ── */
+  function relativeTime(iso) {
+    const then = new Date(iso).getTime();
+    const diff = Math.max(0, Date.now() - then);
+    const s = Math.floor(diff / 1000);
+    if (s < 60) return 'just now';
+    const m = Math.floor(s / 60);
+    if (m < 60) return m + 'm ago';
+    const h = Math.floor(m / 60);
+    if (h < 24) return h + 'h ago';
+    const d = Math.floor(h / 24);
+    if (d < 7) return d + 'd ago';
+    const w = Math.floor(d / 7);
+    if (w < 5) return w + 'w ago';
+    const mo = Math.floor(d / 30);
+    if (mo < 12) return mo + 'mo ago';
+    return Math.floor(d / 365) + 'y ago';
+  }
+
+  function absoluteTime(iso) {
+    try { return new Date(iso).toLocaleString(); }
+    catch (e) { return iso; }
+  }
+
+  function el(tag, cls) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    return n;
+  }
+
+  /* ── Card builders (XSS-safe: user fields via textContent only) ── */
+  function buildHead(row) {
+    const head = el('div', 'gt-card-head');
+
+    const name = el('span', 'gt-name');
+    name.textContent = row.name || 'Anonymous';
+    head.appendChild(name);
+
+    if (row.is_admin === true) {
+      const badge = el('span', 'gt-badge');
+      badge.textContent = '✦ THE JUDITH'; // ✦ THE JUDITH
+      head.appendChild(badge);
+    }
+
+    const time = el('span', 'gt-time');
+    time.textContent = relativeTime(row.created_at);
+    time.title = absoluteTime(row.created_at);
+    head.appendChild(time);
+
+    return head;
+  }
+
+  function buildMessageCard(row, replies) {
+    const card = el('div', 'gt-card' + (row.is_admin === true ? ' gt-admin' : ''));
+    card.appendChild(buildHead(row));
+
+    const body = el('div', 'gt-body');
+    body.textContent = row.body || '';
+    card.appendChild(body);
+
+    // Reply toggle + inline mini-form
+    const toggle = el('button', 'gt-reply-toggle');
+    toggle.type = 'button';
+    toggle.textContent = 'Reply';
+    card.appendChild(toggle);
+
+    const replyForm = buildReplyForm(row.id, () => refreshFeed());
+    card.appendChild(replyForm);
+
+    toggle.addEventListener('click', function () {
+      replyForm.classList.toggle('hidden');
+    });
+
+    // Replies container
+    if (replies && replies.length) {
+      const wrap = el('div', 'gt-replies');
+      replies.forEach(function (r) {
+        wrap.appendChild(buildReplyCard(r));
+      });
+      card.appendChild(wrap);
+    }
+
+    return card;
+  }
+
+  function buildReplyCard(row) {
+    const card = el('div', 'gt-card' + (row.is_admin === true ? ' gt-admin' : ''));
+    card.appendChild(buildHead(row));
+    const body = el('div', 'gt-body');
+    body.textContent = row.body || '';
+    card.appendChild(body);
+    return card;
+  }
+
+  function buildReplyForm(parentId, onDone) {
+    const form = el('form', 'gt-reply-form hidden');
+    form.setAttribute('autocomplete', 'off');
+
+    const nameInput = el('input');
+    nameInput.type = 'text';
+    nameInput.maxLength = 40;
+    nameInput.placeholder = 'Your name / callsign';
+    nameInput.value = localStorage.getItem('gt_name') || '';
+    form.appendChild(nameInput);
+
+    const bodyInput = el('textarea');
+    bodyInput.maxLength = 2000;
+    bodyInput.rows = 3;
+    bodyInput.placeholder = 'Your reply…';
+    form.appendChild(bodyInput);
+
+    const err = el('div', 'gt-error');
+    err.style.display = 'none';
+    form.appendChild(err);
+
+    const btn = el('button', 'gt-submit');
+    btn.type = 'submit';
+    btn.textContent = 'Transmit';
+    form.appendChild(btn);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      handleSubmit({
+        nameVal: nameInput.value,
+        bodyVal: bodyInput.value,
+        honeypot: '',
+        button: btn,
+        errorEl: err,
+        parentId: parentId,
+        onDone: function () {
+          bodyInput.value = '';
+          onDone();
+        }
+      });
+    });
+
+    return form;
+  }
+
+  /* ── Feed render ── */
+  function renderFeed(rows) {
+    const feed = document.getElementById('gt-feed');
+    if (!feed) return;
+    feed.textContent = '';
+
+    if (!rows || rows.length === 0) {
+      const empty = el('div', 'gt-empty');
+      empty.textContent = 'No transmissions yet. Be the first to send one.';
+      feed.appendChild(empty);
+      return;
+    }
+
+    // Split into top-level (newest first) and replies grouped by parent.
+    const tops = rows.filter(function (r) { return !r.parent_id; });
+    const repliesByParent = {};
+    rows.forEach(function (r) {
+      if (r.parent_id) {
+        (repliesByParent[r.parent_id] = repliesByParent[r.parent_id] || []).push(r);
+      }
+    });
+    // Replies oldest-first under each parent.
+    Object.keys(repliesByParent).forEach(function (k) {
+      repliesByParent[k].sort(function (a, b) {
+        return new Date(a.created_at) - new Date(b.created_at);
+      });
+    });
+
+    tops.forEach(function (top) {
+      feed.appendChild(buildMessageCard(top, repliesByParent[top.id] || []));
+    });
+  }
+
+  /* ── Main-page strip render ── */
+  function renderStrip(rows) {
+    const strip = document.getElementById('gt-strip');
+    if (!strip) return;
+    strip.textContent = '';
+
+    const total = rows ? rows.length : 0;
+
+    // Zero messages: single CTA, no empty list.
+    if (total === 0) {
+      const cta = el('button', 'gt-strip-cta');
+      cta.type = 'button';
+      cta.textContent = 'Send the first transmission →';
+      cta.addEventListener('click', function () { navigate('transmissions'); });
+      strip.appendChild(cta);
+      return;
+    }
+
+    const head = el('div', 'gt-strip-head');
+    const title = el('div', 'gt-strip-title');
+    title.textContent = '📡 Guest Transmissions'; // 📡
+    head.appendChild(title);
+    const count = el('div', 'gt-strip-count');
+    count.textContent = total + (total === 1 ? ' transmission' : ' transmissions');
+    head.appendChild(count);
+    strip.appendChild(head);
+
+    const list = el('div', 'gt-strip-list');
+    // Latest top-level messages, newest first (rows already sorted desc).
+    const tops = rows.filter(function (r) { return !r.parent_id; }).slice(0, 3);
+    tops.forEach(function (r) {
+      const item = el('div', 'gt-strip-item');
+      const ih = el('div', 'gt-strip-item-head');
+
+      const name = el('span', 'gt-name');
+      name.textContent = r.name || 'Anonymous';
+      ih.appendChild(name);
+
+      if (r.is_admin === true) {
+        const badge = el('span', 'gt-badge');
+        badge.textContent = '✦ THE JUDITH';
+        ih.appendChild(badge);
+      }
+
+      const time = el('span', 'gt-time');
+      time.textContent = relativeTime(r.created_at);
+      time.title = absoluteTime(r.created_at);
+      ih.appendChild(time);
+
+      item.appendChild(ih);
+
+      const body = el('div', 'gt-strip-item-body');
+      var txt = r.body || '';
+      if (txt.length > 140) txt = txt.slice(0, 140).trim() + '…';
+      body.textContent = txt;
+      item.appendChild(body);
+
+      list.appendChild(item);
+    });
+    strip.appendChild(list);
+
+    const cta = el('button', 'gt-strip-cta');
+    cta.type = 'button';
+    cta.textContent = 'Join the conversation →';
+    cta.addEventListener('click', function () { navigate('transmissions'); });
+    strip.appendChild(cta);
+  }
+
+  /* ── Shared submit handler (top-level + replies) ── */
+  async function handleSubmit(opts) {
+    const name = (opts.nameVal || '').trim();
+    const body = (opts.bodyVal || '').trim();
+    const err = opts.errorEl;
+    const btn = opts.button;
+
+    function showErr(msg) {
+      if (!err) return;
+      err.textContent = msg;
+      err.style.display = 'block';
+    }
+    function clearErr() {
+      if (err) { err.textContent = ''; err.style.display = 'none'; }
+    }
+    clearErr();
+
+    // Honeypot: silently drop, pretend success.
+    if (opts.honeypot && opts.honeypot.trim() !== '') {
+      if (opts.onDone) opts.onDone();
+      return;
+    }
+
+    // Length checks (mirror DB).
+    if (body.length < 1 || body.length > 2000) {
+      showErr('Transmission must be 1 to 2000 characters.');
+      return;
+    }
+    if (name.length > 40) {
+      showErr('Name must be 40 characters or fewer.');
+      return;
+    }
+
+    // Profanity/hate check (UX only).
+    if (isBlocked(body) || isBlocked(name)) {
+      showErr('That can\'t be transmitted.');
+      return;
+    }
+
+    // Rate limit.
+    const last = parseInt(localStorage.getItem('gt_last') || '0', 10);
+    if (Date.now() - last < RATE_MS) {
+      showErr('Slow down. One transmission per 30 seconds.');
+      return;
+    }
+
+    btn.disabled = true;
+    try {
+      if (opts.parentId) {
+        await postReply(name, body, opts.parentId);
+      } else {
+        await postMessage(name, body);
+      }
+      localStorage.setItem('gt_last', String(Date.now()));
+      if (name) localStorage.setItem('gt_name', name);
+      if (opts.onDone) opts.onDone();
+      if (DEMO && opts.demoNoteEl) {
+        opts.demoNoteEl.textContent = '(demo mode, not saved)';
+        opts.demoNoteEl.style.display = 'block';
+      }
+    } catch (e) {
+      showErr('Transmission failed. Try again.');
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  /* ── Refresh feed + strip from cache/network ── */
+  async function refreshFeed() {
+    try {
+      gtCache = await fetchAll();
+    } catch (e) {
+      gtCache = gtCache || [];
+    }
+    renderFeed(gtCache);
+    renderStrip(gtCache);
+  }
+
+  /* ── Wire up the main post form ── */
+  function initForm() {
+    const form = document.getElementById('gt-form');
+    if (!form) return;
+    const nameInput = document.getElementById('gt-name');
+    const bodyInput = document.getElementById('gt-body');
+    const counter = document.getElementById('gt-counter');
+    const honeypot = document.getElementById('gt-website');
+    const btn = document.getElementById('gt-transmit');
+    const errorEl = document.getElementById('gt-error');
+
+    // Prefill remembered name.
+    const savedName = localStorage.getItem('gt_name');
+    if (savedName) nameInput.value = savedName;
+
+    // Demo note element (created lazily).
+    let demoNoteEl = null;
+    if (DEMO) {
+      demoNoteEl = el('div', 'gt-demo-note');
+      demoNoteEl.style.display = 'none';
+      errorEl.parentNode.insertBefore(demoNoteEl, errorEl.nextSibling);
+    }
+
+    function updateCounter() {
+      const len = bodyInput.value.length;
+      counter.textContent = len + ' / 2000';
+      counter.classList.toggle('warn', len >= 1900);
+    }
+    bodyInput.addEventListener('input', updateCounter);
+    updateCounter();
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      handleSubmit({
+        nameVal: nameInput.value,
+        bodyVal: bodyInput.value,
+        honeypot: honeypot ? honeypot.value : '',
+        button: btn,
+        errorEl: errorEl,
+        parentId: null,
+        demoNoteEl: demoNoteEl,
+        onDone: function () {
+          bodyInput.value = '';
+          updateCounter();
+          refreshFeed();
+        }
+      });
+    });
+  }
+
+  /* ── Hook navigation: re-fetch when entering the section ── */
+  document.querySelectorAll('[data-section="transmissions"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      // navigate() already fired via the site's own handler; refresh fresh data.
+      refreshFeed();
+    });
+  });
+
+  /* ── Init: fetch once, populate strip + feed ── */
+  initForm();
+  refreshFeed();
+})();
 </script>
 </body>
 </html>
