@@ -1,0 +1,199 @@
+name: Judith Health Check + Supabase Keep-Alive
+
+# למה הקובץ הזה קיים:
+# ב-2026-07 פרויקט Supabase של The Judith הושהה אוטומטית אחרי 7 ימי חוסר פעילות.
+# לוח הקהילה באתר הקמפיין הציג ריק בשקט, בלי הודעת שגיאה, ואף אחד לא שם לב כחודש.
+# ה-workflow הזה עושה שני דברים: (1) מונע את ההשהיה (2) מתריע בטלגרם אם משהו נשבר.
+
+on:
+  schedule:
+    # 05:00 UTC = 08:00 שעון ישראל, כל יום.
+    # Supabase משהה אחרי 7 ימי חוסר פעילות, אז ריצה יומית נותנת מרווח של פי 7.
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: judith-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Supabase (this request is also the keep-alive)
+        id: db
+        env:
+          # מפתח publishable בלבד. הוא ממילא מוטמע גלוי ב-JS של האתר החי ומוגן ב-RLS.
+          SUPA_URL: https://kahnoeyykeylwkzgyzvf.supabase.co
+          SUPA_KEY: sb_publishable_Qg1Yl1ryh_3e7K1S04zQCA_bHOe8EDG
+        run: |
+          set +e
+          headers=$(curl -s --max-time 30 -o /tmp/body.txt -D - \
+            "$SUPA_URL/rest/v1/transmissions?select=id" \
+            -H "apikey: $SUPA_KEY" \
+            -H "Authorization: Bearer $SUPA_KEY" \
+            -H "Prefer: count=exact" \
+            -H "Range: 0-0")
+          curl_exit=$?
+          set -e
+
+          code=$(printf '%s' "$headers" | awk '/^HTTP/{c=$2} END{printf "%d", c}')
+          count=$(printf '%s' "$headers" | tr -d '\r' | awk -F'/' '/^[Cc]ontent-[Rr]ange:/{printf "%d", $2}')
+          [ -n "$count" ] || count=0
+
+          # curl exit 6 = לא הצליח לפתור את הדומיין. זו החתימה המדויקת של פרויקט מושהה.
+          if [ "$curl_exit" -eq 6 ]; then
+            reason="הדומיין של סופאבייס לא נפתר (NXDOMAIN). הסימן המובהק שהפרויקט מושהה."
+            ok=false
+          elif [ "$curl_exit" -ne 0 ]; then
+            reason="לא הצלחנו להגיע לסופאבייס בכלל (curl exit $curl_exit)."
+            ok=false
+          # שים לב: בגלל הכותרת Range סופאבייס מחזיר 206 Partial Content בהצלחה, לא 200.
+          # אם בודקים רק 200 מקבלים התראת שווא בכל ריצה. נתפס בהרצת ניסיון 2026-08-11.
+          elif [ "$code" != "200" ] && [ "$code" != "206" ]; then
+            reason="סופאבייס החזיר HTTP $code במקום 200/206."
+            ok=false
+          elif [ "$count" -lt 1 ]; then
+            reason="סופאבייס עונה, אבל טבלת transmissions מחזירה 0 רשומות. הלוח יוצג ריק."
+            ok=false
+          else
+            reason="תקין. $count רשומות בלוח."
+            ok=true
+          fi
+
+          echo "ok=$ok"       >> "$GITHUB_OUTPUT"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "code=$code"   >> "$GITHUB_OUTPUT"
+          {
+            echo "reason<<REASON_EOF"
+            echo "$reason"
+            echo "REASON_EOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "DB: $reason"
+
+      - name: Check live site
+        id: site
+        run: |
+          set +e
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
+            https://baritzy.github.io/the-judith-websit/public/)
+          set -e
+          if [ "$code" = "200" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "Site: HTTP $code"
+
+      - name: Compare to previous state
+        id: state
+        env:
+          DB_OK: ${{ steps.db.outputs.ok }}
+          DB_CODE: ${{ steps.db.outputs.code }}
+          DB_COUNT: ${{ steps.db.outputs.count }}
+          SITE_OK: ${{ steps.site.outputs.ok }}
+          SITE_CODE: ${{ steps.site.outputs.code }}
+        run: |
+          prev=unknown
+          if [ -f health/status.json ]; then
+            prev=$(python3 -c "import json;print(str(json.load(open('health/status.json')).get('ok')).lower())" 2>/dev/null || echo unknown)
+          fi
+
+          if [ "$DB_OK" = "true" ] && [ "$SITE_OK" = "true" ]; then now=true; else now=false; fi
+
+          mkdir -p health
+          python3 - <<'PY'
+          import json, os, datetime
+          json.dump({
+              "ok": os.environ["DB_OK"] == "true" and os.environ["SITE_OK"] == "true",
+              "checked_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "supabase": {"ok": os.environ["DB_OK"] == "true",
+                           "http": int(os.environ["DB_CODE"]),
+                           "rows": int(os.environ["DB_COUNT"])},
+              "site": {"ok": os.environ["SITE_OK"] == "true",
+                       "http": int(os.environ["SITE_CODE"])},
+          }, open("health/status.json", "w"), indent=2, ensure_ascii=False)
+          PY
+
+          echo "prev=$prev" >> "$GITHUB_OUTPUT"
+          echo "now=$now"   >> "$GITHUB_OUTPUT"
+
+          # מתריעים רק על שינוי מצב, לא בכל ריצה, כדי שההתראה תישאר משמעותית.
+          if [ "$now" = "false" ] && [ "$prev" != "false" ]; then
+            echo "alert=broke" >> "$GITHUB_OUTPUT"
+          elif [ "$now" = "true" ] && [ "$prev" = "false" ]; then
+            echo "alert=fixed" >> "$GITHUB_OUTPUT"
+          elif [ "$now" = "true" ] && [ "$(date -u +%d)" = "01" ]; then
+            echo "alert=monthly" >> "$GITHUB_OUTPUT"
+          else
+            echo "alert=none" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Telegram alert
+        if: steps.state.outputs.alert != 'none'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ALERT: ${{ steps.state.outputs.alert }}
+          DB_REASON: ${{ steps.db.outputs.reason }}
+          DB_COUNT: ${{ steps.db.outputs.count }}
+          SITE_CODE: ${{ steps.site.outputs.code }}
+        run: |
+          if [ "$ALERT" = "broke" ]; then
+            MSG=$(printf '%s\n' \
+              "🔴 The Judith: לוח הקהילה לא עובד." \
+              "" \
+              "מה קרה: $DB_REASON" \
+              "האתר עצמו: HTTP $SITE_CODE" \
+              "" \
+              "הדאטה בטוחה. סופאבייס שומר הכל 90 יום." \
+              "" \
+              "מה לעשות:" \
+              "1. להיכנס ל-supabase.com/dashboard" \
+              "2. לבחור את הפרויקט the-judith" \
+              "3. ללחוץ Restore project" \
+              "" \
+              "שים לב: מבקרים באתר לא רואים שגיאה. הלוח פשוט מוצג ריק.")
+          elif [ "$ALERT" = "fixed" ]; then
+            MSG="🟢 The Judith: לוח הקהילה חזר לעבוד. $DB_COUNT הודעות בלוח."
+          else
+            MSG="✅ The Judith: הבדיקה היומית רצה כסדרה. הלוח תקין, $DB_COUNT הודעות. (עדכון חודשי, לא נדרשת פעולה)"
+          fi
+
+          curl -s --max-time 30 -o /dev/null \
+            "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
+            --data-urlencode "chat_id=$TG_CHAT" \
+            --data-urlencode "text=$MSG"
+
+      - name: Persist status
+        # הקומיט השבועי הזה הוא גם מה שמונע מגיטהאב לכבות את התזמון
+        # אחרי 60 יום בלי פעילות בריפו. בלעדיו ההגנה הייתה נופלת בשקט שוב.
+        env:
+          PREV: ${{ steps.state.outputs.prev }}
+          NOW: ${{ steps.state.outputs.now }}
+        run: |
+          if [ "$PREV" = "$NOW" ] && [ "$(date -u +%u)" != "7" ]; then
+            echo "אין שינוי מצב וזה לא יום ראשון. לא שומרים, כדי לא להציף את ההיסטוריה."
+            exit 0
+          fi
+          git config user.name  "judith-health-bot"
+          git config user.email "baritzy@users.noreply.github.com"
+          git add health/status.json
+          if git diff --staged --quiet; then
+            echo "אין שינוי בקובץ."
+          else
+            git commit -m "health: $(date -u +%Y-%m-%d) ok=$NOW"
+            git push
+          fi
+
+      - name: Fail the run if unhealthy
+        if: steps.state.outputs.now != 'true'
+        run: |
+          echo "::error::${{ steps.db.outputs.reason }} | site HTTP ${{ steps.site.outputs.code }}"
+          exit 1
