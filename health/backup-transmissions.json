@@ -1,0 +1,196 @@
+{
+  "exported_at": "2026-08-11T11:16:07Z",
+  "source": "supabase table: transmissions",
+  "rows": 21,
+  "data": [
+    {
+      "id": "85a947bb-db18-4b4e-be0f-8c0154cd448e",
+      "name": "Ksenia",
+      "body": "WOW!!! waiting to the first episode 🙂",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-22T14:06:12.767201+00:00"
+    },
+    {
+      "id": "99b84cd1-41a5-4d71-a9b7-646833c072ce",
+      "name": "The Judith",
+      "body": "Yes!! thanks Ksenia! the first one will be available right here on the website on July 29th. can't wait to hear what you think about it.",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "85a947bb-db18-4b4e-be0f-8c0154cd448e",
+      "created_at": "2026-06-22T15:06:12.767201+00:00"
+    },
+    {
+      "id": "bb1f5d55-1e02-4ffb-b301-f0fd0af6ccc9",
+      "name": "Lina",
+      "body": "A Robot. lol.",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-23T14:06:12.767201+00:00"
+    },
+    {
+      "id": "32318488-5fc8-4a3e-8bd9-408fc3487c0c",
+      "name": "The Judith",
+      "body": "😂yeah we like him. small, yet effective.",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "bb1f5d55-1e02-4ffb-b301-f0fd0af6ccc9",
+      "created_at": "2026-06-23T15:06:12.767201+00:00"
+    },
+    {
+      "id": "b91394e8-be78-406b-b7a0-2fac519b7009",
+      "name": "paul",
+      "body": "looks good",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-24T14:06:12.767201+00:00"
+    },
+    {
+      "id": "79cefd70-5f2f-41f4-b841-013f9b459f03",
+      "name": "The Judith",
+      "body": "Thanks Paul! sign up to the website to stay informed!",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "b91394e8-be78-406b-b7a0-2fac519b7009",
+      "created_at": "2026-06-24T15:06:12.767201+00:00"
+    },
+    {
+      "id": "44e9cd4e-0bab-443f-8297-11b529fc1dde",
+      "name": "just a jew",
+      "body": "when will the first episode be available and where?",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-25T14:06:12.767201+00:00"
+    },
+    {
+      "id": "eb534cd3-f1b6-4e69-86b1-2fc5cb08e54d",
+      "name": "The Judith",
+      "body": "The pilot episode \"In Our Image\" will be available right here on this site on July 29th.",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "44e9cd4e-0bab-443f-8297-11b529fc1dde",
+      "created_at": "2026-06-25T15:06:12.767201+00:00"
+    },
+    {
+      "id": "ac291047-a6cc-418c-b3cb-94d9aa084379",
+      "name": "Tillie",
+      "body": "yeyyyyyy!!!",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": "44e9cd4e-0bab-443f-8297-11b529fc1dde",
+      "created_at": "2026-06-25T16:06:12.767201+00:00"
+    },
+    {
+      "id": "c1bdc6fc-8dc0-4156-a4f1-ae6da4df5ee9",
+      "name": "dana",
+      "body": "wow! we just watched the promo. it is supposed to be like a Jewish Rick & Morty?",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-26T14:06:12.767201+00:00"
+    },
+    {
+      "id": "d6bd0ed8-c824-4577-b9fb-2571a0ab7a8a",
+      "name": "The Judith",
+      "body": "It's supposed to be the Jewish The Judith 😂but love the comparison. follow us to stay in the loop.",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "c1bdc6fc-8dc0-4156-a4f1-ae6da4df5ee9",
+      "created_at": "2026-06-26T15:06:12.767201+00:00"
+    },
+    {
+      "id": "9752c693-740c-4f21-8c79-7bbe9fd7897e",
+      "name": "Lina",
+      "body": "Because of people like you Jews want to run away to outer space.",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-27T14:06:12.767201+00:00"
+    },
+    {
+      "id": "b1342930-2103-45aa-a3a8-022e2f8a3a61",
+      "name": "free palestine",
+      "body": "a show about jews, yeah that's what we need right now…",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-28T12:46:18.223+00:00"
+    },
+    {
+      "id": "eaa5f5d3-7993-47e6-adad-70cd94d5f8a9",
+      "name": "The Judith",
+      "body": "we finally agree on something :)",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "b1342930-2103-45aa-a3a8-022e2f8a3a61",
+      "created_at": "2026-06-28T14:46:18.224+00:00"
+    },
+    {
+      "id": "46f71e38-e65c-4aa7-8749-5b2a6c88d504",
+      "name": "oron levy",
+      "body": "don't mind the haters! it looks cool!!!! more jewish content please!!!!",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": "b1342930-2103-45aa-a3a8-022e2f8a3a61",
+      "created_at": "2026-06-28T16:46:18.224+00:00"
+    },
+    {
+      "id": "f4119d0e-ec35-40ca-a482-3fef9eedb13e",
+      "name": "The Judith",
+      "body": "we're on it 💪",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "b1342930-2103-45aa-a3a8-022e2f8a3a61",
+      "created_at": "2026-06-28T18:46:18.224+00:00"
+    },
+    {
+      "id": "5eb064ca-b94e-41db-8f3e-cd66718b757f",
+      "name": "Phil Cohen",
+      "body": "lol lol and more lol. great work guys! following.",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-06-30T14:06:12.767201+00:00"
+    },
+    {
+      "id": "854df220-f951-4f34-bc00-eb93232f8f8c",
+      "name": "The Judith",
+      "body": "thanks phil! stick around, more content will be available soon.",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "5eb064ca-b94e-41db-8f3e-cd66718b757f",
+      "created_at": "2026-06-30T15:06:12.767201+00:00"
+    },
+    {
+      "id": "63040665-d080-4a54-9669-8f22685cd9ce",
+      "name": "Tillie",
+      "body": "i need this on netflix asap thx",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": null,
+      "created_at": "2026-07-01T12:06:12.767201+00:00"
+    },
+    {
+      "id": "42facdc2-4e05-42a7-8296-3099832ae3b3",
+      "name": "The Judith",
+      "body": "Working on it :)",
+      "is_admin": true,
+      "hidden": false,
+      "parent_id": "63040665-d080-4a54-9669-8f22685cd9ce",
+      "created_at": "2026-07-01T12:36:12.767201+00:00"
+    },
+    {
+      "id": "fdd16d01-846e-40ba-833f-6d64a33ee7d6",
+      "name": "David Lev",
+      "body": "same here",
+      "is_admin": false,
+      "hidden": false,
+      "parent_id": "63040665-d080-4a54-9669-8f22685cd9ce",
+      "created_at": "2026-07-01T13:06:12.767201+00:00"
+    }
+  ]
+}
