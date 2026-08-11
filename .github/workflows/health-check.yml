@@ -171,24 +171,93 @@ jobs:
             --data-urlencode "chat_id=$TG_CHAT" \
             --data-urlencode "text=$MSG"
 
+      - name: Weekly backup of the board
+        # ב-tier החינמי של סופאבייס אין גיבויים אוטומטיים בכלל.
+        # פעם בשבוע שומרים עותק מלא של הלוח בתוך הריפו. הגרסאות הישנות
+        # נשמרות בהיסטוריית git, אז גם אם גיבוי אחד נדפק אפשר לחזור אחורה.
+        id: backup
+        # רץ בימי ראשון, וגם בכל הרצה ידנית
+        if: github.event_name == 'workflow_dispatch' || steps.db.outputs.ok == 'true'
+        env:
+          SUPA_URL: https://kahnoeyykeylwkzgyzvf.supabase.co
+          SUPA_KEY: sb_publishable_Qg1Yl1ryh_3e7K1S04zQCA_bHOe8EDG
+          EXPECTED: ${{ steps.db.outputs.count }}
+        run: |
+          if [ "$(date -u +%u)" != "7" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "made=false" >> "$GITHUB_OUTPUT"
+            echo "לא יום ראשון ולא הרצה ידנית. מדלגים על הגיבוי."
+            exit 0
+          fi
+
+          set +e
+          curl -s --max-time 60 -o /tmp/rows.json -w '%{http_code}' \
+            "$SUPA_URL/rest/v1/transmissions?select=*&order=created_at.asc" \
+            -H "apikey: $SUPA_KEY" -H "Authorization: Bearer $SUPA_KEY" > /tmp/code.txt
+          rc=$?
+          set -e
+          code=$(cat /tmp/code.txt)
+
+          if [ "$rc" -ne 0 ] || [ "$code" != "200" ]; then
+            echo "made=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::הגיבוי לא בוצע. curl=$rc http=$code. הגיבוי הקודם נשאר שלם."
+            exit 0
+          fi
+
+          # שומר חיים: לעולם לא לדרוס גיבוי תקין בגיבוי ריק או חסר.
+          # בלי זה, תקלה חד פעמית בסופאבייס הייתה מוחקת לנו את הגיבוי היחיד.
+          set +e
+          python3 - <<'PY'
+          import json, os, sys, datetime
+          rows = json.load(open("/tmp/rows.json"))
+          expected = int(os.environ.get("EXPECTED") or 0)
+          if not isinstance(rows, list) or len(rows) == 0:
+              print("::warning::הייצוא חזר ריק. לא דורסים את הגיבוי הקיים.")
+              sys.exit(9)
+          if expected and len(rows) < expected * 0.5:
+              print(f"::warning::הייצוא החזיר {len(rows)} רשומות מול {expected} שנספרו. חשוד, לא דורסים.")
+              sys.exit(9)
+          os.makedirs("health", exist_ok=True)
+          json.dump({
+              "exported_at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "source": "supabase table: transmissions",
+              "rows": len(rows),
+              "data": rows,
+          }, open("health/backup-transmissions.json", "w"), indent=2, ensure_ascii=False)
+          print(f"גובו {len(rows)} רשומות.")
+          PY
+          rc=$?
+          set -e
+          if [ "$rc" -eq 9 ]; then
+            echo "made=false" >> "$GITHUB_OUTPUT"
+          elif [ "$rc" -ne 0 ]; then
+            echo "made=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::הגיבוי נכשל (exit $rc). הגיבוי הקודם נשאר שלם."
+          else
+            echo "made=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Persist status
         # הקומיט השבועי הזה הוא גם מה שמונע מגיטהאב לכבות את התזמון
         # אחרי 60 יום בלי פעילות בריפו. בלעדיו ההגנה הייתה נופלת בשקט שוב.
         env:
           PREV: ${{ steps.state.outputs.prev }}
           NOW: ${{ steps.state.outputs.now }}
+          BACKED_UP: ${{ steps.backup.outputs.made }}
         run: |
-          if [ "$PREV" = "$NOW" ] && [ "$(date -u +%u)" != "7" ]; then
-            echo "אין שינוי מצב וזה לא יום ראשון. לא שומרים, כדי לא להציף את ההיסטוריה."
+          if [ "$PREV" = "$NOW" ] && [ "$(date -u +%u)" != "7" ] && [ "$BACKED_UP" != "true" ]; then
+            echo "אין שינוי מצב, לא יום ראשון, ולא נעשה גיבוי. לא שומרים."
             exit 0
           fi
           git config user.name  "judith-health-bot"
           git config user.email "baritzy@users.noreply.github.com"
           git add health/status.json
+          [ -f health/backup-transmissions.json ] && git add health/backup-transmissions.json
           if git diff --staged --quiet; then
-            echo "אין שינוי בקובץ."
+            echo "אין שינוי בקבצים."
           else
-            git commit -m "health: $(date -u +%Y-%m-%d) ok=$NOW"
+            msg="health: $(date -u +%Y-%m-%d) ok=$NOW"
+            [ "$BACKED_UP" = "true" ] && msg="$msg + גיבוי לוח"
+            git commit -m "$msg"
             git push
           fi
 
