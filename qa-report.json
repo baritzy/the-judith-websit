@@ -1,8 +1,8 @@
 {
-  "date": "2026-06-04",
+  "date": "2026-10-01",
   "automated_coverage": "pass",
-  "automated_coverage_details": "All local assets verified present, no broken references, HTML structure valid. Added The Judith Trailer Vimeo embed (ID 1198418462) above episodes section.",
-  "last_updated": "2026-06-04T00:00:00.000Z",
+  "automated_coverage_details": "grep verified single instance of 'July 29' lockLabel in public/index.html, no other occurrences in investor/ or root index.html; no broken HTML/JS",
+  "last_updated": "2026-10-01T14:02:04.933Z",
   "browser_test": "pass",
-  "browser_test_details": "Trailer section added with responsive Vimeo embed, purple glow border, displays correctly above Season 1 Episodes section on desktop and mobile."
+  "browser_test_details": "Health check of all 3 live URLs (root/public/investor): HTTP 200, all tabs click through clean, no console errors, Supabase Guest Transmissions board loads posts, images load, mobile 390px renders with no overflow. Text change verified locally in browser: episode 1 lock badge now reads 'Premieres Soon', old text confirmed gone."
 }
