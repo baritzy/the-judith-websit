@@ -1,8 +1,8 @@
 {
-  "date": "2026-10-01",
+  "date": "2026-10-02",
   "automated_coverage": "pass",
-  "automated_coverage_details": "grep verified single instance of 'July 29' lockLabel in public/index.html, no other occurrences in investor/ or root index.html; no broken HTML/JS",
-  "last_updated": "2026-10-01T14:02:04.933Z",
+  "automated_coverage_details": "3 new static pages in legal/, no em dashes, noindex meta present, links relative/valid, no other files changed",
+  "last_updated": "2026-10-02T16:38:40.362Z",
   "browser_test": "pass",
-  "browser_test_details": "Health check of all 3 live URLs (root/public/investor): HTTP 200, all tabs click through clean, no console errors, Supabase Guest Transmissions board loads posts, images load, mobile 390px renders with no overflow. Text change verified locally in browser: episode 1 lock badge now reads 'Premieres Soon', old text confirmed gone."
+  "browser_test_details": "Rendered privacy.html, terms.html, data-deletion.html in headless Chrome, dark theme with yellow accent renders correctly, text readable at 900px"
 }
