@@ -3244,7 +3244,7 @@ document.addEventListener('keydown', function(e) {
    modal (email capture) via openModal(). Numbers read from CAMPAIGN only.
 ══════════════════════════════════════════════ */
 const CAMPAIGN = {
-  status: 'live',            // 'live' shows numbers; 'prelaunch' hides raised/backers/countdown and shows "Get notified" instead.
+  status: 'prelaunch',          // 'live' shows numbers; 'prelaunch' hides raised/backers/countdown and shows "Get notified" instead.
   raised: 18450,
   goal: 45000,
   backers: 327,
@@ -3371,7 +3371,7 @@ const CF_FAQ = [
       '<div class="cf-tier">' +
         '<div class="cf-tier-head">' +
           '<span class="cf-tier-price">' + money(t.price) + '</span>' +
-          '<span class="cf-tier-backers">' + t.backers + ' backers</span>' +
+          (isPrelaunch ? '' : '<span class="cf-tier-backers">' + t.backers + ' backers</span>') +
         '</div>' +
         '<div class="cf-tier-name">' + t.name + '</div>' +
         '<p class="cf-tier-desc">' + t.desc + '</p>' +
