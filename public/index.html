@@ -1811,7 +1811,8 @@
     .teaser-media-wide { aspect-ratio: 16 / 9; }
     .teaser-media-tall { aspect-ratio: 9 / 16; max-width: 300px; margin: 1rem auto 0; border-radius: 10px; }
     .teaser-media img,
-    .teaser-media iframe {
+    .teaser-media iframe,
+    .teaser-media video {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -1858,6 +1859,12 @@
     }
     .teaser-link:hover { border-color: var(--purple); color: var(--purple); }
     .teaser-card .btn-watch { align-self: center; }
+    .teaser-media video { background: #000; object-fit: contain; }
+    .teaser-note { font-size: 0.82rem; color: var(--text-muted); }
+    .hero-signup { margin: -0.75rem 0 0.5rem; }
+    .footer-signup { margin: 0 0 0.9rem; }
+    .footer-signup a { color: var(--purple); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+    .footer-signup a:hover { text-decoration: underline; }
     .teaser-card .btn-locked { align-self: center; }
 
     /* Support / Invest */
@@ -1978,6 +1985,7 @@
       </p>
       <div class="hero-divider"></div>
       <p class="series-format">SCI-FI COMEDY · ANIMATED SERIES<br>10 EPISODES · 25 MIN</p>
+      <a href="#signup" class="btn-cta-large js-signup hero-signup">Sign Up for Updates</a>
     </div>
 
     <div class="trailer-section">
@@ -2136,13 +2144,14 @@
 
       <div class="teaser-card fade-in" style="transition-delay:0.22s">
         <div class="teaser-media teaser-media-tall">
-          <img src="Judith%20New%20Poster%209-16.png" alt="Who Ate My Hummus? teaser, coming soon" loading="lazy" />
-          <div class="lock-overlay"><svg class="lock-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <video controls playsinline preload="metadata" poster="media/hummus-teaser-poster.jpg" aria-label="Who Ate My Hummus? teaser">
+            <source src="media/hummus-teaser.mp4" type="video/mp4" />
+          </video>
         </div>
         <div class="teaser-info">
           <div class="episode-number">Teaser</div>
           <div class="teaser-title">Who Ate My Hummus?</div>
-          <div class="btn-locked">&#x1F512; Coming Soon</div>
+          <div class="teaser-note">New teaser, watch it here first.</div>
         </div>
       </div>
 
@@ -2231,6 +2240,7 @@
       <a href="https://www.instagram.com/thejudithseries/" target="_blank" rel="noopener" aria-label="The Judith on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
       <a href="https://www.facebook.com/profile.php?id=61595078697416" target="_blank" rel="noopener" aria-label="The Judith on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg>Facebook</a>
     </div>
+    <p class="footer-signup"><a href="#signup" class="js-signup">&#x2709; Sign up for updates</a></p>
     &copy; 2026 <span>The Judith</span> &nbsp;&middot;&nbsp; An independent animated series by Eytan Baritzy and Nadav Shlomo Giladi
   </footer>
 
