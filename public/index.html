@@ -12,6 +12,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Judith: A Dark Comedy Series</title>
+  <meta name="description" content="The Judith is an independent animated sci-fi comedy by Eytan Baritzy and Nadav Shlomo Giladi. Earth turned antisemitic, so a spaceship full of Jews went looking for a new home. Nobody wants them." />
+  <meta name="author" content="Eytan Baritzy and Nadav Shlomo Giladi" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="The Judith" />
+  <meta property="og:title" content="The Judith: A Dark Comedy Series" />
+  <meta property="og:description" content="Earth turned antisemitic, so a spaceship full of Jews went looking for a new home. Even in infinite space, nobody wants them. An independent animated series." />
+  <meta property="og:url" content="https://baritzy.github.io/the-judith-websit/public/" />
+  <meta property="og:image" content="https://baritzy.github.io/the-judith-websit/public/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="669" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -976,639 +987,6 @@
       padding: 0.75rem 0;
     }
 
-    /* ══════════════════════════════════════════════
-       CROWDFUNDING CAMPAIGN (Buy us a coffee)
-    ══════════════════════════════════════════════ */
-    .cf-wrap {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 1rem 2rem 5rem;
-    }
-
-    .cf-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(139,92,246,0.14);
-      border: 1px solid rgba(139,92,246,0.4);
-      color: var(--purple);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.4rem 0.9rem;
-      border-radius: 50px;
-      margin-bottom: 1rem;
-    }
-
-    /* Hero */
-    .cf-hero {
-      margin-bottom: 2rem;
-    }
-
-    .cf-hero-title {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 900;
-      font-size: clamp(1.8rem, 5vw, 3.2rem);
-      letter-spacing: 0.05em;
-      color: var(--text);
-      text-shadow: 0 0 40px rgba(139,92,246,0.3);
-      line-height: 1.1;
-      margin-bottom: 0.75rem;
-    }
-
-    .cf-hero-pitch {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 720px;
-      margin-bottom: 1.5rem;
-    }
-
-    .cf-hero-img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-radius: var(--radius);
-      border: 1px solid rgba(139,92,246,0.2);
-      box-shadow: 0 0 60px rgba(139,92,246,0.2), 0 0 120px rgba(139,92,246,0.06);
-      display: block;
-    }
-
-    /* Two-column grid */
-    .cf-grid {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 2.5rem;
-      align-items: start;
-    }
-
-    .cf-main { min-width: 0; }
-
-    .cf-rail {
-      position: sticky;
-      top: 90px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    /* Funding panel */
-    .cf-panel {
-      background: var(--surface);
-      border: 1px solid rgba(139,92,246,0.25);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-    }
-
-    .cf-raised {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 900;
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      color: var(--purple);
-      line-height: 1.1;
-    }
-
-    .cf-raised-sub {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-
-    .cf-progress-track {
-      width: 100%;
-      height: 10px;
-      background: var(--surface2);
-      border-radius: 50px;
-      overflow: hidden;
-      margin-bottom: 0.75rem;
-    }
-
-    .cf-progress-fill {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, var(--purple), #a78bfa);
-      border-radius: 50px;
-      box-shadow: 0 0 12px var(--purple-glow);
-      transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .cf-percent {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text);
-      margin-bottom: 1.25rem;
-    }
-
-    .cf-stats {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .cf-stat-num {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      color: var(--text);
-      line-height: 1.1;
-    }
-
-    .cf-stat-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .cf-goal-target {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 1.6rem;
-      color: var(--purple);
-      margin-bottom: 1.25rem;
-    }
-
-    .cf-btn-primary {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: linear-gradient(135deg, var(--purple), #6d28d9);
-      color: #fff;
-      border: none;
-      border-radius: 50px;
-      padding: 0.95rem 1.5rem;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      transition: box-shadow var(--transition), transform var(--transition);
-    }
-
-    .cf-btn-primary:hover {
-      box-shadow: 0 0 28px var(--purple-glow), 0 0 60px rgba(139,92,246,0.2);
-      transform: translateY(-2px);
-    }
-
-    .cf-btn-secondary {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
-      cursor: pointer;
-      padding: 0.85rem 0 0.25rem;
-      transition: color var(--transition);
-    }
-
-    .cf-btn-secondary:hover { color: var(--purple); }
-
-    /* Reward tiers */
-    .cf-tiers-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--purple);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .cf-tiers {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .cf-tier {
-      background: var(--surface);
-      border: 1px solid rgba(139,92,246,0.15);
-      border-radius: var(--radius);
-      padding: 1.25rem;
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-
-    .cf-tier:hover {
-      border-color: rgba(139,92,246,0.45);
-      box-shadow: 0 0 24px rgba(139,92,246,0.1);
-    }
-
-    .cf-tier-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.35rem;
-    }
-
-    .cf-tier-price {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: var(--purple);
-    }
-
-    .cf-tier-backers {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      white-space: nowrap;
-    }
-
-    .cf-tier-name {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .cf-tier-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 0.75rem;
-    }
-
-    .cf-tier-list {
-      list-style: none;
-      margin: 0 0 0.75rem;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .cf-tier-list li {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      padding-left: 1.1rem;
-      position: relative;
-      line-height: 1.5;
-    }
-
-    .cf-tier-list li::before {
-      content: '\2713';
-      position: absolute;
-      left: 0;
-      color: var(--purple);
-      font-size: 0.8rem;
-    }
-
-    .cf-tier-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .cf-pill {
-      font-size: 0.68rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: var(--surface2);
-      color: var(--text-muted);
-      border-radius: 50px;
-      padding: 0.25rem 0.7rem;
-    }
-
-    .cf-pill.limit {
-      background: rgba(139,92,246,0.14);
-      color: var(--purple);
-    }
-
-    .cf-tier-select {
-      width: 100%;
-      background: var(--surface2);
-      color: var(--text);
-      border: 1px solid rgba(139,92,246,0.3);
-      border-radius: 50px;
-      padding: 0.6rem 1.2rem;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: background var(--transition), box-shadow var(--transition);
-    }
-
-    .cf-tier-select:hover {
-      background: var(--purple);
-      color: #fff;
-      box-shadow: 0 0 18px var(--purple-glow);
-    }
-
-    /* Story / About */
-    .cf-story { margin-top: 2rem; }
-
-    .cf-story h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(0.85rem, 1.8vw, 1rem);
-      font-weight: 700;
-      color: var(--purple);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin: 2rem 0 0.75rem;
-    }
-
-    .cf-story h3:first-child { margin-top: 0; }
-
-    .cf-story p {
-      font-size: clamp(0.95rem, 1.7vw, 1.02rem);
-      color: var(--text-muted);
-      line-height: 1.85;
-      margin-bottom: 1rem;
-    }
-
-    .cf-story-img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-radius: var(--radius);
-      border: 1px solid rgba(139,92,246,0.15);
-      margin: 1.5rem 0;
-      display: block;
-    }
-
-    .cf-money-list {
-      list-style: none;
-      margin: 0 0 1rem;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .cf-money-list li {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      padding-left: 1.2rem;
-      position: relative;
-    }
-
-    .cf-money-list li::before {
-      content: '\2022';
-      position: absolute;
-      left: 0;
-      color: var(--purple);
-    }
-
-    /* Stretch goals */
-    .cf-stretch {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .cf-stretch-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius);
-      padding: 1.1rem 1.25rem;
-      opacity: 0.6;
-      transition: opacity var(--transition), border-color var(--transition), box-shadow var(--transition);
-    }
-
-    .cf-stretch-item.reached {
-      opacity: 1;
-      border-color: rgba(139,92,246,0.5);
-      box-shadow: 0 0 24px rgba(139,92,246,0.12);
-    }
-
-    .cf-stretch-icon {
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--surface2);
-      color: var(--text-dim);
-      font-size: 1.1rem;
-    }
-
-    .cf-stretch-item.reached .cf-stretch-icon {
-      background: rgba(139,92,246,0.18);
-      color: var(--purple);
-    }
-
-    .cf-stretch-amount {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-    }
-
-    .cf-stretch-item.reached .cf-stretch-amount { color: var(--purple); }
-
-    .cf-stretch-title {
-      font-weight: 600;
-      font-size: 0.92rem;
-      color: var(--text);
-      margin: 0.1rem 0;
-    }
-
-    .cf-stretch-reward {
-      font-size: 0.83rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* FAQ accordion */
-    .cf-faq {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-top: 1rem;
-    }
-
-    .cf-faq-item {
-      background: var(--surface);
-      border: 1px solid rgba(139,92,246,0.12);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .cf-faq-q {
-      width: 100%;
-      text-align: left;
-      background: none;
-      border: none;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 1rem 1.25rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .cf-faq-q .cf-faq-mark {
-      color: var(--purple);
-      font-size: 1.2rem;
-      transition: transform var(--transition);
-      flex-shrink: 0;
-    }
-
-    .cf-faq-item.open .cf-faq-mark { transform: rotate(45deg); }
-
-    .cf-faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-
-    .cf-faq-a p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      padding: 0 1.25rem 1.1rem;
-      margin: 0;
-    }
-
-    /* Mobile fixed bottom CTA bar */
-    .cf-mobile-bar {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 90;
-      background: rgba(6,6,6,0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(139,92,246,0.25);
-      padding: 0.75rem 1rem;
-    }
-
-    .cf-section-label {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--purple);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin: 2.5rem 0 1rem;
-    }
-
-    /* Tablet + mobile: single column */
-    @media (max-width: 900px) {
-      .cf-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .cf-rail { position: static; top: auto; }
-      .cf-tiers-title { display: none; }
-    }
-
-    @media (max-width: 700px) {
-      .cf-wrap { padding: 0.5rem 1rem 6rem; }
-      .cf-panel { padding: 1.35rem; }
-      .cf-mobile-bar.show { display: block; }
-    }
-
-    /* ── Studio / Founders ── */
-    .studio-section {
-      max-width: 860px;
-      margin: 4rem auto 0;
-      padding: 0 2rem 3rem;
-    }
-
-    .studio-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .studio-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--teal);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .studio-desc {
-      font-size: 1rem;
-      color: var(--text-muted);
-      line-height: 1.85;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .founders-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .founder-card {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      background: var(--surface);
-      border: 1px solid rgba(0,212,255,0.12);
-      border-radius: var(--radius);
-      padding: 2rem;
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-
-    .founder-card:hover {
-      border-color: rgba(0,212,255,0.35);
-      box-shadow: 0 0 30px rgba(0,212,255,0.07);
-    }
-
-    .founder-text { flex: 1; }
-
-    .founder-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.2rem;
-    }
-
-    .founder-role {
-      font-size: 0.85rem;
-      color: var(--teal);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-    }
-
-    .founder-bio {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-    }
-
-    .founder-photo-img {
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
-    .founder-photo-img img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 2px solid rgba(0,212,255,0.25);
-      display: block;
-    }
-
-    @media (max-width: 600px) {
-      .founder-card { flex-direction: column; text-align: center; }
-    }
-
     /* ── Modal ── */
     .modal-backdrop {
       position: fixed;
@@ -2305,6 +1683,214 @@
       .gt-reply-form { margin-left: 1.1rem; padding-left: 0.75rem; }
     }
 
+    /* ══════════════════════════════════════════════
+       SLIM PAGE (14.10.26): episodes grid, teasers, social, support
+    ══════════════════════════════════════════════ */
+    .main-copy { padding-bottom: 1.5rem; }
+    .main-copy p { margin-bottom: 1.25rem; }
+    .main-copy p strong { color: var(--text); font-weight: 600; }
+
+    .main-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      padding: 0.5rem 2rem 2.5rem;
+    }
+    .main-cta .btn-cta-large { margin-top: 0; }
+
+    .btn-cta-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      border: 2px solid var(--purple);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+      transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+    }
+    .btn-cta-outline:hover {
+      background: rgba(139,92,246,0.15);
+      box-shadow: 0 0 24px var(--purple-glow);
+      transform: translateY(-3px);
+    }
+
+    .social-block { text-align: center; padding: 0 2rem 3rem; }
+    .social-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .social-links { display: flex; justify-content: center; gap: 0.9rem; flex-wrap: wrap; }
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.55rem 1.1rem;
+      border-radius: 50px;
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.25);
+      transition: border-color var(--transition), color var(--transition), box-shadow var(--transition);
+    }
+    .social-links a:hover { border-color: var(--purple); color: var(--purple); box-shadow: 0 0 16px var(--purple-glow); }
+    .social-links svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* Episodes: posters + titles only */
+    .ep-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+    .ep-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(139,92,246,0.1);
+    }
+    .ep-info { padding: 0.9rem 1.1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .ep-info .episode-number { margin-bottom: 0; }
+    .ep-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .ep-card .btn-locked { padding: 0.4rem 1rem; font-size: 0.78rem; }
+
+    /* Teasers */
+    .teaser-list {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .teaser-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(139,92,246,0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    .teaser-card.wide { grid-column: 1 / -1; }
+    .teaser-media {
+      position: relative;
+      display: block;
+      width: 100%;
+      background: #000;
+      border: none;
+      padding: 0;
+      overflow: hidden;
+    }
+    button.teaser-media { cursor: pointer; }
+    .teaser-media-wide { aspect-ratio: 16 / 9; }
+    .teaser-media-tall { aspect-ratio: 9 / 16; max-width: 300px; margin: 1rem auto 0; border-radius: 10px; }
+    .teaser-media img,
+    .teaser-media iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+      display: block;
+    }
+    .teaser-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(139,92,246,0.85);
+      color: #fff;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px var(--purple-glow);
+      transition: transform var(--transition);
+    }
+    button.teaser-media:hover .teaser-play { transform: translate(-50%, -50%) scale(1.08); }
+    .teaser-info { padding: 1rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; }
+    .teaser-info .episode-number { margin-bottom: 0; }
+    .teaser-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .teaser-links { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-top: 0.25rem; }
+    .teaser-link {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 1.1rem;
+      border-radius: 50px;
+      border: 1px solid rgba(139,92,246,0.4);
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .teaser-link:hover { border-color: var(--purple); color: var(--purple); }
+    .teaser-card .btn-watch { align-self: center; }
+    .teaser-card .btn-locked { align-self: center; }
+
+    /* Support / Invest */
+    .form-group select {
+      background: var(--surface);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .form-group select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(139,92,246,0.15); }
+    .invest-intro p + p { margin-top: 1rem; }
+    .invest-intro strong { color: var(--text); font-weight: 600; }
+    .support-alt { text-align: center; color: var(--text-muted); font-size: 0.92rem; margin-top: 2rem; }
+    .support-alt a { color: var(--purple); }
+    .invest-error { color: #f87171; font-size: 0.9rem; }
+
+    footer .footer-social { margin-bottom: 0.9rem; }
+    footer .footer-social a { padding: 0.4rem 0.9rem; font-size: 0.78rem; }
+
+    @media (max-width: 700px) {
+      .main-cta { padding: 0.25rem 1rem 2rem; }
+      .main-cta .btn-cta-large,
+      .main-cta .btn-cta-outline { width: 100%; padding: 0.85rem 1.25rem; font-size: 0.8rem; }
+      .social-block { padding: 0 1rem 2.5rem; }
+      .ep-grid { grid-template-columns: 1fr 1fr; padding: 0 0.75rem 3rem; gap: 0.75rem; }
+      .ep-info { padding: 0.7rem 0.75rem 0.85rem; }
+      .ep-title { font-size: 0.78rem; }
+      .ep-card .btn-locked { padding: 0.3rem 0.7rem; font-size: 0.68rem; }
+      .teaser-list { grid-template-columns: 1fr; padding: 0 0.75rem 3rem; gap: 1rem; }
+      .teaser-media-tall { max-width: 260px; }
+      .teaser-play { width: 56px; height: 56px; font-size: 1.2rem; }
+    }
+
     /* ── Fade-in animations ── */
     .fade-in {
       opacity: 0;
@@ -2350,16 +1936,13 @@
     </div>
 
     <ul class="nav-links">
-      <li><a href="#" data-section="main"   class="active">Main</a></li>
-      <li><a href="#" data-section="home">Episodes</a></li>
-      <li><a href="#" data-section="transmissions">Guest Transmissions</a></li>
-      <li><a href="#" data-section="crew">Characters</a></li>
-      <li><a href="#" data-section="vision">Our Vision</a></li>
-      <li><a href="#" data-section="teasers">Teasers &amp; Trailers</a></li>
-      <!-- ABOUT US TAB TEMPORARILY HIDDEN - restore by uncommenting -->
-      <!-- <li><a href="#" data-section="about">About Us</a></li> -->
-      <li><a href="#" data-section="invest">Buy us a coffee</a></li>
-      <li><a href="#" class="nav-cta" id="signupBtn">Sign Up to Stay Informed</a></li>
+      <li><a href="#main" data-section="main" class="active">Main</a></li>
+      <li><a href="#episodes" data-section="episodes">Episodes</a></li>
+      <li><a href="#characters" data-section="characters">Characters</a></li>
+      <li><a href="#teasers" data-section="teasers">Teasers</a></li>
+      <li><a href="#transmissions" data-section="transmissions">Guest Transmissions</a></li>
+      <li><a href="#support" data-section="support">Support &amp; Invest</a></li>
+      <li><a href="#signup" class="nav-cta js-signup" id="signupBtn">Sign Up to Stay Informed</a></li>
     </ul>
 
     <div class="hamburger" id="hamburger" aria-label="Menu">
@@ -2369,16 +1952,13 @@
 
   <!-- ── Mobile Nav Menu ── -->
   <div class="nav-mobile-menu" id="mobileMenu">
-    <a data-section="main"   class="active">Main</a>
-    <a data-section="home">Episodes</a>
-    <a data-section="transmissions">Guest Transmissions</a>
-    <a data-section="crew">Characters</a>
-    <a data-section="vision">Our Vision</a>
-    <a data-section="teasers">Teasers &amp; Trailers</a>
-    <!-- ABOUT US MOBILE TAB TEMPORARILY HIDDEN - restore by uncommenting -->
-    <!-- <a data-section="about">About Us</a> -->
-    <a data-section="invest">Buy us a coffee</a>
-    <a id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
+    <a href="#main" data-section="main" class="active">Main</a>
+    <a href="#episodes" data-section="episodes">Episodes</a>
+    <a href="#characters" data-section="characters">Characters</a>
+    <a href="#teasers" data-section="teasers">Teasers</a>
+    <a href="#transmissions" data-section="transmissions">Guest Transmissions</a>
+    <a href="#support" data-section="support">Support &amp; Invest</a>
+    <a href="#signup" class="js-signup" id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
   </div>
 
   <!-- ════════════════════════════════════════════
@@ -2389,7 +1969,7 @@
     <div class="hero">
       <img src="judith-logo-new.png" alt="The Judith" class="hero-logo" />
       <p class="hero-tagline">
-        After planet Earth became completely antisemitic, the spaceship Judith was sent to find a new home for the Jews. but even in the vast and infinite space - nobody wants them.
+        After planet Earth became completely antisemitic, the spaceship Judith was sent to find a new home for the Jews. But even in the vast, infinite space, nobody wants them.
       </p>
       <div class="hero-divider"></div>
       <p class="series-format">SCI-FI COMEDY · ANIMATED SERIES<br>10 EPISODES · 25 MIN</p>
@@ -2414,19 +1994,37 @@
     </div>
 
     <div class="section-header fade-in" style="transition-delay:0.08s">
-      <h2>Season 1 Synopsis</h2>
+      <h2>The Series</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="synopsis-section fade-in" style="transition-delay:0.16s">
-      <div class="synopsis-part-title">Part A: Dysfunction of the Status Quo</div>
-      <p>The season opens in total chaos. The previous crew was murdered (without anyone even bothering to investigate why). The morning after the massacre, the main computer activates the "Judith Protocol" and sends a team of seven strangers who have nothing in common but shared Jewish DNA and varying traumas. They do not get along, not because they are monsters, but because they are too human: the Captain is a leadership fantasist living in a war movie, Jordan is a progressive who thinks every situation is a workshop in sensitivity, Schtempepper is a nihilist who would rather the ship explode than admit he was wrong, and Rabbi Itzik and Dr. Khalil are simply hustlers of survival. and Lilly...oh Lilly. Inside this tin can, every mission to integrate into a new planet turns into a family fight at a Friday night dinner, only the fate of the galaxy is at stake. They will not be able to fit in anywhere, because they cannot even sit in one room without wanting to kill each other.</p>
+    <div class="synopsis-section main-copy fade-in" style="transition-delay:0.16s">
+      <p>Earth has become completely antisemitic, so the spaceship Judith is sent out to find the Jews a new home. On board are seven strangers who share nothing but Jewish DNA and a wide selection of traumas, and who cannot sit in one room without wanting to kill each other. Every planet they try to settle turns into a Friday night dinner fight, only this time the fate of the galaxy is at stake. The universe has already made up its mind about them. The question is whether they can stop fighting long enough to find a place that will have them.</p>
+    </div>
 
-      <div class="synopsis-part-title">Part B: The Transformation (or: How to Learn to Love the Monster Next to You)</div>
-      <p>When they realize that no one in the universe is even willing to sell them coffee, something changes. Under the infinite pressure, their egos begin to crack. The Captain starts to understand that the rules are just a suggestion. Schtempepper finds some comfort in the fact that someone actually appreciates his cursed genius, and Lilly, the alien who came to destroy them, starts asking herself why the hell she enjoys this human neurosis. They turn from a crew of strangers into a toxic, yet effective, family unit.</p>
+    <div class="section-header fade-in" style="transition-delay:0.08s">
+      <h2>Why We Are Making This</h2>
+      <div class="section-divider"></div>
+    </div>
 
-      <div class="synopsis-part-title">Part C: Consequences and Collapse</div>
-      <p>This is where everything explodes. It turns out that every planet they visited was rendered uninhabitable because of their stupidity. It is not just an antisemitic universe. it is a universe united in its disgust toward the "Judith" expedition. The Anti-Jewish Federation rises, and they are coming to end what remains. Just before they are wiped off the map, they discover the season's shocking revelation: there is a parallel universe. A universe where Jews are not only loved, they are the stars of the place. Will they run away there for safe haven? Or will they decide to fight for the jews in this jew-hating universe, even if it is about to explode?</p>
+    <div class="synopsis-section main-copy fade-in" style="transition-delay:0.16s">
+      <p>We set out to make the most unhinged, unapologetic animated comedy we could, with no network notes and no permission asked. Underneath the sci-fi chaos there is a real target: modern antisemitism. We don't lecture. We take history and the news, turn them into galactic metaphors, and let the double standards expose themselves.</p>
+      <p>Our characters are not saints. They are flawed, loud and very human, and that is the whole point.</p>
+      <p><strong>We are done hiding. We are done apologizing. Deal with it.</strong></p>
+    </div>
+
+    <div class="main-cta fade-in" style="transition-delay:0.1s">
+      <a href="#signup" class="btn-cta-large js-signup">Sign Up for Updates</a>
+      <a href="#support" class="btn-cta-outline" data-section="support">Support or Invest</a>
+    </div>
+
+    <div class="social-block fade-in" style="transition-delay:0.14s">
+      <div class="social-title">Follow The Judith</div>
+      <div class="social-links">
+        <a href="https://www.youtube.com/@thejudithseries" target="_blank" rel="noopener" aria-label="The Judith on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>YouTube</a>
+        <a href="https://www.instagram.com/thejudithseries/" target="_blank" rel="noopener" aria-label="The Judith on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61595078697416" target="_blank" rel="noopener" aria-label="The Judith on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg>Facebook</a>
+      </div>
     </div>
 
     <!-- ── Guest Transmissions live strip ── -->
@@ -2437,14 +2035,18 @@
   <!-- ════════════════════════════════════════════
        SECTION: HOME (Episodes)
   ═════════════════════════════════════════════ -->
-  <section id="section-home" class="section">
+  <section id="section-episodes" class="section">
 
     <div class="section-header">
       <h2>Season 1: Episodes</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="episodes-container" id="episodeList"></div>
+    <p class="crew-subtitle fade-in" style="transition-delay:0.06s">
+      Ten episodes. The pilot premieres soon, and the rest are on their way.
+    </p>
+
+    <div class="ep-grid" id="episodeList"></div>
 
   </section>
 
@@ -2486,102 +2088,59 @@
   </section>
 
   <!-- ════════════════════════════════════════════
-       SECTION: OUR VISION
-  ═════════════════════════════════════════════ -->
-  <section id="section-vision" class="section">
-
-    <div class="section-header fade-in">
-      <h2>Our Vision</h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <div class="vision-body">
-      <p class="fade-in" style="transition-delay:0.08s">
-        Our vision is simple: to create the most unhinged, unapologetic, and boundary-shattering animated series the screen has ever seen. Operating in the wild-west of web animation means no suits, no censorship, and zero permissions asked. We are here to weaponize taboos, stir up chaos, and make some serious, global noise.
-      </p>
-      <p class="fade-in" style="transition-delay:0.16s">
-        But don't let the madness fool you. Beneath the sci-fi chaos lies a razor-sharp mission: to wage war on modern antisemitism. We aren't here to lecture. Instead, we take historical trauma and current events and flip them into brilliant galactic metaphors that hit you right in basic human logic. We are here to systematically dismantle the cynical excuse that "anti-Zionism is not antisemitism."
-      </p>
-      <p class="fade-in" style="transition-delay:0.24s">
-        We have absolutely no intention of sugarcoating reality or painting Jews as flawless, holy "beacon of light." Our characters are deeply flawed, chaotic, and messy. Just like every other human being in the universe. And that's the whole point. Through the bizarre alien civilizations we build, we hold a mirror up to the world's blatant double standards and put the hypocrisy of antisemitism on blast.
-      </p>
-      <p class="fade-in" style="transition-delay:0.32s">
-        <strong>This series is our ultimate statement: We are officially done hiding. We are done apologizing for our identity. Deal with it.</strong>
-      </p>
-    </div>
-
-  </section>
-
-  <!-- ════════════════════════════════════════════
-       SECTION: ABOUT
-  ═════════════════════════════════════════════ -->
-  <section id="section-about" class="section">
-
-    <div class="section-header fade-in">
-      <h2>About Us</h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <div class="studio-section fade-in" style="transition-delay:0.12s">
-      <div class="studio-header">
-        <h3 class="studio-title">New Angle Studios</h3>
-        <div class="section-divider" style="margin:1rem auto 1.5rem;"></div>
-        <p class="studio-desc">
-          New Angle Studios is an independent animation studio built at the intersection of
-          decades of creative industry experience and next-generation AI production tools.
-          We believe the future of storytelling belongs to those who are unafraid to point
-          the camera somewhere no one else is looking, and to use every tool available
-          to get there. Our work is fast, bold, and uncompromising.
-        </p>
-      </div>
-
-      <div class="founders-grid">
-        <div class="founder-card fade-in" style="transition-delay:0.55s">
-          <div class="founder-text">
-            <div class="founder-name">Eytan Baritzy</div>
-            <p class="founder-bio">
-              With over 20 years in the entertainment industry as a screenwriter and director,
-              Eytan brings the storytelling instincts and creative vision that make The Judith
-              more than just an experiment. He writes the scripts, shapes
-              the characters, and makes sure the comedy actually lands.
-            </p>
-          </div>
-          <div class="founder-photo-img">
-            <img src="Eytan profile pic.png" alt="Eytan Baritzy" />
-          </div>
-        </div>
-
-        <div class="founder-card fade-in" style="transition-delay:0.62s">
-          <div class="founder-text">
-            <div class="founder-name">Nadav Shlomo Giladi</div>
-            <p class="founder-bio">
-              A creative technologist with a background in visual storytelling, bringing
-              the technical and aesthetic direction that makes each frame of The Judith
-              look like nothing else on screen. Fluent in the language of AI tools
-              and experienced in translating a writer's vision into motion.
-            </p>
-          </div>
-          <div class="founder-photo-img">
-            <img src="Nadav profile pic.png" alt="Nadav Shlomo Giladi" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ════════════════════════════════════════════
-       SECTION: TEASERS & TRAILERS
+       SECTION: TEASERS
   ═════════════════════════════════════════════ -->
   <section id="section-teasers" class="section">
 
     <div class="section-header fade-in">
-      <h2>Teasers &amp; Trailers</h2>
+      <h2>Teasers</h2>
       <div class="section-divider"></div>
     </div>
 
-    <div class="teasers-coming-soon fade-in" style="transition-delay:0.1s">
-      <span>Coming Soon</span>
+    <p class="crew-subtitle fade-in" style="transition-delay:0.06s">
+      Short teasers from aboard the Judith. More are on the way.
+    </p>
+
+    <div class="teaser-list">
+
+      <div class="teaser-card wide fade-in" style="transition-delay:0.1s">
+        <button type="button" class="teaser-media teaser-media-wide" onclick="openVideoModal('1198418462')" aria-label="Play the official trailer">
+          <img src="Judith%20New%20Poster%2016-9.png" alt="The Judith official trailer" loading="lazy" />
+          <span class="teaser-play" aria-hidden="true">&#x25B6;</span>
+        </button>
+        <div class="teaser-info">
+          <div class="episode-number">Trailer</div>
+          <div class="teaser-title">The Judith: Official Trailer</div>
+          <button type="button" class="btn-watch" onclick="openVideoModal('1198418462')">&#x25B6; Watch the Trailer</button>
+        </div>
+      </div>
+
+      <div class="teaser-card fade-in" style="transition-delay:0.16s">
+        <div class="teaser-media teaser-media-tall">
+          <iframe src="https://www.youtube-nocookie.com/embed/WEPtBmJKfWc?rel=0" title="I Can't. It's Shabbat. | The Judith" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="teaser-info">
+          <div class="episode-number">Teaser</div>
+          <div class="teaser-title">I Can't. It's Shabbat.</div>
+          <div class="teaser-links">
+            <a class="teaser-link" href="https://www.youtube.com/shorts/WEPtBmJKfWc" target="_blank" rel="noopener">Watch on YouTube</a>
+            <a class="teaser-link" href="https://www.facebook.com/reel/2217721682126901/" target="_blank" rel="noopener">Watch on Facebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="teaser-card fade-in" style="transition-delay:0.22s">
+        <div class="teaser-media teaser-media-tall">
+          <img src="Judith%20New%20Poster%209-16.png" alt="Who Ate My Hummus? teaser, coming soon" loading="lazy" />
+          <div class="lock-overlay"><svg class="lock-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        </div>
+        <div class="teaser-info">
+          <div class="episode-number">Teaser</div>
+          <div class="teaser-title">Who Ate My Hummus?</div>
+          <div class="btn-locked">&#x1F512; Coming Soon</div>
+        </div>
+      </div>
+
     </div>
 
   </section>
@@ -2589,7 +2148,7 @@
   <!-- ════════════════════════════════════════════
        SECTION: CHARACTERS
   ═════════════════════════════════════════════ -->
-  <section id="section-crew" class="section">
+  <section id="section-characters" class="section">
 
     <div class="section-header fade-in">
       <h2>Characters</h2>
@@ -2605,136 +2164,70 @@
   </section>
 
   <!-- ════════════════════════════════════════════
-       SECTION: INVEST
+       SECTION: SUPPORT & INVEST
+       No payment is connected. This form sends an inquiry (Formspree, same
+       endpoint as the newsletter signup) so the creators can follow up personally.
   ═════════════════════════════════════════════ -->
-  <section id="section-invest" class="section">
+  <section id="section-support" class="section">
 
     <div class="section-header fade-in">
-      <h2>Buy Us a Coffee</h2>
+      <h2>Support &amp; Invest</h2>
       <div class="section-divider"></div>
     </div>
 
-    <!-- Crowdfunding campaign. All numbers render from the CAMPAIGN config in the
-         campaign script block below. Nothing is hardcoded in this markup. -->
-    <div class="cf-wrap">
-
-      <!-- Hero -->
-      <div class="cf-hero fade-in" style="transition-delay:0.05s">
-        <span class="cf-badge" id="cf-badge" style="display:none;">Campaign launches soon</span>
-        <h1 class="cf-hero-title">The Judith</h1>
-        <p class="cf-hero-pitch">
-          Help us keep a Jewish spaceship nobody wants in orbit. Every coffee buys one more episode the galaxy did not ask for.
-        </p>
-        <img class="cf-hero-img" src="Judith%20New%20Poster%2016-9.png" alt="The Judith key art" loading="lazy" />
+    <div class="invest-content">
+      <div class="invest-intro fade-in" style="transition-delay:0.06s">
+        <p>The Judith is made by two independent creators, <strong>Eytan Baritzy</strong> and <strong>Nadav Shlomo Giladi</strong>. No studio, no network, no committee notes.</p>
+        <p>Want to support the show, invest in it, or partner with us? Leave your details and we will get back to you personally. Nothing is charged on this site: this form only starts the conversation.</p>
       </div>
 
-      <div class="cf-grid">
-
-        <!-- LEFT COLUMN: story, stretch goals, FAQ -->
-        <div class="cf-main">
-
-          <!-- Story / About -->
-          <div class="cf-story fade-in" style="transition-delay:0.1s">
-            <h3>What is this</h3>
-            <p>
-              The Judith is an AI-animated adult sci-fi comedy about seven Jews on a spaceship, sent to find a new home after Earth turned on them. The catch: nobody in the galaxy wants them either. The pilot is done. The scripts are written. What we are short on is coffee, and by coffee we mean the money to animate the rest.
-            </p>
-
-            <h3>Why now</h3>
-            <p>
-              AI animation just made it possible for a tiny human-led team to make a full series without a studio deciding it is too Jewish, too edgy, or too cynical to exist. The tools are ready. The audience is here. This is the window, and windows in space close fast.
-            </p>
-
-            <img class="cf-story-img" src="poster.png" alt="The Judith crew" loading="lazy" />
-
-            <h3>The team</h3>
-            <p>
-              We are a small crew working under New Angle Studios, led by the two founders who wrote and directed the pilot. Human-written, human-directed, AI-animated. No committee notes, no network softening the punchlines into oblivion.
-            </p>
-
-            <h3>Where the coffee goes</h3>
-            <p>Your support pays for the work, not the overhead. Roughly:</p>
-            <ul class="cf-money-list">
-              <li>Animation and rendering for the next episodes</li>
-              <li>Writing, editing, and voice work</li>
-              <li>Music and sound design</li>
-              <li>Reward fulfillment and platform fees</li>
-            </ul>
-
-            <h3>Risks</h3>
-            <p>
-              This is an independent production using new tools, so timelines can slip. If a reward is delayed, we will tell you honestly and keep you posted. We would rather ship late than ship bad.
-            </p>
+      <form class="invest-form fade-in" id="support-form" action="https://formspree.io/f/xaqvjazj" method="POST" style="transition-delay:0.12s">
+        <input type="hidden" name="_subject" value="The Judith website: support / invest inquiry" />
+        <input type="hidden" name="form" value="support-invest" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="sp-name">Name</label>
+            <input id="sp-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="Your name" required />
           </div>
-
-          <!-- Stretch goals -->
-          <div class="cf-section-label">Stretch Goals</div>
-          <div class="cf-stretch fade-in" id="cf-stretch" style="transition-delay:0.14s"></div>
-
-          <!-- FAQ -->
-          <div class="cf-section-label">FAQ</div>
-          <div class="cf-faq fade-in" id="cf-faq" style="transition-delay:0.16s"></div>
-
+          <div class="form-group">
+            <label for="sp-email">Email</label>
+            <input id="sp-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </div>
         </div>
+        <div class="form-group">
+          <label for="sp-interest">I want to</label>
+          <select id="sp-interest" name="interest" required>
+            <option value="Support the show">Support the show</option>
+            <option value="Invest in The Judith">Invest in The Judith</option>
+            <option value="Partner or help with distribution">Partner or help with distribution</option>
+            <option value="Something else">Something else</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sp-message">Message (optional)</label>
+          <textarea id="sp-message" name="message" rows="4" maxlength="2000" placeholder="Tell us a little about yourself"></textarea>
+        </div>
+        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+        </div>
+        <button type="submit" class="btn-invest-submit" id="sp-submit">Get in Touch</button>
+        <div id="sp-status" role="status" aria-live="polite"></div>
+      </form>
 
-        <!-- RIGHT RAIL: funding panel + tiers (moves inline on mobile) -->
-        <aside class="cf-rail">
-
-          <!-- Funding panel -->
-          <div class="cf-panel fade-in" style="transition-delay:0.08s">
-            <!-- LIVE stats (hidden in prelaunch) -->
-            <div id="cf-live-stats">
-              <div class="cf-raised" id="cf-raised"></div>
-              <div class="cf-progress-track"><div class="cf-progress-fill" id="cf-progress-fill"></div></div>
-              <div class="cf-percent" id="cf-percent"></div>
-              <div class="cf-raised-sub" id="cf-goal-sub"></div>
-              <div class="cf-stats">
-                <div>
-                  <div class="cf-stat-num" id="cf-backers"></div>
-                  <div class="cf-stat-label">backers</div>
-                </div>
-                <div>
-                  <div class="cf-stat-num" id="cf-days"></div>
-                  <div class="cf-stat-label">days left</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- PRELAUNCH target (hidden when live) -->
-            <div id="cf-prelaunch-stats" style="display:none;">
-              <div class="cf-raised-sub">Our goal</div>
-              <div class="cf-goal-target" id="cf-goal-target"></div>
-            </div>
-
-            <!-- Primary + secondary CTA. Both open the existing signup modal for now.
-                 NOTE: real payment / backing is not wired yet. This captures email only. -->
-            <button type="button" class="cf-btn-primary" id="cf-primary-cta" onclick="openModal()"></button>
-            <button type="button" class="cf-btn-secondary" id="cf-secondary-cta" onclick="openModal()">Get notified at launch</button>
-          </div>
-
-          <!-- Reward tiers -->
-          <div>
-            <div class="cf-tiers-title">Reward Tiers</div>
-            <div class="cf-section-label" style="display:none;" id="cf-tiers-mobile-label">Reward Tiers</div>
-            <div class="cf-tiers" id="cf-tiers"></div>
-          </div>
-
-        </aside>
-
-      </div>
+      <p class="support-alt fade-in" style="transition-delay:0.16s">Just want to follow along? <a href="#signup" class="js-signup">Sign up for updates</a>.</p>
     </div>
+
   </section>
 
   <!-- ── Footer ── -->
   <footer>
-    &copy; 2026 <span>The Judith</span> &nbsp;&middot;&nbsp; An AI-animated dark comedy series
+    <div class="social-links footer-social">
+      <a href="https://www.youtube.com/@thejudithseries" target="_blank" rel="noopener" aria-label="The Judith on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>YouTube</a>
+      <a href="https://www.instagram.com/thejudithseries/" target="_blank" rel="noopener" aria-label="The Judith on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=61595078697416" target="_blank" rel="noopener" aria-label="The Judith on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></svg>Facebook</a>
+    </div>
+    &copy; 2026 <span>The Judith</span> &nbsp;&middot;&nbsp; An independent animated series by Eytan Baritzy and Nadav Shlomo Giladi
   </footer>
-
-  <!-- Mobile fixed CTA bar for the crowdfunding campaign. Shown only on the
-       invest/campaign section on small screens (toggled in navigate + JS). -->
-  <div class="cf-mobile-bar" id="cf-mobile-bar">
-    <button type="button" class="cf-btn-primary" id="cf-mobile-cta" onclick="openModal()"></button>
-  </div>
 
 </div><!-- /app -->
 
@@ -2756,8 +2249,8 @@
     <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
     <h3 id="modalTitle">Stay in the Loop</h3>
     <p>
-      Be the first to know when new episodes drop, get exclusive behind-the-scenes
-      content, and hear about our Kickstarter launch.
+      Be the first to know when new episodes and teasers drop, and get
+      behind-the-scenes updates from the creators.
     </p>
     <form class="modal-form" action="https://formspree.io/f/xaqvjazj" method="POST">
       <input
@@ -2780,77 +2273,16 @@
 <script>
 /* ── Data ── */
 const EPISODES = [
-  {
-    num: 1,
-    title: 'In Our Image',
-    summary: 'As The Judith mission arrives at a promising new world, the crew believes they have finally found their sanctuary. Their hopes are quickly challenged when they discover the planet is already home to a peculiar, highly sensitive civilization. To secure their place on the planet, the crew must navigate a minefield of bizarre cultural expectations and absurd diplomatic demands, testing the limits of their patience, and their dignity.',
-    locked: true,
-    lockLabel: 'Premieres Soon',
-    img: 'episode1.jpg'
-  },
-  {
-    num: 2,
-    title: 'Ass a Jew',
-    summary: "After a long run of bad luck and planets that wouldn't even sell them coffee, the crew picks up the signal of their dreams: an invite to a world full of Jews, diaspora Jews, the Western kind, who've never once set foot in Israel. They're welcomed with open arms and finally feel like they've found their people. The good vibes don't last. The locals have their own plans for the newcomers, and it turns out being Jewish together doesn't fix the huge gap in beliefs between them. Jordan is the only one who fits right in, finding her crowd among the planet's proudly progressive Jews. Schtempepper starts digging into what happened to the crew that came before them. Rabbi Itzik picks a fight with the local Reform rabbi over the meaning of faith, when mutual feelings start to arise between them. The Captain wants to know why no one will sacrifice themselves for the team, while making sure it's never him. And Dr. Khalil, the only Arab aboard, can't believe how badly these Jews treat him, until he learns the even more insulting reason why. The group starts to understand that they need more common ground than being Jews to get along and succeed with their mission.",
-    locked: true,
-    img: 'Episode%202%20Ass%20A%20Jew.png'
-  },
-  {
-    num: 3,
-    title: 'Exodus',
-    summary: "A critical malfunction sends the Judith spinning out of control and crashing onto a strange planet. Within minutes the crew is surrounded by friendly ancient Egyptians, who offer them a place in the community in exchange for a little help building pyramids. The local Pharaoh explains that building pyramids together is the whole meaning of life, and for a moment it sounds almost nice. It isn't. The crew quickly realizes they haven't joined a community, they've become slaves with a strict pecking order, and now they need to pull off an escape of biblical proportions, except their ship is still broken and the robot they left aboard has lost contact and is, frankly, no help at all. The Captain decides this is his big heroic moment and starts planning the great escape with equal parts courage and stupidity, only to find that nobody wants to follow him the second things get hard. Rabbi Itzik thinks he should be the one leading this very biblical situation, and the two of them butt heads over who gets to be the hero. Schtempepper impresses the Egyptians with a bit of science and gets promoted to royal Minister of Science, living like a king while the rest of his crew sweats in the sun. Jordan keeps freezing out the ship's mechanic, an ex she would rather forget, while everyone else takes the mechanic's side. Khalil is leaned on to fix a problem he has no idea how to fix, sweating to keep his own secret buried. And Lilly, somehow, gets everyone else to do her work for her. They came down looking for shelter. They're going to have to escape it.",
-    locked: true,
-    img: 'Episode%203%20Exodus.png'
-  },
-  {
-    num: 4,
-    title: 'Microaggression',
-    summary: "The crew lands on a beautiful, quiet planet and finally gets to relax, playing volleyball and soaking up the calm. As far as they can tell the place is empty, so they let loose and enjoy themselves. What they don't notice is that the planet isn't empty at all, it's home to a tiny, gentle civilization the whole galaxy adores, and the crew's harmless fun is leaving behind massive destruction, rubble and bodies, an entire culture crushed underfoot. They never meant to hurt anyone, but that hardly matters anymore, because this is just one more story spreading across the galaxy: wherever the Jews go, ruin follows. When the locals find a way to make the crew finally see the damage they've caused, the situation spins out of control and the team is left scrambling to fix the disaster. This is the episode where the egos start to crack, where the delegation of the Judith who can't stand each other begin to admit it out loud and realize that the only way out is to actually work together.",
-    locked: true,
-    img: 'episode4.png'
-  },
-  {
-    num: 5,
-    title: 'How Dare We?',
-    summary: "The crew reaches a planet in a far off corner of the galaxy, and the locals somehow recognize right away that they're humans. That's because the planet's leader is human too, a bitter old woman named Greta who has clearly seen and done things out in space that no one should. At first it feels like a lucky break, finally someone likes them, but the moment Greta realizes her guests are Jews, her hatred sets off a bizarre crisis that quickly grows into a threat to the entire universe. Worse still, the only way to stop it is the most embarrassing thing this crew has ever been asked to do, and it kicks off a full blown battle of the sexes between cynical Schtempepper and progressive Jordan. Running alongside all the chaos, the crew sits down one by one with the ship's psychologist, and the sessions crack each of them wide open. The Captain wrestles with the fact that no one respects him as a leader. Rabbi Itzik feels like a failure for not bringing anyone closer to faith. Khalil is sweating that someone will finally figure out he's not really a doctor. Boris quietly cries. And Schtempepper tries to psychoanalyze the psychologist, only to expose just how unsure of himself he really is. It's the funniest, filthiest, and most revealing hour of the season.",
-    locked: true,
-    img: 'Episode%205%20How%20Dare%20We%3F.png'
-  },
-  {
-    num: 6,
-    title: 'Open Air Prism',
-    summary: "To help fund the new Jewish planet, Schtempepper leads the gang on a hunt for the purest diamond in the universe. But one tiny mishap involving a single photon turns the diamond into a deadly prism, splitting the entire galaxy into countless little prisons made of light. Whole civilizations end up trapped behind laser bars, families are torn apart with no way to reach each other, and half the universe is suddenly living under a siege the crew accidentally created. As the gang scrambles to figure out what went wrong and how to shut the thing down quietly, which they are spectacularly bad at, the Intergalactic Federation steps fully into view at last, the closest thing this universe has to a court of nations, and it is not a Jew-loving entity. Meanwhile something strange keeps happening. Every so often the lasers flicker off for two or three seconds, and nobody can work out when or why. In those tiny windows people risk everything to cross the line, and a belief starts spreading across the galaxy that prayer is what's causing the blackouts, with whole cults forming around the idea. With the universe accusing them of an intergalactic occupation and the Federation closing in, the crew has to fix the mess before the galaxy's fury comes down on them for good.",
-    locked: true,
-    img: 'Episode%206%20Open%20Air%20Prism.png'
-  },
-  {
-    num: 7,
-    title: 'Apart-Hide',
-    summary: "Locked up by the Federation and waiting for the intergalactic trial that will judge them for their crimes against the universe, the crew has nothing to do but talk, and the talking is where it all comes apart. Built largely from flashbacks, this is the episode that fills in the blanks, pulling back the curtain on who these people really are and where they came from, and letting the audience in on secrets the crew themselves have been hiding or never knew. One by one the truths come out, and almost none of them are what anyone expected. Long held fears come true, carefully buried lies surface, and at least one member of the group turns out to be something entirely different from what they've claimed all along. It's the hour where a lot of things change for good, where loyalties crack and faith in each other starts to crumble right when they can least afford it.",
-    locked: true,
-    img: 'Episode%207%20-%20Apart-Hide.png'
-  },
-  {
-    num: 8,
-    title: 'We Need a Hague',
-    summary: "The trial is broadcast across the entire galaxy, and the crew stands accused of pretty much everything. One after another, the Federation's prosecutors and a long line of planets from across the season, worlds the crew left wrecked, ruined, or simply blamed for it, take the stand to build their case, painting the expedition and Zionist Jews everywhere as the single most evil force in the universe. The crew tries to defend itself, but the lawyer the Federation assigned them is somewhere between useless and actively unhelpful. As it dawns on them that the whole thing is rigged and a guilty verdict is already waiting, Schtempepper drops a bombshell, revealing a dark secret the crew has been sitting on all along, a doomsday card that just might be their last chance to walk out of this trial alive.",
-    locked: true,
-    img: 'Episode%208%20-%20We%20Need%20a%20Hague.png'
-  },
-  {
-    num: 9,
-    title: "Once Upon A Time in 48",
-    summary: "Having barely scraped together a plea deal with the Intergalactic Federation, the crew is finally promised a planet to call home: a world known only as 48. But there's history here. The Asses, the Jew eating species first glimpsed back in episode 2, are a conquering race, and to keep the damage contained the Federation has been letting them swallow up worthless, forgotten little worlds, forty seven of them so far. Handing the crew number forty eight was supposed to be the easy part, until the Asses throw a fit, and the Federation folds, announcing that the crew and the Asses will simply have to share the planet and learn to get along. The crew agrees, but the Asses don't, declaring war and insisting the world is theirs alone. What follows is a brutal, bloody fight for the crew's new home against a merciless enemy, and along the way they realize someone is quietly helping them from the shadows, a mysterious figure tipping the war in their favor. Who that figure turns out to be will leave the crew, and the audience, completely stunned, and crack open a secret about the universe itself that changes everything.",
-    locked: true,
-    img: "Once%20Upon%20a%20Time%20in%20'48.png"
-  },
-  {
-    num: 10,
-    title: 'Jewverse',
-    summary: "With the existence of the Jewverse now out in the open, a universe where every Jew is loved and safe, the crew finally learns the real reason they were sent away from Earth in the first place, and the truth shatters everything they thought they knew about their mission. There's no time to sit with it. The Asses are already breaking the peace deal and pushing again to claim the whole planet for themselves, and the pressure splits the crew right down the middle. Some want to dig in and fight for the home they bled for, others want to set off into the unknown once more to find the way to the Jewverse and the safe haven waiting there. As the two camps tear at each other and the last buried secrets come spilling onto the table, the crew has to fend off the Asses and decide, once and for all, what the expedition is really for and where it goes from here.",
-    locked: true,
-    img: 'Parallel%20Jewniverse.png'
-  }
+  { num: 1,  title: 'In Our Image',           lockLabel: 'Premieres Soon', img: 'episode1.jpg' },
+  { num: 2,  title: 'Ass a Jew',              img: 'Episode%202%20Ass%20A%20Jew.png' },
+  { num: 3,  title: 'Exodus',                 img: 'Episode%203%20Exodus.png' },
+  { num: 4,  title: 'Microaggression',        img: 'episode4.png' },
+  { num: 5,  title: 'How Dare We?',           img: 'Episode%205%20How%20Dare%20We%3F.png' },
+  { num: 6,  title: 'Open Air Prism',         img: 'Episode%206%20Open%20Air%20Prism.png' },
+  { num: 7,  title: 'Apart-Hide',             img: 'Episode%207%20-%20Apart-Hide.png' },
+  { num: 8,  title: 'We Need a Hague',        img: 'Episode%208%20-%20We%20Need%20a%20Hague.png' },
+  { num: 9,  title: 'Once Upon A Time in 48', img: "Once%20Upon%20a%20Time%20in%20'48.png" },
+  { num: 10, title: 'Jewverse',               img: 'Parallel%20Jewniverse.png' }
 ];
 
 const CREW = [
@@ -2901,83 +2333,22 @@ const CREW = [
   }
 ];
 
-/* ── Thumbnail SVG fallback ── */
-function buildThumbnailSVG(colors) {
-  const [c1, c2, c3, c4] = colors;
-  return `
-    <svg class="thumb-gradient" viewBox="0 0 300 169" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="ng_${Math.random().toString(36).slice(2,6)}" cx="40%" cy="40%" r="70%">
-          <stop offset="0%" stop-color="${c4}" stop-opacity="0.7"/>
-          <stop offset="60%" stop-color="${c2}" stop-opacity="0.5"/>
-          <stop offset="100%" stop-color="${c1}" stop-opacity="1"/>
-        </radialGradient>
-      </defs>
-      <rect width="300" height="169" fill="${c1}"/>
-      <ellipse cx="110" cy="70" rx="120" ry="90" fill="${c4}" opacity="0.3"/>
-      <ellipse cx="200" cy="120" rx="90" ry="70" fill="${c2}" opacity="0.25"/>
-      ${Array.from({length:40}, (_,i) => {
-        const x = (Math.sin(i * 137.5) * 0.5 + 0.5) * 300;
-        const y = (Math.cos(i * 97.3) * 0.5 + 0.5) * 169;
-        const r = 0.4 + (i % 3) * 0.4;
-        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="white" opacity="${(0.3 + (i%5)*0.1).toFixed(1)}"/>`;
-      }).join('')}
-    </svg>`;
-}
-
-/* ── Episode Card ── */
+/* ── Episode Card (title + poster only, all locked) ── */
 function buildEpisodeCard(ep, index) {
   const card = document.createElement('div');
-  card.className = `episode-card${ep.locked ? ' locked' : ''}`;
-  card.style.transitionDelay = `${index * 55}ms`;
-
-  const thumbHTML = ep.img
-    ? `<img class="thumb-real" src="${ep.img}" alt="Episode ${ep.num}" />`
-    : buildThumbnailSVG(ep.colors);
-
-  const lockHTML = ep.locked ? `
-    <div class="lock-overlay">
-      <svg class="lock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-      </svg>
-    </div>` : '';
-
-  const btnHTML = ep.locked
-    ? `<div class="btn-locked">&#x1F512; ${ep.lockLabel || 'Coming Soon'}</div>`
-    : ep.vimeoId
-      ? `<button class="btn-watch" onclick="openVideoModal('${ep.vimeoId}')">&#x25B6; Watch Now</button>`
-      : `<button class="btn-watch">&#x25B6; Watch Now</button>`;
-
+  card.className = 'ep-card fade-in';
+  card.style.transitionDelay = (0.05 + index * 0.05).toFixed(2) + 's';
+  const label = ep.lockLabel || 'Coming Soon';
   card.innerHTML = `
     <div class="episode-thumb">
-      ${thumbHTML}
-      ${lockHTML}
+      <img class="thumb-real" src="${ep.img}" alt="Episode ${ep.num}: ${ep.title}" loading="lazy" />
+      <div class="lock-overlay"><svg class="lock-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
     </div>
-    <div class="episode-info">
-      <div>
-        <div class="episode-number">Episode ${ep.num.toString().padStart(2,'0')}</div>
-        <div class="episode-title">Episode ${ep.num}: ${ep.title}</div>
-        <p class="episode-summary">${ep.summary}</p>
-      </div>
-      ${btnHTML}
-      <div class="summary-fade"></div>
-      <button class="read-more-btn">Read more &#x25BE;</button>
+    <div class="ep-info">
+      <div class="episode-number">Episode ${ep.num.toString().padStart(2,'0')}</div>
+      <div class="ep-title">${ep.title}</div>
+      <div class="btn-locked">&#x1F512; ${label}</div>
     </div>`;
-
-  const info = card.querySelector('.episode-info');
-  const readMoreBtn = card.querySelector('.read-more-btn');
-  readMoreBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const expanded = info.classList.toggle('expanded');
-    if (expanded) {
-      info.style.height = info.scrollHeight + 'px';
-    } else {
-      info.style.height = '';
-    }
-    readMoreBtn.textContent = expanded ? 'Read less ▴' : 'Read more ▾';
-  });
-
   return card;
 }
 
@@ -3001,11 +2372,6 @@ function buildCrewCard(member, index) {
 function renderEpisodes() {
   const list = document.getElementById('episodeList');
   EPISODES.forEach((ep, i) => list.appendChild(buildEpisodeCard(ep, i)));
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.episode-card').forEach((card, i) => {
-      setTimeout(() => card.classList.add('animate-in'), i * 55);
-    });
-  });
 }
 
 function renderCrew() {
@@ -3015,10 +2381,21 @@ function renderCrew() {
 
 /* ── Section Navigation ── */
 let currentSection = 'main';
+const SECTIONS = ['main', 'episodes', 'characters', 'teasers', 'transmissions', 'support'];
 
-function navigate(target) {
+function sectionFromHash() {
+  const h = (location.hash || '').replace('#', '');
+  return SECTIONS.indexOf(h) !== -1 ? h : null;
+}
+
+function navigate(target, fromHistory) {
+  if (SECTIONS.indexOf(target) === -1) target = 'main';
+  if (!fromHistory) {
+    const url = target === 'main' ? location.pathname + location.search : '#' + target;
+    if (location.hash !== (target === 'main' ? '' : '#' + target)) history.pushState(null, '', url);
+  }
   if (target === currentSection) return;
-  sessionStorage.setItem('judithSection', target);
+  try { sessionStorage.setItem('judithSection', target); } catch (e) {}
 
   const outEl = document.getElementById(`section-${currentSection}`);
   const inEl  = document.getElementById(`section-${target}`);
@@ -3064,6 +2441,14 @@ document.querySelectorAll('[data-section]').forEach(el => {
   });
 });
 
+/* Back / forward buttons and manual hash edits */
+window.addEventListener('popstate', () => { navigate(sectionFromHash() || 'main', true); });
+window.addEventListener('hashchange', () => {
+  if (location.hash === '#signup') { openModal(); return; }
+  const t = sectionFromHash();
+  if (t) navigate(t, true);
+});
+
 /* ── Hamburger ── */
 document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('mobileMenu').classList.toggle('open');
@@ -3084,8 +2469,13 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-document.getElementById('signupBtn').addEventListener('click', (e) => { e.preventDefault(); openModal(); });
-document.getElementById('mobileSignupBtn').addEventListener('click', openModal);
+document.querySelectorAll('.js-signup').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('mobileMenu').classList.remove('open');
+    openModal();
+  });
+});
 document.getElementById('modalClose').addEventListener('click', closeModal);
 document.getElementById('modalBackdrop').addEventListener('click', (e) => {
   if (e.target === document.getElementById('modalBackdrop')) closeModal();
@@ -3116,17 +2506,33 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
     }
   }
 
-  // Refresh: user already entered this session, skip landing
-  if (sessionStorage.getItem('judithEntered')) {
+  // Deep link (#episodes, #support, #signup ...): skip the splash, open it directly
+  const hashTarget = sectionFromHash();
+  const wantsSignup = location.hash === '#signup';
+  if (hashTarget || wantsSignup) {
+    try { sessionStorage.setItem('judithEntered', '1'); } catch (e) {}
     landing.style.display = 'none';
     app.classList.add('visible');
-    showSection(sessionStorage.getItem('judithSection'));
+    showSection(hashTarget || 'main');
+    if (wantsSignup) openModal();
+    return;
+  }
+
+  // Refresh: user already entered this session, skip landing
+  let entered = null, stored = null;
+  try { entered = sessionStorage.getItem('judithEntered'); stored = sessionStorage.getItem('judithSection'); } catch (e) {}
+  if (entered) {
+    landing.style.display = 'none';
+    app.classList.add('visible');
+    showSection(stored);
     return;
   }
 
   function enter() {
-    sessionStorage.setItem('judithEntered', '1');
-    sessionStorage.setItem('judithSection', 'main');
+    try {
+      sessionStorage.setItem('judithEntered', '1');
+      sessionStorage.setItem('judithSection', 'main');
+    } catch (e) {}
     landing.classList.add('fade-out');
     app.classList.add('visible');
     setTimeout(() => { landing.style.display = 'none'; }, 900);
@@ -3138,6 +2544,8 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
     if (e.target !== document.getElementById('enter-btn')) enter();
   });
   document.addEventListener('keydown', (e) => {
+    // Only while the splash is still up, so typing in forms never re-triggers it
+    if (landing.classList.contains('fade-out')) return;
     if (e.key === 'Enter' || e.key === ' ') enter();
   });
 })();
@@ -3239,201 +2647,40 @@ document.addEventListener('keydown', function(e) {
 });
 
 /* ══════════════════════════════════════════════
-   CROWDFUNDING CAMPAIGN (Buy us a coffee)
-   NOTE: no payment / backing is wired. All CTAs open the existing signup
-   modal (email capture) via openModal(). Numbers read from CAMPAIGN only.
+   SUPPORT & INVEST FORM
+   Sends an inquiry to Formspree (no payment). Falls back to a normal POST
+   if fetch is unavailable.
 ══════════════════════════════════════════════ */
-const CAMPAIGN = {
-  status: 'prelaunch',          // 'live' shows numbers; 'prelaunch' hides raised/backers/countdown and shows "Get notified" instead.
-  raised: 18450,
-  goal: 45000,
-  backers: 327,
-  daysLeft: 28,
-  currency: '$'
-};
-
-const CF_TIERS = [
-  {
-    price: 5, name: 'Buy Us a Coffee', backers: 142,
-    desc: 'The one that keeps the lights on. Our eternal gratitude, and your name on the backer wall.',
-    perks: ['Our eternal gratitude', 'Your name on the digital backer wall'],
-    delivery: 'Instant', limit: null
-  },
-  {
-    price: 15, name: 'Digital Insider', backers: 88,
-    desc: 'Everything above, plus you get in before everyone else.',
-    perks: ['Everything in the previous tier', 'Episode 1 early digital access', 'Wallpaper pack'],
-    delivery: 'On release', limit: null
-  },
-  {
-    price: 35, name: 'In the Credits', backers: 47,
-    desc: 'Your name rolls with the show. The good kind of public record.',
-    perks: ['Everything above', 'Your name in the end credits (Coffee Club)', 'Private behind the scenes gallery'],
-    delivery: 'On release', limit: null
-  },
-  {
-    price: 60, name: 'Merch Drop', backers: 31,
-    desc: 'Something you can actually hold, for a change.',
-    perks: ['Everything above', 'Enamel pin', 'Sticker sheet', 'Signed digital print'],
-    delivery: '3 months after campaign', limit: 500
-  },
-  {
-    price: 150, name: 'Screening Room', backers: 12,
-    desc: 'Watch the whole thing first, with us in the room.',
-    perks: ['Everything above', 'Full season early access', 'Live virtual watch party with the creators'],
-    delivery: 'On release', limit: 100
-  },
-  {
-    price: 500, name: "Show Runner's Circle", backers: 4,
-    desc: 'Get written into the galaxy. Yes, really.',
-    perks: ['Everything above', 'A hand drawn cameo character in the show', 'A physical animation cel', 'A video call with the team'],
-    delivery: '6 months after campaign', limit: 25
-  }
-];
-
-const CF_STRETCH = [
-  { amount: 60000, title: 'Bonus post-credits scene', reward: 'One extra scene the network would never have let us air.' },
-  { amount: 80000, title: 'Full original score', reward: 'A full original score, with the downloadable soundtrack for all backers.' },
-  { amount: 120000, title: 'A full second episode', reward: 'We animate an entire additional episode.' }
-];
-
-const CF_FAQ = [
-  {
-    q: 'When does it ship?',
-    a: 'Digital rewards land instantly or on release. Physical rewards ship 3 to 6 months after the campaign ends. Exact dates are listed on each tier.'
-  },
-  {
-    q: 'What if the goal is not reached?',
-    a: 'We keep making the show at whatever scale the funding allows. Rewards still ship. Bigger funding just means we get to the good stuff faster.'
-  },
-  {
-    q: 'How do the credits work?',
-    a: 'Back the "In the Credits" tier or above and your name goes in the end credits under the Coffee Club, exactly as you write it.'
-  },
-  {
-    q: 'Is this the same as investing?',
-    a: 'No. This is support, not investment. You are buying us coffee and getting rewards in return. You do not receive equity or a share of revenue.'
-  },
-  {
-    q: 'Where does the money go?',
-    a: 'Straight into making the series: animation, writing, voice, music, and reward fulfillment. Not into a fancy office. We do not have one.'
-  }
-];
-
-(function initCampaign() {
-  const c = CAMPAIGN;
-  const money = (n) => c.currency + Number(n).toLocaleString('en-US');
-  const percent = Math.round((c.raised / c.goal) * 100);
-  const isPrelaunch = c.status === 'prelaunch';
-
-  const liveStats = document.getElementById('cf-live-stats');
-  const preStats  = document.getElementById('cf-prelaunch-stats');
-  const badge     = document.getElementById('cf-badge');
-  const primary   = document.getElementById('cf-primary-cta');
-  const secondary = document.getElementById('cf-secondary-cta');
-  const mobileCta = document.getElementById('cf-mobile-cta');
-
-  if (isPrelaunch) {
-    // Prelaunch: hide raised / progress / backers / days. Show target + badge.
-    liveStats.style.display = 'none';
-    preStats.style.display  = 'block';
-    badge.style.display     = 'inline-flex';
-    document.getElementById('cf-goal-target').textContent = 'Our goal: ' + money(c.goal);
-    primary.textContent   = 'Get Notified at Launch';
-    secondary.style.display = 'none';
-    mobileCta.textContent = 'Get Notified at Launch';
-  } else {
-    // Live: fill the numbers.
-    liveStats.style.display = 'block';
-    preStats.style.display  = 'none';
-    badge.style.display     = 'none';
-    document.getElementById('cf-raised').textContent   = money(c.raised);
-    document.getElementById('cf-percent').textContent  = percent + '% funded';
-    document.getElementById('cf-goal-sub').textContent = 'pledged of ' + money(c.goal) + ' goal';
-    document.getElementById('cf-backers').textContent  = c.backers.toLocaleString('en-US');
-    document.getElementById('cf-days').textContent     = c.daysLeft;
-    primary.textContent   = 'Buy Us a Coffee ☕';
-    mobileCta.textContent = 'Buy Us a Coffee ☕';
-    // Animate the progress bar to the funded percent (cap the visual at 100%).
-    const fill = document.getElementById('cf-progress-fill');
-    setTimeout(() => { fill.style.width = Math.min(percent, 100) + '%'; }, 300);
-  }
-
-  // ── Reward tiers ──
-  const tiersEl = document.getElementById('cf-tiers');
-  tiersEl.innerHTML = CF_TIERS.map((t) => {
-    const perks = t.perks.map((p) => '<li>' + p + '</li>').join('');
-    const limitPill = t.limit
-      ? '<span class="cf-pill limit">' + t.limit + ' of ' + t.limit + ' left</span>'
-      : '';
-    const selectLabel = isPrelaunch ? 'Preview' : 'Select';
-    return (
-      '<div class="cf-tier">' +
-        '<div class="cf-tier-head">' +
-          '<span class="cf-tier-price">' + money(t.price) + '</span>' +
-          (isPrelaunch ? '' : '<span class="cf-tier-backers">' + t.backers + ' backers</span>') +
-        '</div>' +
-        '<div class="cf-tier-name">' + t.name + '</div>' +
-        '<p class="cf-tier-desc">' + t.desc + '</p>' +
-        '<ul class="cf-tier-list">' + perks + '</ul>' +
-        '<div class="cf-tier-meta">' +
-          '<span class="cf-pill">Delivery: ' + t.delivery + '</span>' +
-          limitPill +
-        '</div>' +
-        '<button type="button" class="cf-tier-select" onclick="openModal()">' + selectLabel + '</button>' +
-      '</div>'
-    );
-  }).join('');
-
-  // ── Stretch goals (reached = raised >= amount) ──
-  const stretchEl = document.getElementById('cf-stretch');
-  const introNote = isPrelaunch
-    ? '<p class="cf-tier-desc" style="margin-bottom:0.75rem;">Here is what you will be able to unlock:</p>'
-    : '';
-  stretchEl.innerHTML = introNote + CF_STRETCH.map((s) => {
-    const reached = !isPrelaunch && c.raised >= s.amount;
-    const icon = reached ? '✓' : '🔒';
-    return (
-      '<div class="cf-stretch-item' + (reached ? ' reached' : '') + '">' +
-        '<div class="cf-stretch-icon">' + icon + '</div>' +
-        '<div>' +
-          '<div class="cf-stretch-amount">' + money(s.amount) + '</div>' +
-          '<div class="cf-stretch-title">' + s.title + '</div>' +
-          '<div class="cf-stretch-reward">' + s.reward + '</div>' +
-        '</div>' +
-      '</div>'
-    );
-  }).join('');
-
-  // ── FAQ accordion (vanilla, click to expand) ──
-  const faqEl = document.getElementById('cf-faq');
-  faqEl.innerHTML = CF_FAQ.map((f) => (
-    '<div class="cf-faq-item">' +
-      '<button type="button" class="cf-faq-q">' + f.q + '<span class="cf-faq-mark">+</span></button>' +
-      '<div class="cf-faq-a"><p>' + f.a + '</p></div>' +
-    '</div>'
-  )).join('');
-  faqEl.querySelectorAll('.cf-faq-q').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const item = btn.parentElement;
-      const ans  = item.querySelector('.cf-faq-a');
-      const open = item.classList.toggle('open');
-      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
-    });
+(function initSupportForm() {
+  const form = document.getElementById('support-form');
+  if (!form || !window.fetch) return;
+  const status = document.getElementById('sp-status');
+  const btn = document.getElementById('sp-submit');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.className = '';
+    status.textContent = '';
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      form.reset();
+      status.className = 'invest-success';
+      status.textContent = 'Thank you. Your message reached us, and we will get back to you soon.';
+    } catch (err) {
+      status.className = 'invest-error';
+      status.textContent = 'Something went wrong and the message was not sent. Please try again in a minute.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Get in Touch';
+    }
   });
 })();
-
-/* Toggle the mobile fixed CTA bar only while the campaign section is showing. */
-function updateCampaignMobileBar() {
-  const bar = document.getElementById('cf-mobile-bar');
-  if (!bar) return;
-  const onCampaign = document.getElementById('section-invest').classList.contains('active');
-  bar.classList.toggle('show', onCampaign);
-}
-document.querySelectorAll('[data-section]').forEach((el) => {
-  el.addEventListener('click', () => setTimeout(updateCampaignMobileBar, 300));
-});
-updateCampaignMobileBar();
 </script>
 
 <!-- ════════════════════════════════════════════
