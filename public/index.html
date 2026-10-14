@@ -1775,6 +1775,10 @@
       line-height: 1.3;
     }
     .ep-card .btn-locked { padding: 0.4rem 1rem; font-size: 0.78rem; }
+    .ep-line { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 0.25rem; }
+    .ep-card .btn-locked { margin-top: auto; }
+    .ep-info { flex: 1; }
+    .ep-card { display: flex; flex-direction: column; }
 
     /* Teasers */
     .teaser-list {
@@ -1885,6 +1889,7 @@
       .ep-grid { grid-template-columns: 1fr 1fr; padding: 0 0.75rem 3rem; gap: 0.75rem; }
       .ep-info { padding: 0.7rem 0.75rem 0.85rem; }
       .ep-title { font-size: 0.78rem; }
+      .ep-line { font-size: 0.74rem; line-height: 1.45; }
       .ep-card .btn-locked { padding: 0.3rem 0.7rem; font-size: 0.68rem; }
       .teaser-list { grid-template-columns: 1fr; padding: 0 0.75rem 3rem; gap: 1rem; }
       .teaser-media-tall { max-width: 260px; }
@@ -2273,16 +2278,16 @@
 <script>
 /* ── Data ── */
 const EPISODES = [
-  { num: 1,  title: 'In Our Image',           lockLabel: 'Premieres Soon', img: 'episode1.jpg' },
-  { num: 2,  title: 'Ass a Jew',              img: 'Episode%202%20Ass%20A%20Jew.png' },
-  { num: 3,  title: 'Exodus',                 img: 'Episode%203%20Exodus.png' },
-  { num: 4,  title: 'Microaggression',        img: 'episode4.png' },
-  { num: 5,  title: 'How Dare We?',           img: 'Episode%205%20How%20Dare%20We%3F.png' },
-  { num: 6,  title: 'Open Air Prism',         img: 'Episode%206%20Open%20Air%20Prism.png' },
-  { num: 7,  title: 'Apart-Hide',             img: 'Episode%207%20-%20Apart-Hide.png' },
-  { num: 8,  title: 'We Need a Hague',        img: 'Episode%208%20-%20We%20Need%20a%20Hague.png' },
-  { num: 9,  title: 'Once Upon A Time in 48', img: "Once%20Upon%20a%20Time%20in%20'48.png" },
-  { num: 10, title: 'Jewverse',               img: 'Parallel%20Jewniverse.png' }
+  { num: 1,  title: 'In Our Image', line: "A perfect new world, a hypersensitive civilization, and diplomacy with zero dignity.",           lockLabel: 'Premieres Soon', img: 'episode1.jpg' },
+  { num: 2,  title: 'Ass a Jew', line: "A planet of diaspora Jews welcomes the crew. Being Jewish isn't enough.",              img: 'Episode%202%20Ass%20A%20Jew.png' },
+  { num: 3,  title: 'Exodus', line: "Crash-landed among friendly Egyptians, the crew joins a pyramid scheme. Literally.",                 img: 'Episode%203%20Exodus.png' },
+  { num: 4,  title: 'Microaggression', line: "A quiet beach planet, a little volleyball, and a galactic-sized misunderstanding.",        img: 'episode4.png' },
+  { num: 5,  title: 'How Dare We?', line: "The only human on a distant planet really, really hates Jews.",           img: 'Episode%205%20How%20Dare%20We%3F.png' },
+  { num: 6,  title: 'Open Air Prism', line: "One tiny photon, one perfect diamond, and half the galaxy behind bars.",         img: 'Episode%206%20Open%20Air%20Prism.png' },
+  { num: 7,  title: 'Apart-Hide', line: "Locked up awaiting trial, the crew finally talks. Big mistake.",             img: 'Episode%207%20-%20Apart-Hide.png' },
+  { num: 8,  title: 'We Need a Hague', line: "The whole galaxy puts the crew on trial. The verdict is rigged.",        img: 'Episode%208%20-%20We%20Need%20a%20Hague.png' },
+  { num: 9,  title: 'Once Upon A Time in 48', line: "Finally, a planet of their own. Their new neighbors disagree.", img: "Once%20Upon%20a%20Time%20in%20'48.png" },
+  { num: 10, title: 'Jewverse', line: "The final secrets spill, and the crew must choose where home is.",               img: 'Parallel%20Jewniverse.png' }
 ];
 
 const CREW = [
@@ -2347,6 +2352,7 @@ function buildEpisodeCard(ep, index) {
     <div class="ep-info">
       <div class="episode-number">Episode ${ep.num.toString().padStart(2,'0')}</div>
       <div class="ep-title">${ep.title}</div>
+      <p class="ep-line">${ep.line}</p>
       <div class="btn-locked">&#x1F512; ${label}</div>
     </div>`;
   return card;
