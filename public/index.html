@@ -2005,7 +2005,7 @@
       <li><a href="#episodes" data-section="episodes">Episodes</a></li>
       <li><a href="#characters" data-section="characters">Characters</a></li>
       <li><a href="#teasers" data-section="teasers">Teasers</a></li>
-      <li><a href="#transmissions" data-section="transmissions">Guest Transmissions</a></li>
+      <!-- GT-DISABLED 20.10.26 (restore: uncomment) <li><a href="#transmissions" data-section="transmissions">Guest Transmissions</a></li> -->
       <li><a href="#support" data-section="support">Support &amp; Invest</a></li>
       <li><a href="#signup" class="nav-cta js-signup" id="signupBtn">Sign Up to Stay Informed</a></li>
     </ul>
@@ -2021,7 +2021,7 @@
     <a href="#episodes" data-section="episodes">Episodes</a>
     <a href="#characters" data-section="characters">Characters</a>
     <a href="#teasers" data-section="teasers">Teasers</a>
-    <a href="#transmissions" data-section="transmissions">Guest Transmissions</a>
+    <!-- GT-DISABLED 20.10.26 (restore: uncomment) <a href="#transmissions" data-section="transmissions">Guest Transmissions</a> -->
     <a href="#support" data-section="support">Support &amp; Invest</a>
     <a href="#signup" class="js-signup" id="mobileSignupBtn" style="color: var(--purple); font-weight:600;">Sign Up to Stay Informed</a>
   </div>
@@ -2091,7 +2091,7 @@
     </div>
 
     <!-- ── Guest Transmissions live strip ── -->
-    <div class="gt-strip fade-in" id="gt-strip" style="transition-delay:0.24s"></div>
+    <!-- GT-DISABLED 20.10.26 (restore: uncomment) <div class="gt-strip fade-in" id="gt-strip" style="transition-delay:0.24s"></div> -->
 
   </section>
 
@@ -2116,7 +2116,8 @@
   <!-- ════════════════════════════════════════════
        SECTION: GUEST TRANSMISSIONS
   ═════════════════════════════════════════════ -->
-  <section id="section-transmissions" class="section">
+  <!-- GT-DISABLED 20.10.26: section kept in the page but hidden. Restore: remove the hidden attribute. -->
+  <section id="section-transmissions" class="section" hidden>
 
     <div class="section-header fade-in">
       <h2>Guest Transmissions</h2>
@@ -2436,7 +2437,8 @@ function renderCrew() {
 
 /* ── Section Navigation ── */
 let currentSection = 'main';
-const SECTIONS = ['main', 'episodes', 'characters', 'teasers', 'transmissions', 'support'];
+/* GT-DISABLED 20.10.26: 'transmissions' removed from SECTIONS. Restore: add it back after 'teasers'. */
+const SECTIONS = ['main', 'episodes', 'characters', 'teasers', 'support'];
 
 function sectionFromHash() {
   const h = (location.hash || '').replace('#', '');
@@ -2811,9 +2813,14 @@ document.addEventListener('keydown', function(e) {
 <!-- ════════════════════════════════════════════
      GUEST TRANSMISSIONS
 ═════════════════════════════════════════════ -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- GT-DISABLED 20.10.26 (restore: uncomment the Supabase library line below and set GT_ENABLED = true) -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
 <script>
 (function () {
+  /* GT-DISABLED 20.10.26: the Guest Transmissions board is switched off. Set to true to restore. */
+  const GT_ENABLED = false;
+  if (!GT_ENABLED) return;
+
   /* ===== GUEST TRANSMISSIONS CONFIG =====
      Paste the Supabase Project URL and anon public key below.
      (The anon key is safe to expose. It is protected by Row Level Security.) */
