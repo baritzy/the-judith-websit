@@ -1869,6 +1869,57 @@
     .footer-signup a:hover { text-decoration: underline; }
     .teaser-card .btn-locked { align-self: center; }
 
+    /* Teasers: Landscape / Vertical toggle + Coming Soon tile (20.10.26) */
+    .teaser-list { align-items: start; }
+    @media (min-width: 901px) {
+      .teaser-list { max-width: 1100px; grid-template-columns: repeat(3, 1fr); }
+    }
+    .teaser-card.is-missing { display: none; }
+    .ratio-toggle {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 50px;
+      border: 1px solid rgba(139,92,246,0.4);
+      background: var(--bg2);
+      margin-top: 0.25rem;
+    }
+    .ratio-toggle[hidden] { display: none; }
+    .ratio-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      min-height: 36px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .ratio-toggle button[aria-pressed="true"] { background: var(--purple); color: #fff; }
+    .ratio-toggle button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .teaser-soon-media {
+      background: radial-gradient(ellipse at center, rgba(139,92,246,0.28), var(--bg2) 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .teaser-soon-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .teaser-soon-inner .lock-icon { color: var(--purple); }
+    .teaser-soon .teaser-soon-btn { margin-top: 0.5rem; text-align: center; white-space: normal; max-width: 100%; padding: 0.9rem 1.5rem; font-size: 0.8rem; line-height: 1.4; }
+
     /* Support / Invest */
     .form-group select {
       background: var(--surface);
@@ -2128,30 +2179,55 @@
         </div>
       </div>
 
-      <div class="teaser-card fade-in" style="transition-delay:0.16s">
-        <div class="teaser-media teaser-media-tall">
-          <iframe src="https://www.youtube-nocookie.com/embed/WEPtBmJKfWc?rel=0" title="I Can't. It's Shabbat. | The Judith" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <!--
+        TEASERS WITH LANDSCAPE / VERTICAL TOGGLE (20.10.26)
+        Each card plays local files from media/:
+          teaser-<slug>-16x9.mp4  + teaser-<slug>-16x9-poster.jpg   (Landscape)
+          teaser-<slug>-9x16.mp4  + teaser-<slug>-9x16-poster.jpg   (Vertical)
+        The script checks which files exist. Both exist: the toggle shows.
+        Only one exists: it plays that one, no toggle. None: data-fallback
+        (if set) is used, otherwise the card is hidden.
+        To add a teaser: copy a card, change data-slug, the title and aria-label.
+      -->
+      <div class="teaser-card js-teaser fade-in" data-slug="shabbat" style="transition-delay:0.16s">
+        <div class="teaser-media teaser-media-wide">
+          <video controls playsinline preload="metadata" aria-label="I Can't. It's Shabbat. teaser"></video>
         </div>
         <div class="teaser-info">
           <div class="episode-number">Teaser</div>
           <div class="teaser-title">I Can't. It's Shabbat.</div>
-          <div class="teaser-links">
-            <a class="teaser-link" href="https://www.youtube.com/shorts/WEPtBmJKfWc" target="_blank" rel="noopener">Watch on YouTube</a>
-            <a class="teaser-link" href="https://www.facebook.com/reel/2217721682126901/" target="_blank" rel="noopener">Watch on Facebook</a>
+          <div class="ratio-toggle" role="group" aria-label="Video format" hidden>
+            <button type="button" data-ratio="16x9" aria-pressed="true">Landscape</button>
+            <button type="button" data-ratio="9x16" aria-pressed="false">Vertical</button>
           </div>
         </div>
       </div>
 
-      <div class="teaser-card fade-in" style="transition-delay:0.22s">
-        <div class="teaser-media teaser-media-tall">
-          <video controls playsinline preload="metadata" poster="media/hummus-teaser-poster.jpg" aria-label="Who Ate My Hummus? teaser">
-            <source src="media/hummus-teaser.mp4" type="video/mp4" />
-          </video>
+      <div class="teaser-card js-teaser fade-in" data-slug="hummus" data-fallback="media/hummus-teaser.mp4" data-fallback-poster="media/hummus-teaser-poster.jpg" data-fallback-ratio="9x16" style="transition-delay:0.22s">
+        <div class="teaser-media teaser-media-wide">
+          <video controls playsinline preload="metadata" aria-label="Who Ate My Hummus? teaser"></video>
         </div>
         <div class="teaser-info">
           <div class="episode-number">Teaser</div>
           <div class="teaser-title">Who Ate My Hummus?</div>
-          <div class="teaser-note">New teaser, watch it here first.</div>
+          <div class="ratio-toggle" role="group" aria-label="Video format" hidden>
+            <button type="button" data-ratio="16x9" aria-pressed="true">Landscape</button>
+            <button type="button" data-ratio="9x16" aria-pressed="false">Vertical</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="teaser-card teaser-soon fade-in" style="transition-delay:0.28s">
+        <div class="teaser-media teaser-media-wide teaser-soon-media">
+          <div class="teaser-soon-inner">
+            <svg class="lock-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>Coming Soon</span>
+          </div>
+        </div>
+        <div class="teaser-info">
+          <div class="episode-number">Teaser</div>
+          <div class="teaser-title">Next teaser: coming soon</div>
+          <a href="#signup" class="btn-cta-large js-signup teaser-soon-btn">Sign Up to Be the First to See It</a>
         </div>
       </div>
 
@@ -2602,6 +2678,76 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
 /* ── Init ── */
 renderEpisodes();
 renderCrew();
+
+/* ── Teasers: Landscape / Vertical toggle (20.10.26) ──
+   Looks for media/teaser-<slug>-16x9.mp4 and -9x16.mp4 (with -poster.jpg).
+   Both found: show the toggle. One found: play it, no toggle.
+   None found: use data-fallback if set, else hide the card. */
+(function initTeasers() {
+  const RATIOS = ['16x9', '9x16'];
+  const LABEL = { '16x9': 'Landscape', '9x16': 'Vertical' };
+  const preferVertical = window.matchMedia('(max-width: 700px)').matches;
+
+  function exists(url) {
+    if (!window.fetch) return Promise.resolve(true);
+    return fetch(url, { method: 'HEAD', cache: 'no-store' })
+      .then(r => r.ok)
+      .catch(() => false);
+  }
+
+  function setRatio(card, ratio, src, poster) {
+    const box = card.querySelector('.teaser-media');
+    const video = card.querySelector('video');
+    const wasPlaying = !video.paused;
+    box.classList.toggle('teaser-media-wide', ratio === '16x9');
+    box.classList.toggle('teaser-media-tall', ratio === '9x16');
+    video.pause();
+    if (poster) video.setAttribute('poster', poster); else video.removeAttribute('poster');
+    video.src = src;
+    video.load();
+    if (wasPlaying) video.play().catch(() => {});
+    card.querySelectorAll('.ratio-toggle button').forEach(b => {
+      b.setAttribute('aria-pressed', b.dataset.ratio === ratio ? 'true' : 'false');
+    });
+    card.dataset.ratio = ratio;
+  }
+
+  document.querySelectorAll('.js-teaser').forEach(card => {
+    const slug = card.dataset.slug;
+    const srcOf = r => 'media/teaser-' + slug + '-' + r + '.mp4';
+    const posterOf = r => 'media/teaser-' + slug + '-' + r + '-poster.jpg';
+
+    Promise.all(RATIOS.map(r => exists(srcOf(r)))).then(found => {
+      const available = RATIOS.filter((r, i) => found[i]);
+      if (available.length === 0) {
+        if (card.dataset.fallback) {
+          setRatio(card, card.dataset.fallbackRatio || '16x9', card.dataset.fallback, card.dataset.fallbackPoster || '');
+        } else {
+          card.classList.add('is-missing');
+        }
+        return;
+      }
+      const posters = {};
+      Promise.all(available.map(r => exists(posterOf(r)).then(ok => { posters[r] = ok ? posterOf(r) : ''; })))
+        .then(() => {
+          const first = available.indexOf(preferVertical ? '9x16' : '16x9') !== -1
+            ? (preferVertical ? '9x16' : '16x9') : available[0];
+          setRatio(card, first, srcOf(first), posters[first]);
+          if (available.length === 2) {
+            const toggle = card.querySelector('.ratio-toggle');
+            toggle.hidden = false;
+            toggle.querySelectorAll('button').forEach(b => {
+              b.textContent = LABEL[b.dataset.ratio];
+              b.addEventListener('click', () => {
+                if (card.dataset.ratio === b.dataset.ratio) return;
+                setRatio(card, b.dataset.ratio, srcOf(b.dataset.ratio), posters[b.dataset.ratio]);
+              });
+            });
+          }
+        });
+    });
+  });
+})();
 
 /* ── Video Modal ── */
 function openVideoModal(vimeoId) {
