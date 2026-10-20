@@ -5,7 +5,7 @@
   "automated_coverage_details": "git grep -i -E 'new[ _-]?angle' over the whole repo (all tracked text files incl. sql, json, workflows, admin, comments) = 0 matches after the change. No tracked filename contains angle/xcurrent. No link to newangle-xcurrent-shots anywhere in the repo. No em dashes added.",
   "last_updated": "2026-10-20T00:00:00.000Z",
   "browser_test": "pass",
-  "browser_test_details": "Local server, agent-browser headless Chrome at 390x844 (innerWidth 390 verified): legal/privacy.html, legal/terms.html, legal/data-deletion.html and investor/ render, scrollWidth 390 (no horizontal scroll), 0 'new angle' matches in outerHTML, new creators wording present, investor .studio-title = 'Two Independent Creators'. Screenshots: temp/judith-no-newangle-20.10/local-*.png. Live verification pending at commit time, recorded in the commit report.",
+  "browser_test_details": "Local server, agent-browser headless Chrome at 390x844 (innerWidth 390 verified): legal/privacy.html, legal/terms.html, legal/data-deletion.html and investor/ render, scrollWidth 390 (no horizontal scroll), 0 'new angle' matches in outerHTML, new creators wording present, investor .studio-title = 'Two Independent Creators'. Screenshots: temp/judith-no-newangle-20.10/local-*.png. LIVE (Pages build c55a9a2 = built): curl with cache-buster on /, /investor/, /legal/privacy.html, /legal/terms.html, /legal/data-deletion.html, /public/, /public/admin.html: all 200, 'new angle' count 0 in HTML source on every page. agent-browser at 390 on the live legal pages and /investor/: scrollWidth 390, 0 matches, new wording present. Screenshots: temp/judith-no-newangle-20.10/live-*.png.",
   "verify": true,
-  "live_verified": false
+  "live_verified": true
 }
