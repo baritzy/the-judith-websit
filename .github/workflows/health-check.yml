@@ -81,7 +81,7 @@ jobs:
         run: |
           set +e
           code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 \
-            https://thejudithseries.com/public/)
+            https://thejudithseries.com/)
           set -e
           if [ "$code" = "200" ]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
